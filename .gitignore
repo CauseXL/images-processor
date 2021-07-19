@@ -18,3 +18,8 @@ bower_components
 .cache-loader
 package-lock.json
 yarn.lock
+
+# * ================================================================================
+
+# IDEA
+.idea
