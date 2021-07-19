@@ -17,6 +17,19 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "noEmit": true
+    // * ---------------------------
+    "noEmit": true,
+    "noImplicitAny": false,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "strictBindCallApply": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictPropertyInitialization": true,
+    // * ---------------------------
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"]
+    }
   }
 }

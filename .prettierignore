@@ -1,0 +1,24 @@
+node_modules/*
+.cache/*
+/es/*
+/dist/*
+/types/*
+
+*.*ignore
+*.*rc
+*.lock
+
+package-lock.json
+
+*.sh
+
+# * ---------------- ignore everything for fast fix
+
+# *.css
+# *.less
+# *.sass
+# *.scss
+
+# *.js
+# *.ts
+# *.tsx

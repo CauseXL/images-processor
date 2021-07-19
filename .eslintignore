@@ -1,0 +1,33 @@
+node_modules/*
+.cache/*
+/es/*
+/dist/*
+/types/*
+
+*.html
+*.json
+*.lock
+*.log
+*.md
+*.sh
+*.txt
+
+*.ico
+*.png
+*.jpg
+*.svg
+*.gif
+
+*.css
+*.less
+*.sass
+*.scss
+
+package-lock.json
+tempCodeRunnerFile*
+
+# * ---------------- ignore everything for fast fix
+
+*.js
+# *.ts
+# *.tsx
