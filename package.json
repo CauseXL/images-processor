@@ -18,7 +18,7 @@
     "start": "tsdx watch",
     "build": "tsdx build",
     "test": "tsdx test --passWithNoTests",
-    "lint": "tsdx lint",
+    "lint": "eslint --fix 'src/**'",
     "prepare": "tsdx build",
     "size": "size-limit",
     "analyze": "size-limit --why",
@@ -27,8 +27,14 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "tsdx lint"
+      "pre-commit": "lint-staged"
     }
+  },
+  "lint-staged": {
+    "*.{ts,js,tsx,jsx}": [
+      "eslint --fix 'src/**'",
+      "prettier --write"
+    ]
   },
   "size-limit": [
     {
@@ -77,6 +83,7 @@
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "husky": "^7.0.1",
+    "lint-staged": "^11.0.1",
     "prettier": "2.3.2",
     "prettier-plugin-organize-imports": "^1.1.1",
     "react": "^17.0.2",

@@ -1,5 +1,5 @@
 import React, { FC, HTMLAttributes, ReactChild } from "react";
-import { Button } from "./components/Button";
+import { Button } from "@/components/Button";
 
 export interface Props extends HTMLAttributes<HTMLDivElement> {
   /** custom content, defaults to 'the snozzberries taste like snozzberries' */
