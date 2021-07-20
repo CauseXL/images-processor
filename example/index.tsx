@@ -1,14 +1,16 @@
-import 'react-app-polyfill/ie11';
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import { Thing } from '../.';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import * as React from "react";
+import "react-app-polyfill/ie11";
+// eslint-disable-next-line import/no-extraneous-dependencies
+import * as ReactDOM from "react-dom";
+import Editor from "../.";
 
 const App = () => {
   return (
     <div>
-      <Thing />
+      <Editor />
     </div>
   );
 };
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById("root"));

@@ -25,6 +25,11 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
+  "babelMacros": {
+    "twin": {
+      "preset": "emotion"
+    }
+  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
@@ -52,7 +57,9 @@
     "last 2 versions"
   ],
   "dependencies": {
-    "@emotion/css": "^11.0.0"
+    "@emotion/css": "^11.0.0",
+    "@emotion/react": "^11.4.0",
+    "twin.macro": "^2.6.2"
   },
   "peerDependencies": {
     "react": ">=16",
@@ -60,6 +67,10 @@
   },
   "devDependencies": {
     "@babel/core": "^7.14.6",
+    "@emotion/babel-plugin": "^11.3.0",
+    "@emotion/babel-plugin-jsx-pragmatic": "^0.1.5",
+    "@emotion/babel-preset-css-prop": "^11.2.0",
+    "@emotion/eslint-plugin": "^11.2.0",
     "@size-limit/preset-small-lib": "^5.0.1",
     "@storybook/addon-essentials": "^6.3.4",
     "@storybook/addon-info": "^5.3.21",
@@ -72,25 +83,31 @@
     "@types/react-dom": "^17.0.9",
     "@typescript-eslint/eslint-plugin": "^4.5.0",
     "@typescript-eslint/parser": "^4.5.0",
+    "autoprefixer": "^10.3.1",
     "babel-eslint": "10.1.0",
     "babel-loader": "^8.2.2",
     "babel-plugin-import": "^1.13.3",
+    "babel-plugin-macros": "^3.1.0",
     "babel-plugin-module-resolver": "^4.1.0",
-    "eslint": "^7.11.0",
+    "css-loader": "^3.6.0",
+    "eslint": "^7.31.0",
     "eslint-config-alloy": "^4.1.0",
-    "eslint-loader": "3.0.3",
+    "eslint-loader": "^4.0.2",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-prefer-arrow": "^1.2.2",
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "husky": "^7.0.1",
     "lint-staged": "^11.0.1",
+    "postcss": "^8.3.5",
+    "postcss-import": "^14.0.2",
     "prettier": "2.3.2",
     "prettier-plugin-organize-imports": "^1.1.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-is": "^17.0.2",
     "size-limit": "^5.0.1",
+    "tailwindcss": "^2.2.4",
     "tezign-ui": "^2.27.0",
     "tsdx": "^0.14.1",
     "tslib": "^2.3.0",

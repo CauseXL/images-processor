@@ -1,6 +1,6 @@
 module.exports = {
   extends: ["alloy", "alloy/react", "alloy/typescript"],
-  plugins: ["react-hooks", "import", "prefer-arrow"],
+  plugins: ["react-hooks", "import", "prefer-arrow", "@emotion"],
   rules: {
     // * ------------------------------------------------ react hooks
 
@@ -41,6 +41,10 @@ module.exports = {
 
     /** 注意，现在有全局的 logger 系统，可以控制是否开启，如果要在业务中保留 console.log，请用 logger.debug */
     "no-console": "warn",
+
+    // * ------------------------------------------------ emotion
+
+    "@emotion/jsx-import": "error",
   },
   settings: { react: { version: "detect" } },
 };

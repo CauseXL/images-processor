@@ -1,21 +1,26 @@
-import React, { FC, HTMLAttributes, ReactChild } from "react";
-import { Button } from "@/components/Button";
+/** @jsx jsx */
+import { theme } from "@/styles/theme";
+import { jsx, ThemeProvider } from "@emotion/react";
+import React from "react";
+import { LocaleProvider } from "tezign-ui";
+import zh_CN from "tezign-ui/lib/locale-provider/zh_CN";
+import { GlobalStyles } from "twin.macro";
+import { PCLayout } from "./Editor/PCLayout";
 
-export interface Props extends HTMLAttributes<HTMLDivElement> {
-  /** custom content, defaults to 'the snozzberries taste like snozzberries' */
-  children?: ReactChild;
-}
+// * --------------------------------------------------------------------------- comp
 
-// Please do not use types off of a default export module or else Storybook Docs will suffer.
-// see: https://github.com/storybookjs/storybook/issues/9556
-/**
- * A custom Thing component. Neat!
- */
-export const Thing: FC<Props> = ({ children }) => {
+export const ImagesProcessorEditor: React.FC = () => {
   return (
-    <div>
-      <p>{children || `the snozzberries taste like snozzberries`}</p>
-      <Button text="Button" />
-    </div>
+    <LocaleProvider locale={zh_CN}>
+      <ThemeProvider theme={theme}>
+        <GlobalStyles />
+        <PCLayout />
+      </ThemeProvider>
+    </LocaleProvider>
   );
 };
+
+// * --------------------------------------------------------------------------- export
+
+// eslint-disable-next-line import/no-default-export
+export default ImagesProcessorEditor;
