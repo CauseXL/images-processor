@@ -93,3 +93,14 @@ git fetch --all --prune
 
 - commit （推荐）用：<https://github.com/commitizen/cz-cli> （https://www.conventionalcommits.org/zh-hans/v1.0.0-beta.4/）
 - merge 用：`git merge --no-ff [your-branch]`
+
+提交流程：
+- 当前开发分支 feat/xxx
+- git add .
+- cz
+- git rebase -i HEAD~{你做的修改}
+- 修改信息，合并多次提交，wq 退出编辑
+- git pull origin develop --rebase 同步 dev
+- git push
+- git checkout 到 develop
+- git merge feat/xxx --no-ff
