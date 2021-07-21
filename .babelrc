@@ -1,5 +1,6 @@
 {
   "plugins": [
+    "emotion",
     [
       "import",
       {
@@ -33,13 +34,6 @@
         "pragma": "__cssprop",
         "pragmaFrag": "React.Fragment"
       }
-    ]
-  ],
-  "presets": [
-    "@emotion/babel-preset-css-prop",
-    [
-      "@babel/preset-react",
-      { "runtime": "automatic", "importSource": "@emotion/react" }
     ]
   ]
 }
