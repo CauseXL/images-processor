@@ -44,7 +44,7 @@ module.exports = {
 
     // * ------------------------------------------------ emotion
 
-    "@emotion/jsx-import": "error",
+    // "@emotion/jsx-import": "error",
   },
   settings: { react: { version: "detect" } },
 };

@@ -1,22 +1,17 @@
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
-import React, { useEffect } from "react";
+import React from "react";
+import tw from "twin.macro";
 
 // * --------------------------------------------------------------------------- comp
 
-export const Header: React.FC = () => {
-  useEffect(() => {
-    console.log("load header");
-  }, []);
-
-  return <div css={headerStyle}>header</div>;
+export const CropList = () => {
+  return <div css={[tw`rounded mt-2`, cropListStyle]} />;
 };
 
 // * --------------------------------------------------------------------------- style
 
-const headerStyle = css`
-  width: 100%;
-  min-height: 54px;
+const cropListStyle = css`
+  height: 128px;
   background-color: ${theme.bgColors.light};
-  border-bottom: 1px solid ${theme.bgColors.dark};
 `;

@@ -1,16 +1,26 @@
-/** @jsx jsx */
-import { css, jsx } from "@emotion/react";
+import { theme } from "@/styles/theme";
+import { css } from "@emotion/react";
 import React from "react";
+import tw from "twin.macro";
+import { LeftHeader } from "./LeftHeader/LeftHeader";
+import { ResetButton } from "./ResetButton/ResetButton";
+import { ToolMenu } from "./ToolMenu/ToolMenu";
 
 // * --------------------------------------------------------------------------- comp
 
 export const LeftSidebar: React.FC = () => {
-  return <div css={leftSidebarStyle}>LeftSidebar</div>;
+  return (
+    <div css={[leftSidebarStyle, tw`flex flex-col justify-start`]}>
+      <LeftHeader />
+      <ToolMenu />
+      <ResetButton />
+    </div>
+  );
 };
 
 // * --------------------------------------------------------------------------- style
 
 const leftSidebarStyle = css`
-  min-width: 200px;
-  border-right: 1px solid blue;
+  min-width: 280px;
+  background-color: ${theme.bgColors.medium};
 `;

@@ -1,5 +1,5 @@
-/** @jsx jsx */
-import { css, jsx } from "@emotion/react";
+import { theme } from "@/styles/theme";
+import { css } from "@emotion/react";
 import React from "react";
 
 // * --------------------------------------------------------------------------- comp
@@ -12,5 +12,5 @@ export const RightSidebar: React.FC = () => {
 
 const rightSidebarStyle = css`
   min-width: 200px;
-  border-left: 1px solid blue;
+  background-color: ${theme.bgColors.medium};
 `;
