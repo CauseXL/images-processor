@@ -19,7 +19,7 @@
     "build": "tsdx --tsconfig ./tsconfig.build.json build",
     "test": "tsdx --tsconfig ./tsconfig.build.json test --passWithNoTests",
     "lint": "eslint --fix 'src/**'",
-    "prepare": "tsdx --tsconfig ./tsconfig.build.json build",
+    "prepare": "husky install # && tsdx --tsconfig ./tsconfig.build.json build",
     "size": "size-limit",
     "analyze": "size-limit --why",
     "storybook": "start-storybook -p 6006",
@@ -30,15 +30,12 @@
       "preset": "emotion"
     }
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
-    "*.{ts,js,tsx,jsx}": [
-      "eslint --fix 'src/**'",
+    "*.*": [
       "prettier --write"
+    ],
+    "*.{ts,js,tsx,jsx}": [
+      "eslint --fix"
     ]
   },
   "size-limit": [
