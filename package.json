@@ -15,11 +15,11 @@
     "node": ">=10"
   },
   "scripts": {
-    "start": "tsdx watch",
-    "build": "tsdx build",
-    "test": "tsdx test --passWithNoTests",
+    "start": "tsdx --tsconfig ./tsconfig.build.json watch",
+    "build": "tsdx --tsconfig ./tsconfig.build.json build",
+    "test": "tsdx --tsconfig ./tsconfig.build.json test --passWithNoTests",
     "lint": "eslint --fix 'src/**'",
-    "prepare": "tsdx build",
+    "prepare": "tsdx --tsconfig ./tsconfig.build.json build",
     "size": "size-limit",
     "analyze": "size-limit --why",
     "storybook": "start-storybook -p 6006",
