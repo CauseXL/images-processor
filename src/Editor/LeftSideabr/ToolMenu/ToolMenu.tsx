@@ -2,7 +2,8 @@ import { BatchRename } from "@/Editor/LeftSideabr/ToolMenu/BatchRename/BatchRena
 import { ImageConvert } from "@/Editor/LeftSideabr/ToolMenu/ImageConvert/ImageConvert";
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
-import React, { useState } from "react";
+import type { FC, ReactNode } from "react";
+import { useState } from "react";
 import { Icon } from "tezign-ui";
 import tw from "twin.macro";
 import { ImageCrop } from "./ImageCrop/ImageCrop";
@@ -17,12 +18,12 @@ interface SubMenuProps {
   active?: boolean;
   onClick?: () => void;
   title: any;
-  content: React.ReactNode;
+  content: ReactNode;
 }
 
 // * --------------------------------------------------------------------------- comp
 
-export const ToolMenu: React.FC = () => {
+export const ToolMenu: FC = () => {
   const [activeKey, setActiveKey] = useState<KeyType>(undefined);
 
   const menuList = [
@@ -51,7 +52,7 @@ export const ToolMenu: React.FC = () => {
 
 // * ---------------------------
 
-const MenuItem: React.FC<SubMenuProps> = (props) => {
+const MenuItem: FC<SubMenuProps> = (props) => {
   const { title, content, active = false, onClick } = props;
 
   return (
@@ -66,7 +67,7 @@ const MenuItem: React.FC<SubMenuProps> = (props) => {
 
 // * ---------------------------
 
-const MenuTitle: React.FC<{ active: boolean; onClick?: () => void }> = ({ children, active, onClick }) => {
+const MenuTitle: FC<{ active: boolean; onClick?: () => void }> = ({ children, active, onClick }) => {
   return (
     <div css={[menuTitleStyle, tw`select-none cursor-pointer flex justify-start`]} onClick={onClick}>
       <Icon type={active ? "expand" : "right"} css={tw`pr-4 flex items-center text-center`} />

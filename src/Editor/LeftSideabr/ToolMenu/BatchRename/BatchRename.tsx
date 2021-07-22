@@ -1,13 +1,13 @@
 import { ButtonGroup } from "@/Editor/LeftSideabr/ToolMenu/components/ButtonGroup";
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
-import React from "react";
+import type { FC } from "react";
 import { Checkbox, Divider, Input } from "tezign-ui";
 import tw from "twin.macro";
 
 // * --------------------------------------------------------------------------- comp
 
-export const BatchRename: React.FC = () => {
+export const BatchRename: FC = () => {
   return (
     <div css={tw`flex flex-col`}>
       <p css={tw`mt-2`}>替换全部文件前缀名称</p>

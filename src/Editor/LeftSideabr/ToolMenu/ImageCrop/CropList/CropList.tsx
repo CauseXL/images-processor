@@ -1,11 +1,11 @@
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
-import React from "react";
+import type { FC } from "react";
 import tw from "twin.macro";
 
 // * --------------------------------------------------------------------------- comp
 
-export const CropList = () => {
+export const CropList: FC = () => {
   return <div css={[tw`rounded mt-2`, cropListStyle]} />;
 };
 

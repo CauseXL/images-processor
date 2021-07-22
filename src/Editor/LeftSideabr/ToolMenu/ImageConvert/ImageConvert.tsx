@@ -1,14 +1,14 @@
 import { ButtonGroup } from "@/Editor/LeftSideabr/ToolMenu/components/ButtonGroup";
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
-import React from "react";
+import type { FC } from "react";
 import { InputNumber, Radio } from "tezign-ui";
 import tw from "twin.macro";
 const { Group } = Radio;
 
 // * --------------------------------------------------------------------------- comp
 
-export const ImageConvert: React.FC = () => {
+export const ImageConvert: FC = () => {
   const handleRadioChange = () => console.log(1111111);
 
   return (
@@ -28,7 +28,7 @@ export const ImageConvert: React.FC = () => {
 
 // * ---------------------------
 
-const RadioItem: React.FC<{ text: string; radio: any }> = ({ text, radio }) => {
+const RadioItem: FC<{ text: string; radio: any }> = ({ text, radio }) => {
   return (
     <div css={radioItemStyle}>
       {radio}

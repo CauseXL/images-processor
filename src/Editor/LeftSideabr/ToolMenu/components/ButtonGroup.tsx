@@ -1,6 +1,6 @@
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
-import React from "react";
+import type { FC } from "react";
 import { Button } from "tezign-ui";
 
 // * --------------------------------------------------------------------------- type
@@ -14,7 +14,7 @@ interface ButtonGroupProps {
 
 // * --------------------------------------------------------------------------- comp
 
-export const ButtonGroup: React.FC<ButtonGroupProps> = (props) => {
+export const ButtonGroup: FC<ButtonGroupProps> = (props) => {
   const { onOk, onCancel, okText = "确认", cancelText = "取消" } = props;
   return (
     <div css={buttonGroupStyle}>

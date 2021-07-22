@@ -1,15 +1,23 @@
-import React from "react";
-import { Button, Icon, Dropdown, Menu } from "tezign-ui";
+import type { FC } from "react";
+import { Button, Dropdown, Icon, Menu } from "tezign-ui";
 
 // * --------------------------------------------------------------------------- comp
 
-export const DownloadButton: React.FC = () => {
+export const DownloadButton: FC = () => {
   const menu = (
     <Menu>
-      <Menu.Item onClick={() => {console.log(123)}}>
+      <Menu.Item
+        onClick={() => {
+          console.log(123);
+        }}
+      >
         当前图片下载
       </Menu.Item>
-      <Menu.Item onClick={() => {console.log(321)}}>
+      <Menu.Item
+        onClick={() => {
+          console.log(321);
+        }}
+      >
         全部批量下载
       </Menu.Item>
     </Menu>
@@ -22,7 +30,7 @@ export const DownloadButton: React.FC = () => {
         下载
       </Button>
     </Dropdown>
-  )
+  );
 };
 
 // * --------------------------------------------------------------------------- style

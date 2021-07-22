@@ -1,5 +1,5 @@
 import { css, useTheme } from "@emotion/react";
-import React from "react";
+import type { FC } from "react";
 import { Header } from "./Header/Header";
 import { LeftSidebar } from "./LeftSideabr/LeftSidebar";
 import { Main } from "./Main/Main";
@@ -7,7 +7,7 @@ import { RightSidebar } from "./RightSidebar/RightSidebar";
 
 // * --------------------------------------------------------------------------- comp
 
-export const PCLayout: React.FC = () => {
+export const PCLayout: FC = () => {
   const theme = useTheme();
 
   return (

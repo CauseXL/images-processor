@@ -1,10 +1,10 @@
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
-import React from "react";
+import type { FC } from "react";
 
 // * --------------------------------------------------------------------------- comp
 
-export const RightSidebar: React.FC = () => {
+export const RightSidebar: FC = () => {
   return <div css={rightSidebarStyle}>rightSidebar</div>;
 };
 

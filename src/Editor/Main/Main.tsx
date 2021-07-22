@@ -1,12 +1,12 @@
+import { ToolsBar } from "@/components/ToolsBar/ToolsBar";
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
+import type { FC } from "react";
 import tw from "twin.macro";
-import React from "react";
-import { ToolsBar } from "@/components/ToolsBar/ToolsBar";
 
 // * --------------------------------------------------------------------------- comp
 
-export const Main: React.FC = () => {
+export const Main: FC = () => {
   return (
     <div css={[tw`relative`, mainStyle]}>
       main

@@ -1,10 +1,11 @@
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
+import type { FC } from "react";
+import { useMemo } from "react";
 import tw from "twin.macro";
-import React, { useMemo } from "react";
 import { ZoomBar } from "./ZoomBar";
 
-export const ToolsBar: React.FC = () => {
+export const ToolsBar: FC = () => {
   return useMemo(
     () => (
       <div css={[tw`flex justify-between absolute left-2/4 transform -translate-x-1/2`, toolsBarStyle]}>

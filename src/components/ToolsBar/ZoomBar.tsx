@@ -1,8 +1,9 @@
 import { css } from "@emotion/react";
-import tw from "twin.macro";
 import { findIndex, findLastIndex } from "ramda";
-import React, { useState, useMemo } from "react";
+import type { FC } from "react";
+import { useMemo, useState } from "react";
 import { Dropdown, Icon, Menu } from "tezign-ui";
+import tw from "twin.macro";
 
 const scaleList = [0.1, 0.25, 0.5, 0.75, 1, 1.5, 2, 4, 5];
 
@@ -14,9 +15,7 @@ export const ZoomBar = () => {
 
   const updateScaleByButton = (current: number, type: "+" | "-") => {
     const nextScaleIndex =
-      type === "+"
-        ? findIndex((e) => e > current, scaleList)
-        : findLastIndex((e) => e < current, scaleList);
+      type === "+" ? findIndex((e) => e > current, scaleList) : findLastIndex((e) => e < current, scaleList);
 
     if (nextScaleIndex === -1) return;
 
@@ -31,8 +30,11 @@ export const ZoomBar = () => {
         <div className="zoomIcon" onClick={() => updateScaleByButton(scale, "-")}>
           <Icon type="stop" css={tw`text-lg flex items-center`} />
         </div>
-        <Dropdown overlay={<ZoomList originScale={originScale} setScale={setScale} />}
-          trigger={["click"]} placement="topCenter">
+        <Dropdown
+          overlay={<ZoomList originScale={originScale} setScale={setScale} />}
+          trigger={["click"]}
+          placement="topCenter"
+        >
           <span>{(scale * 100).toFixed(0)}%</span>
         </Dropdown>
         <div className="zoomIcon" onClick={() => updateScaleByButton(scale, "+")}>
@@ -45,7 +47,7 @@ export const ZoomBar = () => {
 
 // * -------------------------------------------
 // TODO: prop type
-const ZoomList: React.FC<any> = (props) => {
+const ZoomList: FC<any> = (props) => {
   const { originScale, setScale } = props;
   return (
     <Menu>
@@ -67,7 +69,7 @@ const ZoomList: React.FC<any> = (props) => {
 const zoomBarStyle = css`
   height: 36px;
   padding: 0px 12px;
-  background-color: #2F2F2F;
+  background-color: #2f2f2f;
   border-radius: 40px;
 
   & > span {

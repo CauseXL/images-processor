@@ -1,6 +1,7 @@
-import { css } from "@emotion/react";
 import { theme } from "@/styles/theme";
-import React, { useMemo, useCallback } from "react";
+import { css } from "@emotion/react";
+import type { FC } from "react";
+import { useCallback, useMemo } from "react";
 import { Icon, Input } from "tezign-ui";
 import tw from "twin.macro";
 import { CompareModal } from "./CompareModal/CompareModal";
@@ -10,7 +11,7 @@ import { mock } from "./mockData";
 // * --------------------------------------------------------------------------- comp
 
 // TODO: props type
-export const Header: React.FC = (props: any) => {
+export const Header: FC = (props: any) => {
   const { onCancel } = props;
   const hasUnsavedData = true;
 
@@ -24,10 +25,9 @@ export const Header: React.FC = (props: any) => {
     }
   }, [hasUnsavedData, onCancel]);
 
-
   return useMemo(
     () => (
-      <div css={[tw`flex justify-between items-center relative px-4`, headerStyle]} >
+      <div css={[tw`flex justify-between items-center relative px-4`, headerStyle]}>
         <div css={tw`flex items-center`}>
           <div onClick={handleReturnClick} css={tw`flex cursor-pointer`}>
             <Icon type="left" css={tw`pr-1 flex items-center`} /> 返回
@@ -45,7 +45,7 @@ export const Header: React.FC = (props: any) => {
             <Icon type="redo" css={tw`text-xl flex items-center`} />
           </div>
         </div>
-        <div css={tw`absolute left-2/4 transform -translate-x-1/2`}>宽度：800px     高度：1200px</div>
+        <div css={tw`absolute left-2/4 transform -translate-x-1/2`}>宽度：800px 高度：1200px</div>
         <div css={tw`flex`}>
           <div className="ml-16">
             <DownloadButton />

@@ -1,6 +1,6 @@
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
-import React, { ReactElement } from "react";
+import type { FC, ReactElement } from "react";
 import { Button } from "tezign-ui";
 import tw from "twin.macro";
 import {
@@ -13,7 +13,7 @@ import {
 
 // * --------------------------------------------------------------------------- comp
 
-export const CropButtons: React.FC = () => {
+export const CropButtons: FC = () => {
   return (
     <div css={tw`flex justify-between items-center mt-4`}>
       <CropButton icon={<FlipHorizontalIcon />} />
@@ -25,7 +25,7 @@ export const CropButtons: React.FC = () => {
   );
 };
 
-const CropButton: React.FC<{ icon: string | ReactElement }> = ({ icon }) => (
+const CropButton: FC<{ icon: string | ReactElement }> = ({ icon }) => (
   <Button
     icon={icon}
     type="neutral"

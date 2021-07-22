@@ -1,10 +1,10 @@
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
-import React from "react";
+import type { FC } from "react";
 import { Button } from "tezign-ui";
 import tw from "twin.macro";
 
-export const ResetButton: React.FC = () => {
+export const ResetButton: FC = () => {
   return (
     <div css={[resetBtnStyle, tw`flex justify-center`]}>
       <Button type="danger" ghost="text">

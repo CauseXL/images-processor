@@ -3,12 +3,12 @@ import { CropButtons } from "@/Editor/LeftSideabr/ToolMenu/ImageCrop/CropButtons
 import { CropDirection } from "@/Editor/LeftSideabr/ToolMenu/ImageCrop/CropDirection/CropDirection";
 import { CropInput } from "@/Editor/LeftSideabr/ToolMenu/ImageCrop/CropInput/CropInput";
 import { CropList } from "@/Editor/LeftSideabr/ToolMenu/ImageCrop/CropList/CropList";
-import React from "react";
+import type { FC } from "react";
 import tw from "twin.macro";
 
 // * --------------------------------------------------------------------------- comp
 
-export const ImageCrop: React.FC = () => {
+export const ImageCrop: FC = () => {
   return (
     <div css={tw`flex flex-col`}>
       <CropList />

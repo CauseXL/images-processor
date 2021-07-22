@@ -1,14 +1,15 @@
-import { css } from "@emotion/react";
-import React, { useState, useEffect, useMemo } from "react";
-import tw from "twin.macro";
 import { theme } from "@/styles/theme";
-import { ModalV2 as Modal, Icon } from "tezign-ui";
+import { css } from "@emotion/react";
+import type { FC } from "react";
+import React, { useEffect, useMemo, useState } from "react";
+import { Icon, ModalV2 as Modal } from "tezign-ui";
+import tw from "twin.macro";
 
 // * --------------------------------------------------------------------------- comp
 
 // TODO: props type
-export const CompareModal: React.FC<any> = (props) => {
-  const {pageData} = props;
+export const CompareModal: FC<any> = (props) => {
+  const { pageData } = props;
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [modalItem, setModalItem] = useState(pageData[0]);
   const [count, setCount] = useState(0);
@@ -22,7 +23,7 @@ export const CompareModal: React.FC<any> = (props) => {
     if (count - 1 < 0) {
       setCount(maxLength - 1);
     } else {
-      setCount(c => c - 1);
+      setCount((c) => c - 1);
     }
   };
 
@@ -31,7 +32,7 @@ export const CompareModal: React.FC<any> = (props) => {
     if (count + 1 >= maxLength) {
       setCount(0);
     } else {
-      setCount(c => c + 1);
+      setCount((c) => c + 1);
     }
   };
 
@@ -44,11 +45,11 @@ export const CompareModal: React.FC<any> = (props) => {
         footer={true}
         mask={false}
         closable={true}
-        style={{background: theme.bgColors.opacity}}
+        style={{ background: theme.bgColors.opacity }}
         onCancel={() => setModalVisible(false)}
       >
         <div css={tw`h-full flex flex-col items-center justify-center px-48`}>
-          <Icon type="round-right" css={[tw`transform -rotate-90 cursor-pointer`, iconStyle]} onClick={getPreview}/>
+          <Icon type="round-right" css={[tw`transform -rotate-90 cursor-pointer`, iconStyle]} onClick={getPreview} />
           <div css={tw`w-full flex items-center justify-center my-6`}>
             <div css={[tw`mr-8 w-1/2 overflow-hidden pb-1`, containerStyle]}>
               <div css={tw`text-base mb-3`}>原图</div>
@@ -59,7 +60,9 @@ export const CompareModal: React.FC<any> = (props) => {
                 <span css={tw`truncate`}>{modalItem.oName}</span>
                 <div>
                   <span css={tw`px-4 py-1 rounded-3xl border border-solid mx-4`}>{modalItem.oType}</span>
-                  <span css={tw`px-4 py-1 rounded-3xl border border-solid`}>{modalItem.oWidth}*{modalItem.oHeight}px</span>
+                  <span css={tw`px-4 py-1 rounded-3xl border border-solid`}>
+                    {modalItem.oWidth}*{modalItem.oHeight}px
+                  </span>
                 </div>
               </div>
             </div>
@@ -73,7 +76,9 @@ export const CompareModal: React.FC<any> = (props) => {
                 <span css={tw`truncate`}>{modalItem.name}</span>
                 <div>
                   <span css={tw`px-4 py-1 rounded-3xl border border-solid mx-4`}>{modalItem.type}</span>
-                  <span css={tw`px-4 py-1 rounded-3xl border border-solid`}>{modalItem.width}*{modalItem.height}px</span>
+                  <span css={tw`px-4 py-1 rounded-3xl border border-solid`}>
+                    {modalItem.width}*{modalItem.height}px
+                  </span>
                 </div>
               </div>
             </div>
@@ -81,20 +86,21 @@ export const CompareModal: React.FC<any> = (props) => {
           <Icon type="round-right" css={[tw`transform rotate-90 cursor-pointer`, iconStyle]} onClick={getNext} />
         </div>
       </Modal>
-    )
-  }, [modalVisible, modalItem])
+    );
+  }, [modalVisible, modalItem]);
 
   return (
     <>
-      <div css={
-        [
+      <div
+        css={[
           tw`rounded-sm px-4 py-1`,
-          css`&:hover {
-            color: #0CC5AE;
-            background-color: rgba(12, 197, 174, 0.16)}
-          `
-        ]
-      }
+          css`
+            &:hover {
+              color: #0cc5ae;
+              background-color: rgba(12, 197, 174, 0.16);
+            }
+          `,
+        ]}
         onClick={() => setModalVisible(true)}
       >
         原图对比
