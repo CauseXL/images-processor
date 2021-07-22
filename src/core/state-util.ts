@@ -1,8 +1,8 @@
 /* eslint-disable max-lines */
 
 import { produce } from "immer";
-import { useEffect, useState } from "react";
 import type { DependencyList } from "react";
+import { useEffect, useState } from "react";
 
 // * ================================================================================
 
@@ -79,7 +79,7 @@ class Store<T> {
       typeof ValueOrSetter === "function" ? produce(this.state, ValueOrSetter) : ValueOrSetter;
 
     // * emit
-    [...this.listeners].forEach((fn) => {
+    new Set(this.listeners).forEach((fn) => {
       Store.batchListeners ? Store.batchListeners.add(fn) : fn();
     });
   }

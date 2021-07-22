@@ -9,7 +9,7 @@ const d2 = store({ s: { a: 100 } });
 const rnd = () => Math.random().toString(36).slice(-6);
 const gen = () => [rnd(), rnd(), "Hello"];
 
-export const App: FC = () => {
+export const CompState: FC = () => {
   const [v, setV] = useState(gen());
   return (
     <>
@@ -21,13 +21,13 @@ export const App: FC = () => {
         refresh
       </button>
       {v.map((e, i) => (
-        <CompA key={i} v={e} />
+        <Child key={i} v={e} />
       ))}
     </>
   );
 };
 
-const CompA: FC<{ v: string }> = memo(({ v = "" }) => {
+const Child: FC<{ v: string }> = memo(({ v = "" }) => {
   console.log("render A", v);
 
   const d = useValue(() => {
