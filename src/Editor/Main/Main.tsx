@@ -1,16 +1,18 @@
-import { ToolsBar } from "@/components/ToolsBar/ToolsBar";
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
 import type { FC } from "react";
+import React from "react";
 import tw from "twin.macro";
+import { Canvas } from "./Canvas/Canvas";
+import { ZoomBar } from "./ZoomBar/ZoomBar";
 
 // * --------------------------------------------------------------------------- comp
 
 export const Main: FC = () => {
   return (
-    <div css={[tw`relative`, mainStyle]}>
-      main
-      <ToolsBar />
+    <div css={[tw`relative flex flex-1 overflow-hidden`, mainStyle]}>
+      <Canvas />
+      <ZoomBar />
     </div>
   );
 };
@@ -18,7 +20,5 @@ export const Main: FC = () => {
 // * --------------------------------------------------------------------------- style
 
 const mainStyle = css`
-  flex: 1;
-  background-color: ${theme.bgColors.dark};
-  text-align: center;
+  //background-color: ${theme.bgColors.dark};
 `;

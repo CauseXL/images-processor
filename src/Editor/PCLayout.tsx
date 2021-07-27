@@ -1,5 +1,8 @@
+import { theme } from "@/styles/theme";
 import { css, useTheme } from "@emotion/react";
 import type { FC } from "react";
+import React from "react";
+import tw from "twin.macro";
 import { Header } from "./Header/Header";
 import { LeftSidebar } from "./LeftSideabr/LeftSidebar";
 import { Main } from "./Main/Main";
@@ -11,9 +14,9 @@ export const PCLayout: FC = () => {
   const theme = useTheme();
 
   return (
-    <div css={layoutStyle} style={{ color: theme.colors.default }}>
+    <div css={[tw`flex flex-col h-screen w-screen`, layoutStyle]} style={{ color: theme.colors.default }}>
       <Header />
-      <div css={containerStyle}>
+      <div css={[tw`flex flex-1 h-full`, containerStyle]}>
         <LeftSidebar />
         <Main />
         <RightSidebar />
@@ -24,15 +27,14 @@ export const PCLayout: FC = () => {
 
 // * --------------------------------------------------------------------------- style
 
-export const layoutStyle = css`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  min-height: 100vh;
+const layoutStyle = css`
+  //&::-webkit-scrollbar,
+  //& ::-webkit-scrollbar {
+  //  display: none;
+  //}
 `;
 
-export const containerStyle = css`
-  display: flex;
-  flex: 1;
+const containerStyle = css`
+  height: calc(100% - 55px);
+  background-color: ${theme.bgColors.dark};
 `;

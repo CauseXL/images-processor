@@ -10,15 +10,17 @@ interface ButtonGroupProps {
   cancelText?: string;
   onOk?: () => void;
   onCancel?: () => void;
+  /* 禁用 确认 按钮 */
+  disableOnOk?: boolean;
 }
 
 // * --------------------------------------------------------------------------- comp
 
 export const ButtonGroup: FC<ButtonGroupProps> = (props) => {
-  const { onOk, onCancel, okText = "确认", cancelText = "取消" } = props;
+  const { onOk, onCancel, okText = "确认", cancelText = "取消", disableOnOk = false } = props;
   return (
     <div css={buttonGroupStyle}>
-      <Button size="small" onClick={onOk} css={okBtnStyle}>
+      <Button size="small" onClick={onOk} css={okBtnStyle} disabled={disableOnOk}>
         {okText}
       </Button>
       <Button size="small" onClick={onCancel} css={cancelBtnStyle} type="neutral">
