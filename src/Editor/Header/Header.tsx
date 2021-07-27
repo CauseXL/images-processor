@@ -1,24 +1,28 @@
-import { Snap, useCurrentImage, usePageData, useRedoable, useUndoable } from "@/hooks/usePageData";
+import { Snap, updatePageTitle, useCurrentImage, usePageData } from "@/hooks/usePageData";
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
+import { useKeyPress } from "ahooks";
 import type { FC } from "react";
-import { useCallback, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Icon, Input } from "tezign-ui";
 import tw from "twin.macro";
 import { CompareModal } from "./CompareModal/CompareModal";
 import { DownloadButton } from "./DownloadButton/DownloadButton";
-import { mock } from "./mockData";
 
 // * --------------------------------------------------------------------------- comp
-
 // TODO: props type
 export const Header: FC = (props: any) => {
   const { onCancel } = props;
   const hasUnsavedData = true;
   const pageData = usePageData();
-  const currentImage = useCurrentImage();
-  const undoable = useUndoable();
-  const redoable = useRedoable();
+
+  useKeyPress(["meta.z", "ctrl.z"], (event) => {
+    !event.shiftKey && Snap.undo();
+  });
+
+  useKeyPress(["meta.shift.z", "ctrl.shift.z"], () => {
+    Snap.redo();
+  });
 
   const handleReturnClick = useCallback(() => {
     if (hasUnsavedData) {
@@ -30,6 +34,17 @@ export const Header: FC = (props: any) => {
     }
   }, [hasUnsavedData, onCancel]);
 
+  const onTitleChange = (e) => {
+    const { value } = e.target;
+    if (!value.trim().length) {
+      updatePageTitle(pageData.title);
+      return true;
+    } else {
+      updatePageTitle(value);
+      return true;
+    }
+  };
+
   return useMemo(
     () => (
       <div css={[tw`flex justify-between items-center relative px-4`, headerStyle]}>
@@ -38,10 +53,10 @@ export const Header: FC = (props: any) => {
             <Icon type="left" css={tw`pr-1 flex items-center`} /> 返回
           </div>
           <div css={[tw`mx-4`, titleInputStyle]}>
-            <Input.Text style={{ width: 120 }} value="名字很长的情况名字很长的情况名字很长的情况" />
+            <Input.Text style={{ width: 120 }} value={pageData?.title} onInputBlur={onTitleChange} />
           </div>
           <div css={tw`mx-4 cursor-pointer`}>
-            <CompareModal pageData={mock} />
+            <CompareModal />
           </div>
           <div
             css={[tw`mx-4 cursor-pointer`]}
@@ -60,9 +75,7 @@ export const Header: FC = (props: any) => {
             <Icon type="redo" css={tw`text-xl flex items-center`} />
           </div>
         </div>
-        <div css={tw`absolute left-2/4 transform -translate-x-1/2`}>
-          {pageData?.title}: {currentImage?.width}px
-        </div>
+        <ProjectTitle />
         <div css={tw`flex`}>
           <div className="ml-16">
             <DownloadButton />
@@ -70,7 +83,31 @@ export const Header: FC = (props: any) => {
         </div>
       </div>
     ),
-    [undoable, redoable, pageData?.title, currentImage],
+    [pageData?.title],
+  );
+};
+
+const ProjectTitle: FC = () => {
+  const { width, height } = useCurrentImage() || {};
+  const [isChanging, setIsChanging] = useState<boolean>(false);
+  useEffect(() => {
+    setIsChanging(true);
+    let timer = setTimeout(() => {
+      setIsChanging(false);
+    }, 500);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [width, height]);
+  return (
+    <div
+      css={[
+        tw`absolute left-2/4 transform -translate-x-1/2 transition-colors duration-500`,
+        isChanging && infoChangingStyle,
+      ]}
+    >
+      宽度：{width}px 高度：{height}px
+    </div>
   );
 };
 
@@ -87,4 +124,8 @@ const titleInputStyle = css`
   .edit-input {
     background-color: ${theme.bgColors.light};
   }
+`;
+
+const infoChangingStyle = css`
+  color: #0cc5ae;
 `;

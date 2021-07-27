@@ -1,4 +1,4 @@
-import { Snap } from "@/hooks/usePageData";
+import { resetPageData } from "@/hooks/usePageData";
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
 import type { FC } from "react";
@@ -12,7 +12,8 @@ export const ResetButton: FC = () => {
         type="danger"
         ghost="text"
         onClick={() => {
-          Snap.reset();
+          /* 不用 Snap.rest 因为···一键还原···也需要支持撤销 */
+          resetPageData();
         }}
       >
         一键还原
