@@ -12,7 +12,6 @@ import { RightSidebar } from "./RightSidebar/RightSidebar";
 
 export const PCLayout: FC = () => {
   const theme = useTheme();
-
   return (
     <div css={[tw`flex flex-col h-screen w-screen`, layoutStyle]} style={{ color: theme.colors.default }}>
       <Header />
