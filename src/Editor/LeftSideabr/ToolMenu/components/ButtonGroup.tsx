@@ -8,6 +8,7 @@ import { Button } from "tezign-ui";
 interface ButtonGroupProps {
   okText?: string;
   cancelText?: string;
+  disabled?: boolean;
   onOk?: () => void;
   onCancel?: () => void;
   /* 禁用 确认 按钮 */

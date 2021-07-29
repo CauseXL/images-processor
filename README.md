@@ -40,13 +40,15 @@ tsdx lint src --write-file
 
 ### Bundle analysis
 
- `npm run size && npm run analyze`.
+`npm run size && npm run analyze`.
 
-### TODO Publish
+### Publish
 
-- 代码合并到master自动执行发包？
-- changelog？
-
+- 代码合并到 master/develop 会自动执行 gitlab-CI 来发布版本 (需遵守[commit 信息规范](https://github.com/semantic-release/semantic-release#commit-message-format))
+- master 版本执行 patch 版本号升级，develop 为 prerelease = "dev"
+- feat/auto-release 为自动发包测试分支
+- 如果你有 slack 可以加入 [频道](https://join.slack.com/share/zt-u115z6mo-zW7DO9r164G8GAWnq1XfOg) 或者搜索 ID: C029VH0K212
+- 每当版本发布会即时收到成功/失败信息
 
 ## 开发
 
@@ -59,18 +61,18 @@ tsdx lint src --write-file
   - 禁止 `export default`，只允许具名导出
   - 行数太长的文件请切分，有特例请在文件中 disable 该规则
 
-
 CSS 的开发模式目前主要使用（CSS in JS "@emotion/css"）
 
 ### 整体文件结构
 
 **src/**
 
-* **core/**：系统核心
-- **components/**：组件库
-- **logic/**：业务有关的执行逻辑（比如尺寸计算，数据生成等，hotkey 等系统）
-- **utils/**：业务无关的 util（工厂函数等）
-- **types/**：TS 类型声明
+- **core/**：系统核心
+
+* **components/**：组件库
+* **logic/**：业务有关的执行逻辑（比如尺寸计算，数据生成等，hotkey 等系统）
+* **utils/**：业务无关的 util（工厂函数等）
+* **types/**：TS 类型声明
 
 ---
 
@@ -95,6 +97,7 @@ git fetch --all --prune
 - merge 用：`git merge --no-ff [your-branch]`
 
 提交流程：
+
 - 当前开发分支 feat/xxx
 - git add .
 - cz

@@ -1,0 +1,64 @@
+{
+  "branches": [
+    "master",
+    {
+      "name": "develop",
+      "prerelease": "dev"
+    },
+    {
+      "name": "feat/auto-release",
+      "prerelease": "auto-release"
+    }
+  ],
+  "debug": true,
+  "repositoryUrl": "https://git.tezign.com/engineering/tezign-intelligence-images-processor",
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    [
+      "@semantic-release/npm",
+      {
+        "npmPublish": true,
+        "tarballDir": "dist"
+      }
+    ],
+    [
+      "@semantic-release/git",
+      {
+        "assets": ["package.json", "docs/CHANGELOG.md"],
+        "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+      }
+    ],
+    "@semantic-release/release-notes-generator",
+    [
+      "@semantic-release/changelog",
+      {
+        "changelogFile": "docs/CHANGELOG.md"
+      }
+    ],
+    [
+      "semantic-release-slack-bot",
+      {
+        "notifyOnSuccess": false,
+        "notifyOnFail": false,
+        "slackWebhook": "https://hooks.slack.com/services/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",
+        "branchesConfig": [
+          {
+            "pattern": "feat/auto-release",
+            "notifyOnSuccess": true,
+            "notifyOnFail": true
+          },
+          {
+            "pattern": "develop",
+            "notifyOnSuccess": true,
+            "notifyOnFail": true
+          },
+          {
+            "pattern": "master",
+            "notifyOnSuccess": true,
+            "notifyOnFail": true
+          }
+        ]
+      }
+    ]
+  ]
+}

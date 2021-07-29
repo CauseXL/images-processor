@@ -1,6 +1,6 @@
 {
   "name": "tezign-intelligence-images-processor",
-  "version": "0.0.1",
+  "version": "1.0.0-auto-release.5",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "module": "dist/tezign-intelligence-images-processor.esm.js",
@@ -23,7 +23,8 @@
     "size": "size-limit",
     "analyze": "size-limit --why",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "semantic-release": "semantic-release"
   },
   "babelMacros": {
     "twin": {
@@ -72,6 +73,10 @@
     "@emotion/babel-preset-css-prop": "^11.2.0",
     "@emotion/eslint-plugin": "^11.2.0",
     "@emotion/styled": "^11.3.0",
+    "@semantic-release/changelog": "^5.0.1",
+    "@semantic-release/git": "^9.0.0",
+    "@semantic-release/gitlab": "^6.2.1",
+    "@semantic-release/npm": "^7.1.3",
     "@size-limit/preset-small-lib": "^5.0.1",
     "@storybook/addon-essentials": "^6.3.4",
     "@storybook/addon-info": "^5.3.21",
@@ -106,6 +111,8 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-is": "^17.0.2",
+    "semantic-release": "^17.4.4",
+    "semantic-release-slack-bot": "^2.1.1",
     "size-limit": "^5.0.1",
     "tailwindcss": "^2.2.4",
     "tezign-ui": "^2.27.0",
