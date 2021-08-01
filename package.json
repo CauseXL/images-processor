@@ -1,6 +1,6 @@
 {
   "name": "tezign-intelligence-images-processor",
-  "version": "1.0.0-auto-release.5",
+  "version": "1.0.0-auto-release-npm.1",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "module": "dist/tezign-intelligence-images-processor.esm.js",
