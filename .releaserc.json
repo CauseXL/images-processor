@@ -6,8 +6,8 @@
       "prerelease": "dev"
     },
     {
-      "name": "feat/auto-release",
-      "prerelease": "auto-release"
+      "name": "feat/auto-release-npm",
+      "prerelease": "auto-release-npm"
     }
   ],
   "debug": true,
@@ -43,7 +43,7 @@
         "slackWebhook": "https://hooks.slack.com/services/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",
         "branchesConfig": [
           {
-            "pattern": "feat/auto-release",
+            "pattern": "feat/auto-release-npm",
             "notifyOnSuccess": true,
             "notifyOnFail": true
           },
