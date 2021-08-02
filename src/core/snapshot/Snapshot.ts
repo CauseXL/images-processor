@@ -82,6 +82,10 @@ export class Snapshot<T> extends SimpleEmitter {
     this.go(+1);
   }
 
+  public reset() {
+    this.jumpTo(0);
+  }
+
   public go(delta: number) {
     this.jumpTo(this.index + delta);
   }
