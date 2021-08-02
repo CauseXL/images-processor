@@ -1,3 +1,4 @@
+import { Snap, useCurrentImage, usePageData, useRedoable, useUndoable } from "@/hooks/usePageData";
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
 import type { FC } from "react";
@@ -14,6 +15,10 @@ import { mock } from "./mockData";
 export const Header: FC = (props: any) => {
   const { onCancel } = props;
   const hasUnsavedData = true;
+  const pageData = usePageData();
+  const currentImage = useCurrentImage();
+  const undoable = useUndoable();
+  const redoable = useRedoable();
 
   const handleReturnClick = useCallback(() => {
     if (hasUnsavedData) {
@@ -38,14 +43,26 @@ export const Header: FC = (props: any) => {
           <div css={tw`mx-4 cursor-pointer`}>
             <CompareModal pageData={mock} />
           </div>
-          <div css={tw`mx-4`} onClick={() => {}}>
+          <div
+            css={[tw`mx-4 cursor-pointer`]}
+            onClick={() => {
+              Snap.undo();
+            }}
+          >
             <Icon type="undo" css={tw`text-xl flex items-center`} />
           </div>
-          <div onClick={() => {}}>
+          <div
+            css={[tw`cursor-pointer`]}
+            onClick={() => {
+              Snap.redo();
+            }}
+          >
             <Icon type="redo" css={tw`text-xl flex items-center`} />
           </div>
         </div>
-        <div css={tw`absolute left-2/4 transform -translate-x-1/2`}>宽度：800px 高度：1200px</div>
+        <div css={tw`absolute left-2/4 transform -translate-x-1/2`}>
+          {pageData?.title}: {currentImage?.width}px
+        </div>
         <div css={tw`flex`}>
           <div className="ml-16">
             <DownloadButton />
@@ -53,7 +70,7 @@ export const Header: FC = (props: any) => {
         </div>
       </div>
     ),
-    [mock],
+    [undoable, redoable, pageData?.title, currentImage],
   );
 };
 

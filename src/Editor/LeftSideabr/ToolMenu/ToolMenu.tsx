@@ -6,6 +6,7 @@ import type { FC, ReactNode } from "react";
 import { useState } from "react";
 import { Icon } from "tezign-ui";
 import tw from "twin.macro";
+import { DemoBtnGroup } from "./DemoBtnGroup/DemoBtnGroup";
 import { ImageCrop } from "./ImageCrop/ImageCrop";
 import { SizeScale } from "./SizeScale/SizeScale";
 
@@ -46,6 +47,8 @@ export const ToolMenu: FC = () => {
           onClick={() => handleMenuSelect(index)}
         />
       ))}
+      {/* TODO: Remove */}
+      <DemoBtnGroup />
     </div>
   );
 };
