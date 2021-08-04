@@ -2,18 +2,24 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react
 import { waterfallSize } from "../Editor/RightSidebar/size";
 import { useRafState } from "./useRafState";
 import { useWaterFall } from "./useWaterFall";
+import { off, on } from "./util";
 
 const log = console.log.bind(console);
 
-export const useDrag = ({ list, minWidth }: { list: any; minWidth: number }) => {
+interface IDragProps {
+  list: any;
+  minWidth: number;
+  maxWidth: number;
+  screenWidth: number;
+}
+
+export const useDrag = ({ list, minWidth, maxWidth, screenWidth }: IDragProps) => {
   const barRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
-  // const [width, setWidth] = useState<number>(minWidth || 0);
   const [width, setWidth] = useRafState<number>(minWidth || 0);
 
-  // const [start, setStart] = useState(0);
-  const [start, setStart] = useRafState(0);
+  const [x, setX] = useRafState(0);
   const [enableDrag, setEnableDrag] = useState(false);
 
   const { positionList, calc } = useWaterFall({
@@ -28,47 +34,56 @@ export const useDrag = ({ list, minWidth }: { list: any; minWidth: number }) => 
     calc();
   }, [calc]);
 
+  const widthSet = useCallback(
+    (w: number, x: number) => {
+      if (w > maxWidth) {
+        setWidth(maxWidth);
+        const maxOffset = screenWidth - maxWidth;
+        setX(maxOffset);
+      } else if (w < minWidth) {
+        setWidth(minWidth);
+        const minOffset = screenWidth - minWidth;
+        setX(minOffset);
+      } else {
+        setWidth(w);
+        setX(x);
+      }
+    },
+    [screenWidth, maxWidth, minWidth, setWidth, setX],
+  );
+
   const onDown = useCallback(
     (e: MouseEvent) => {
-      const moveX = e.clientX;
-      setStart(moveX);
+      const newX = e.clientX;
+      setX(newX);
       setEnableDrag(true);
-      log("down", start, width);
+      log("down", x, width);
     },
-    // [start, width],
-    [start, width, setStart],
+    [x, setX, width],
   );
 
   const onMove = useCallback(
     (e: MouseEvent) => {
-      const move = e.clientX;
-      const offset = start - move;
+      const newX = e.clientX;
+      const offset = x - newX;
       const w = width + offset;
-      setWidth(w);
-      setStart(e.clientX);
+      widthSet(w, newX);
       calc();
     },
-    // [start, width, calc],
-    [start, width, calc, setStart, setWidth],
+    [width, x, widthSet, calc],
   );
 
   const onUp = useCallback(
     (e: MouseEvent) => {
       setEnableDrag(false);
-      const moveX = e.clientX;
-      const offset = start - moveX;
+      const newX = e.clientX;
+      const offset = x - newX;
       const w = width + offset;
-      if (w < minWidth) {
-        setWidth(minWidth);
-      } else {
-        setWidth(w);
-      }
-      setStart(moveX);
-      log("up", start, width);
+      widthSet(w, newX);
+      log("up", offset, width);
       calc();
     },
-    // [start, width, minWidth, calc],
-    [start, width, minWidth, calc, setStart, setWidth],
+    [width, x, widthSet, calc],
   );
 
   useLayoutEffect(() => {
@@ -83,15 +98,15 @@ export const useDrag = ({ list, minWidth }: { list: any; minWidth: number }) => 
 
   useLayoutEffect(() => {
     if (enableDrag) {
-      document.addEventListener("mousemove", onMove);
-      document.addEventListener("mouseup", onUp);
+      on(document, "mousemove", onMove);
+      on(document, "mouseup", onUp);
     } else {
-      document.removeEventListener("mousemove", onMove);
-      document.removeEventListener("mouseup", onUp);
+      off(document, "mousemove", onMove);
+      off(document, "mouseup", onUp);
     }
     return () => {
-      document.removeEventListener("mousemove", onMove);
-      document.removeEventListener("mouseup", onUp);
+      off(document, "mousemove", onMove);
+      off(document, "mouseup", onUp);
     };
   }, [enableDrag, onMove, onUp]);
 

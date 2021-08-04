@@ -1,3 +1,4 @@
+import { changeCurrentImage, deleteImage, useCurrentImage } from "@/hooks/usePageData";
 import { css } from "@emotion/react";
 import React from "react";
 import { Icon } from "tezign-ui";
@@ -7,40 +8,59 @@ import { Thumbnail } from "./Thumbnail";
 
 const log = console.log.bind(console);
 
-export const List = ({ list, width, activeIndex, setActiveIndex }) => {
+export const List = ({ list, width }) => {
   const extraInfoDisplayWidth = 300;
   const showExtraInfo = width > extraInfoDisplayWidth;
 
+  const current = useCurrentImage();
+
   return (
     <div css={[listStyle]}>
-      {list?.map((item, i) => {
-        const active = activeIndex === i;
-        const onClick = () => setActiveIndex(i);
+      {list?.map((item) => {
+        const { id } = item;
         return (
-          <div
-            key={item.name + i}
-            css={[tw`flex items-center mb-4`, itemStyle, showExtraInfo ? infoHoverStyle : "", active && activeStyle]}
-            onClick={() => {
-              log("clicked", item);
-              onClick();
-            }}
-          >
-            <Thumbnail item={item} />
-            <div css={[tw`ml-2`, nameStyle]}>{item.name}</div>
-            {showExtraInfo && (
-              <div css={[tw`flex ml-auto`]}>
-                <div css={tw`mr-2`}>
-                  {item.width}*{item.height}px
-                </div>
-                <div>{formatSize(item.size)}</div>
-              </div>
-            )}
-            <div css={operationStyle}>
-              <Icon type="delete" css={tw`cursor-pointer`} onClick={() => log("del")} />
-            </div>
-          </div>
+          <Item
+            key={item.name}
+            item={item}
+            showExtraInfo={showExtraInfo}
+            active={current.id === id}
+            onClick={() => changeCurrentImage(id)}
+          />
         );
       })}
+    </div>
+  );
+};
+
+const Item = ({ item, showExtraInfo, active, onClick }) => {
+  return (
+    <div
+      key={item.name}
+      css={[tw`flex items-center mb-4`, itemStyle, showExtraInfo ? infoHoverStyle : "", active && activeStyle]}
+      onClick={() => {
+        log("clicked", item);
+        onClick();
+      }}
+    >
+      <Thumbnail item={item} />
+      <div css={[tw`ml-2`, nameStyle]}>{item.name}</div>
+      <div css={[tw`flex ml-auto`, showExtraInfo ? aniStyle : {}]} style={{ display: showExtraInfo ? "flex" : "none" }}>
+        <div css={tw`mr-2`}>
+          {item.width}*{item.height}px
+        </div>
+        <div>{formatSize(item.size)}</div>
+      </div>
+      <div css={operationStyle}>
+        <Icon
+          type="delete"
+          css={tw`cursor-pointer`}
+          onClick={(e) => {
+            e.stopPropagation();
+            deleteImage(item.id);
+            log("del");
+          }}
+        />
+      </div>
     </div>
   );
 };
@@ -64,7 +84,8 @@ const operationStyle = css`
 const infoHoverStyle = css`
   &:hover {
     & > div:nth-last-of-type(2) {
-      display: none;
+      /* display: none; */
+      opacity: 0;
     }
   }
 `;
@@ -86,4 +107,19 @@ const nameStyle = css`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+`;
+
+const aniStyle = css`
+  @keyframes fadeIn {
+    0% {
+      color: rgba(255, 255, 255, 0.78);
+    }
+    25% {
+      opacity: 0;
+    }
+    100% {
+      color: rgba(255, 255, 255, 0.78);
+    }
+  }
+  animation: fadeIn 1s linear;
 `;

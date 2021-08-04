@@ -1,6 +1,9 @@
 export const formatSize = (size: number) => {
   const KB = size / 1024;
   const MB = size / 1024 / 1024;
+  if (typeof size !== "number") {
+    return "-KB";
+  }
 
   if (MB < 1) {
     return `${Math.ceil(KB)}KB`;

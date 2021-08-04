@@ -1,3 +1,4 @@
+import { deleteImage } from "@/hooks/usePageData";
 import { css } from "@emotion/react";
 import React, { useState } from "react";
 import { Icon } from "tezign-ui";
@@ -16,7 +17,7 @@ export const ImageComp = ({ item, order, active, onClick }: any) => {
         css={[imgStyle, !loaded && tw`opacity-0`, active && activeStyle]}
         src={item.url}
         onLoad={() => {
-          log("loaded", item.name);
+          // log("loaded", item.name);
           setLoaded(true);
         }}
         style={getImgSizeStyle(item)}
@@ -30,7 +31,14 @@ export const ImageComp = ({ item, order, active, onClick }: any) => {
           <div css={[countStyle]}>{order}</div>
           {/* TODO: 不会直接有 size 属性，使用 utils 里的方法 */}
           <div css={[sizeStyle]}>{formatSize(item.size)}</div>
-          <div css={[deleteStyle]} onClick={() => log("del")}>
+          <div
+            css={[deleteStyle]}
+            onClick={(e) => {
+              e.stopPropagation();
+              deleteImage(item.id);
+              log("del");
+            }}
+          >
             <Icon type="delete" />
           </div>
         </>

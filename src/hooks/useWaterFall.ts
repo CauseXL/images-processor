@@ -5,12 +5,6 @@ interface ISize {
   width: number;
   height: number;
 }
-
-// interface IPosition {
-//   sizes: [number, number];
-//   pos: [number, number]
-// }
-
 interface IWaterfallProps<T> {
   list: T[];
   containerWidth: number;
@@ -25,7 +19,6 @@ export const useWaterFall = <T extends ISize>({
   gap,
   subNodeHeight,
 }: IWaterfallProps<T>) => {
-  // const [positionList, setList] = useState<any>([])
   const [positionList, setList] = useRafState<any>([]);
   const calc = useCallback(() => {
     const column = Math.floor((containerWidth - width) / (width + gap)) + 1;
