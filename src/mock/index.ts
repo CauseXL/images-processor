@@ -1,11 +1,6 @@
-/* eslint-disable max-lines */
-import { Snapshot } from "@/core/snapshot/Snapshot";
-import { useSubscribableValue } from "@/core/snapshot/useSubscribableValue";
-import { batch, rafBatch, store, useValue } from "@/core/state-util";
-import { message } from "tezign-ui";
+import { PageDataType } from "@/store";
 
-// TODO: remove
-const mockPageData = {
+export const mockPageData: PageDataType = {
   title: "test image processor",
   imgList: [
     {
@@ -16,6 +11,13 @@ const mockPageData = {
       type: "jpg",
       width: 1400,
       height: 800,
+      crop: {
+        x: 0,
+        y: 0,
+        width: 1200,
+        height: 600,
+        flip: [1, 1],
+      },
       origin: {
         name: "test1",
         url: "https://picsum.photos/1200/600",
@@ -34,6 +36,13 @@ const mockPageData = {
       width: 2880,
       height: 920,
       active: true,
+      crop: {
+        x: 0,
+        y: 0,
+        width: 1200,
+        height: 600,
+        flip: [1, 1],
+      },
       origin: {
         name: "test2",
         url: "https://picsum.photos/1200/600",
@@ -50,6 +59,13 @@ const mockPageData = {
       type: "jpg",
       width: 1400,
       height: 800,
+      crop: {
+        x: 0,
+        y: 0,
+        width: 1200,
+        height: 600,
+        flip: [1, 1],
+      },
       origin: {
         name: "test1",
         url: "https://picsum.photos/seed/picsum/1400/800",
@@ -65,6 +81,13 @@ const mockPageData = {
       type: "jpg",
       width: 1400,
       height: 800,
+      crop: {
+        x: 0,
+        y: 0,
+        width: 1200,
+        height: 600,
+        flip: [1, 1],
+      },
       origin: {
         name: "test1",
         url: "https://picsum.photos/seed/picsum/1400/800",
@@ -80,6 +103,13 @@ const mockPageData = {
       type: "jpg",
       width: 1400,
       height: 800,
+      crop: {
+        x: 0,
+        y: 0,
+        width: 1200,
+        height: 600,
+        flip: [1, 1],
+      },
       origin: {
         name: "test1",
         url: "https://picsum.photos/seed/picsum/1400/800",
@@ -89,158 +119,4 @@ const mockPageData = {
       },
     },
   ],
-};
-
-const pageData = store(mockPageData);
-
-export const Snap = new Snapshot({
-  createSaveFrame: () => pageData.get(),
-  load: (frame) => {
-    batch(() => {
-      pageData.set(frame);
-    });
-  },
-  debounceTime: 200,
-});
-
-export const useUndoable = () => useSubscribableValue(Snap, () => 0 < Snap.index);
-export const useRedoable = () => useSubscribableValue(Snap, () => Snap.index < Snap.stack.length - 1);
-
-/**
- * 获取当前页面所有数据
- */
-export const usePageData = () => {
-  const data = useValue(() => pageData.get());
-  return data;
-};
-
-/**
- * 获取选中的图片数据
- */
-export const useCurrentImage = () => {
-  const data = useValue(() => pageData.get().imgList.filter((item) => item.active), [pageData]);
-  return data[0];
-};
-
-/**
- * 批量更新当前页面所有数据
- */
-export const updateAllImages = (imgList) => {
-  rafBatch(() => {
-    pageData.set((data) => {
-      data.imgList = [...imgList];
-    });
-  }).then(() => {
-    Snap.take();
-    console.log("snap", Snap.index);
-  });
-};
-
-/**
- * 一键还原当前页面所有数据
- */
-export const resetPageData = () => {
-  rafBatch(() => {
-    pageData.set((data) => {
-      data.title = mockPageData.title;
-      data.imgList = [...mockPageData.imgList];
-    });
-  }).then(() => {
-    Snap.take();
-    console.log("一键还原 snap", Snap.index);
-  });
-};
-
-/**
- * 更新选中的图片数据
- */
-export const updateCurrentImage = (currentImage) => {
-  rafBatch(() => {
-    pageData.set((data) => {
-      data.imgList = data.imgList.map((img) => {
-        if (img.active) {
-          // eslint-disable-next-line no-param-reassign
-          img = { ...img, ...currentImage };
-        }
-        return img;
-      });
-    });
-  }).then(() => {
-    Snap.take();
-    console.log("snap", Snap.index);
-  });
-};
-
-/**
- * 更新选中的图片
- */
-export const changeCurrentImage = (id: number) => {
-  rafBatch(() => {
-    pageData.set((data) => {
-      data.imgList = data.imgList.map((img) => {
-        if (img.id === id) {
-          img.active = true;
-        } else {
-          img.active = false;
-        }
-        return img;
-      });
-    });
-  }).then(() => console.log("update current image success"));
-};
-
-/**
- * 更新项目标题
- */
-export const updatePageTitle = (name: string) => {
-  rafBatch(() => {
-    pageData.set((data) => {
-      data.title = name;
-    });
-  }).then(() => {
-    Snap.take();
-    console.log("snap", Snap.stack);
-  });
-};
-
-/**
- * 删除
- */
-export const deleteImage = (id: number) => {
-  rafBatch(() => {
-    pageData.set((data) => {
-      if (data.imgList.length === 1) {
-        message.error("您确定您是在批量吗？");
-        return;
-      }
-
-      // get deleted index for reset active
-      let index = data.imgList.findIndex((img) => img.id === id);
-
-      data.imgList = data.imgList.filter((img) => img.id !== id);
-
-      // reset
-      if (index === data.imgList.length) {
-        index -= 1;
-      }
-      data.imgList[index].active = true;
-    });
-  }).then(() => {
-    Snap.take();
-    console.log("snap", Snap.stack);
-  });
-};
-
-/**
- * 批量还原图片数据
- */
-export const resetImageList = () => {
-  rafBatch(() => {
-    pageData.set((data) => {
-      data.imgList = [...mockPageData.imgList];
-    });
-  }).then(() => {
-    Snap.take();
-    console.log("批量还原图片数据 snap", Snap.index);
-  });
 };

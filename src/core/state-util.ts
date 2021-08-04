@@ -11,7 +11,7 @@ type Unsubscriber = () => void;
 
 // * ================================================================================ store
 
-class Store<T> {
+export class Store<T> {
   private static depsRecorder: Set<Store<any>> | null = null;
   private static batchListeners: Set<Function> | null = null;
   private static batchNestedCount = 0;
