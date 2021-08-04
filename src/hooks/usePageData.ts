@@ -1,6 +1,8 @@
+/* eslint-disable max-lines */
 import { Snapshot } from "@/core/snapshot/Snapshot";
 import { useSubscribableValue } from "@/core/snapshot/useSubscribableValue";
 import { batch, rafBatch, store, useValue } from "@/core/state-util";
+import { message } from "tezign-ui";
 
 // TODO: remove
 const mockPageData = {
@@ -32,6 +34,51 @@ const mockPageData = {
       origin: {
         name: "test2",
         url: "https://picsum.photos/1200/600",
+        type: "jpg",
+        width: 1200,
+        height: 600,
+      },
+    },
+    {
+      id: 3,
+      name: "特赞3",
+      url: "https://picsum.photos/seed/a/1400/800",
+      type: "jpg",
+      width: 1400,
+      height: 800,
+      origin: {
+        name: "test1",
+        url: "https://picsum.photos/seed/picsum/1400/800",
+        type: "jpg",
+        width: 1200,
+        height: 600,
+      },
+    },
+    {
+      id: 4,
+      name: "特赞4",
+      url: "https://picsum.photos/seed/b/1400/800",
+      type: "jpg",
+      width: 1400,
+      height: 800,
+      origin: {
+        name: "test1",
+        url: "https://picsum.photos/seed/picsum/1400/800",
+        type: "jpg",
+        width: 1200,
+        height: 600,
+      },
+    },
+    {
+      id: 5,
+      name: "特赞5",
+      url: "https://picsum.photos/seed/c/1400/800",
+      type: "jpg",
+      width: 1400,
+      height: 800,
+      origin: {
+        name: "test1",
+        url: "https://picsum.photos/seed/picsum/1400/800",
         type: "jpg",
         width: 1200,
         height: 600,
@@ -130,6 +177,34 @@ export const updatePageTitle = (name: string) => {
   rafBatch(() => {
     pageData.set((data) => {
       data.title = name;
+    });
+  }).then(() => {
+    Snap.take();
+    console.log("snap", Snap.stack);
+  });
+};
+
+/**
+ * 删除
+ */
+export const deleteImage = (id: number) => {
+  rafBatch(() => {
+    pageData.set((data) => {
+      if (data.imgList.length === 1) {
+        message.error("您确定您是在批量吗？");
+        return;
+      }
+
+      // get deleted index for reset active
+      let index = data.imgList.findIndex((img) => img.id === id);
+
+      data.imgList = data.imgList.filter((img) => img.id !== id);
+
+      // reset
+      if (index === data.imgList.length) {
+        index -= 1;
+      }
+      data.imgList[index].active = true;
     });
   }).then(() => {
     Snap.take();
