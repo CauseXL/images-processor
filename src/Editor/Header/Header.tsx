@@ -47,6 +47,7 @@ export const Header: FC = (props: any) => {
             css={[tw`mx-4 cursor-pointer`]}
             onClick={() => {
               Snap.undo();
+              console.log("undo");
             }}
           >
             <Icon type="undo" css={tw`text-xl flex items-center`} />
