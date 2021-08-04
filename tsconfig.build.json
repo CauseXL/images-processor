@@ -1,14 +1,8 @@
 {
-  "include": [
-    "./src",
-    "twind.d.ts"
-  ],
+  "include": ["./src", "twind.d.ts"],
   "compilerOptions": {
     "module": "esnext",
-    "lib": [
-      "dom",
-      "esnext"
-    ],
+    "lib": ["dom", "esnext"],
     "declaration": true,
     "esModuleInterop": true,
     "importHelpers": true,
@@ -19,12 +13,8 @@
     "rootDir": "./src",
     "baseUrl": "./",
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
+      "@/*": ["src/*"]
     },
-    "types": [
-      "@emotion/react/types/css-prop"
-    ]
+    "types": ["@emotion/react/types/css-prop"]
   }
 }

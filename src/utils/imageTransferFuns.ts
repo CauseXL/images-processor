@@ -59,7 +59,7 @@ export const canvastoFile = (
  * @param {string=} type - 确定转换后的图片类型，选项有 "image/png", "image/jpeg"
  * @returns {Promise(Blob)}
  */
-export async function dataURLtoFile(dataURL: string, type: EImageType): Promise<Blob> {
+export async function dataURLtoFile(dataURL: string, type?: EImageType): Promise<Blob> {
   const arr = dataURL.split(",");
   let mime = arr[0].match(/:(.*?);/)![1];
   const bstr = atob(arr[1]);
@@ -68,7 +68,7 @@ export async function dataURLtoFile(dataURL: string, type: EImageType): Promise<
   while (n--) {
     u8arr[n] = bstr.charCodeAt(n);
   }
-  if (checkImageType(type)) {
+  if (type && checkImageType(type)) {
     mime = type;
   }
   return new Blob([u8arr], {

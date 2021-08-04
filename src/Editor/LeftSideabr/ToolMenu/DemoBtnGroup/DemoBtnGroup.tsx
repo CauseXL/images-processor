@@ -27,6 +27,9 @@ export const DemoBtnGroup: FC = () => {
         <strong>ALL IMAGES COUNT: </strong>
         {pageData.imgList.length}
       </p>
+      <p>
+        <img style={{ width: 100 }} src={currentImage?.url} alt="" />
+      </p>
       <br />
       <p>
         <Button
