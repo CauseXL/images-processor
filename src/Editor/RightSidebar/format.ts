@@ -16,7 +16,7 @@ export const formatOrder = (index: number, total: number) => {
 };
 
 export const formatExtension = (extStr: string) => {
-  if (extStr.includes("/")) {
+  if (extStr?.includes("/")) {
     // "image/jpeg"
     const ext = extStr.split("/")[1];
     return ext;

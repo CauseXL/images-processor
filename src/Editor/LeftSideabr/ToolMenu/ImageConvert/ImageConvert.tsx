@@ -1,41 +1,37 @@
 import { ButtonGroup } from "@/Editor/LeftSideabr/ToolMenu/components/ButtonGroup";
+import { useBatchStatus } from "@/hooks/useBathStatus";
+import { resetImageList, updateCurrentImage, useCurrentImage, usePageData } from "@/hooks/usePageData";
 import { theme } from "@/styles/theme";
-import { EImageType, urltoBlob } from "@/utils/imageTransferFuns";
 import { css } from "@emotion/react";
 import type { FC } from "react";
 import { useState } from "react";
 import { InputNumber, message, Radio } from "tezign-ui";
 import tw from "twin.macro";
-import { compressAccurately } from "./logic/compress";
+import { batchCompress, compress, ICompressConfig } from "./logic/compress";
 
 const { Group } = Radio;
-
-// * --------------------------------------------------------------------------- comp
-interface CompressConfig {
-  type: "origin" | "custom" | undefined;
-  targetSize: number | null;
-}
-
-const defaultCompressConfig = {
+const defaultCompressConfig: ICompressConfig = {
   type: undefined,
   targetSize: null,
 };
 
+// * --------------------------------------------------------------------------- comp
 export const ImageConvert: FC = () => {
-  const [compressConfig, setCompressConfig] = useState<CompressConfig>(defaultCompressConfig);
+  const pageData = usePageData();
+  const currentImage = useCurrentImage();
+  const batchStatus = useBatchStatus();
+  const [compressConfig, setCompressConfig] = useState<ICompressConfig>(defaultCompressConfig);
 
   const handleRadioChange = (e) => {
-    setCompressConfig({
-      ...compressConfig,
-      type: e.target.value,
-    });
+    setCompressConfig({ ...compressConfig, type: e.target.value });
   };
 
   const handleInputChange = (value) => {
-    setCompressConfig({
-      ...compressConfig,
-      targetSize: value,
-    });
+    setCompressConfig({ ...compressConfig, targetSize: value });
+  };
+
+  const onCancel = () => {
+    setCompressConfig({ ...defaultCompressConfig });
   };
 
   const onSubmit = async () => {
@@ -45,26 +41,29 @@ export const ImageConvert: FC = () => {
     }
 
     if (compressConfig.type === "origin") {
-      // TODO: change to pageData.originStatus
-      console.log("还原到原图");
+      if (batchStatus) {
+        resetImageList();
+        message.success("批量还原成功！");
+      } else {
+        const { url: oUrl, size: oSize } = currentImage.origin;
+        updateCurrentImage({ url: oUrl, size: oSize });
+        message.success("还原成功！");
+      }
     }
 
     if (compressConfig.type === "custom" && compressConfig.targetSize) {
-      const jpgUrl = "https://tse4-mm.cn.bing.net/th/id/OIP-C.WtnU9WUh7x3E6z1MbalbnwHaE7?pid=ImgDet&rs=1";
-      const pngUrl =
-        "https://th.bing.com/th/id/R.db1afb84321cf6949b2974ab4e51cd21?rik=gIgYTwMAawc8uQ&riu=http%3a%2f%2fcdn.onlinewebfonts.com%2fsvg%2fimg_37980.png&ehk=ou9vjUKB2HEl2g1qIElfRn9V0LwXVH%2fCUODeDuRs3fo%3d&risl=&pid=ImgRaw";
-      const file = await urltoBlob(jpgUrl);
-      compressAccurately(file, { size: compressConfig.targetSize, type: EImageType.JPEG }).then((res) => {
-        console.log(res);
-      });
-      // TODO: 批量操作
+      if (batchStatus) {
+        await batchCompress(pageData, compressConfig);
+      } else {
+        if ((currentImage.size || 0) / 1024 <= compressConfig.targetSize) {
+          message.warning(
+            `指定体积 ${compressConfig.targetSize}KB 大于原文件体积 ${((currentImage.size || 0) / 1024).toFixed(0)}KB`,
+          );
+          return;
+        }
+        await compress(currentImage, compressConfig);
+      }
     }
-  };
-
-  const onCancel = () => {
-    setCompressConfig({
-      ...defaultCompressConfig,
-    });
   };
 
   return (
@@ -72,8 +71,8 @@ export const ImageConvert: FC = () => {
       <Group
         name="radiogroup"
         className="layout-rows"
-        onChange={handleRadioChange}
         css={radioGroupStyle}
+        onChange={handleRadioChange}
         value={compressConfig.type}
       >
         <RadioItem text="原图品质" radio={<Radio value="origin" css={tw`mr-2`} />} />
@@ -94,13 +93,12 @@ export const ImageConvert: FC = () => {
           />
         </div>
       )}
-      <ButtonGroup onOk={onSubmit} onCancel={onCancel} disabled={!compressConfig.type} />
+      <ButtonGroup onOk={onSubmit} onCancel={onCancel} disableOnOk={!compressConfig.type} />
     </div>
   );
 };
 
 // * ---------------------------
-
 const RadioItem: FC<{ text: string; radio: any }> = ({ text, radio }) => {
   return (
     <div css={radioItemStyle}>
@@ -111,7 +109,6 @@ const RadioItem: FC<{ text: string; radio: any }> = ({ text, radio }) => {
 };
 
 // * --------------------------------------------------------------------------- style
-
 const radioGroupStyle = css`
   width: 100%;
   margin-bottom: 12px;
