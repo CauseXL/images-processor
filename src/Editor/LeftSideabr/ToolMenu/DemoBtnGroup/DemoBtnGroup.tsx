@@ -1,11 +1,7 @@
-import {
-  changeCurrentImage,
-  updateAllImages,
-  updateCurrentImage,
-  updatePageTitle,
-  useCurrentImage,
-  usePageData,
-} from "@/hooks/usePageData";
+import { changeCurrentImage, updateCurrentImage, useCurrentImage } from "@/store/currentImage";
+import { updateAllImages } from "@/store/imageList";
+import { usePageData } from "@/store/pageData";
+import { updatePageTitle } from "@/store/pageTitle";
 import type { FC } from "react";
 import { Button } from "tezign-ui";
 

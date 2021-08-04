@@ -1,4 +1,5 @@
-import { useCurrentImage, usePageData } from "@/hooks/usePageData";
+import { useCurrentImage } from "@/store/currentImage";
+import { usePageData } from "@/store/pageData";
 import { saveAs } from "file-saver";
 import JSZip from "jszip";
 import type { FC } from "react";

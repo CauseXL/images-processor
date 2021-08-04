@@ -1,5 +1,5 @@
 import { rafBatch } from "@/core/state-util";
-import { mockPageData } from "@/hooks/usePageData";
+import { mockPageData } from "@/mock";
 import { pageData } from "@/store/index";
 import { Snap } from "@/store/snap";
 import { message } from "tezign-ui";

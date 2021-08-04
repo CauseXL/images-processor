@@ -1,4 +1,7 @@
-import { Snap, updatePageTitle, useCurrentImage, usePageData } from "@/hooks/usePageData";
+import { useCurrentImage } from "@/store/currentImage";
+import { usePageData } from "@/store/pageData";
+import { updatePageTitle } from "@/store/pageTitle";
+import { Snap } from "@/store/snap";
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
 import { useKeyPress } from "ahooks";
