@@ -5,7 +5,8 @@ import { useRafState } from "@/hooks/useRafState";
 import { off, on } from "@/hooks/util";
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
-import React, { useEffect, useMemo, useState } from "react";
+import type { FC } from "react";
+import { useEffect, useMemo, useState } from "react";
 import tw from "twin.macro";
 import { Card } from "./Card/Card";
 import { List } from "./List/List";
@@ -21,7 +22,7 @@ const BAR_WIDTH = 2;
 const DEFAULT_MIN_WIDTH = 200;
 const HEADER_HEIGHT = 54;
 
-export const RightSidebar: React.FC = () => {
+export const RightSidebar: FC = () => {
   const [viewMode, setViewMode] = useState<EViewMode>(EViewMode.CARD);
 
   // @ts-ignore

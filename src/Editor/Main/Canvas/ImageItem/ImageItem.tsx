@@ -1,6 +1,7 @@
 import { useCurrentImageService } from "@/Editor/Main/Canvas/ImageItem/useCurrentImageService";
+import type { FC } from "react";
 
-export const ImageItem = () => {
+export const ImageItem: FC = () => {
   const imageState = useCurrentImageService();
 
   if (!imageState) return null;

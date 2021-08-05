@@ -1,7 +1,7 @@
 import { SizeScaleItemType } from "@/Editor/LeftSideabr/ToolMenu/SizeScale/SizeScale";
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
-import { FC, ReactNode } from "react";
+import type { FC, ReactNode } from "react";
 import { InputNumber } from "tezign-ui";
 import tw from "twin.macro";
 

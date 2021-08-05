@@ -1,6 +1,7 @@
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
-import React, { CSSProperties, useCallback, useState } from "react";
+import type { FC } from "react";
+import { CSSProperties, useCallback, useState } from "react";
 import { Icon } from "tezign-ui";
 import tw from "twin.macro";
 
@@ -14,7 +15,7 @@ interface IToggleProps {
   style?: CSSProperties;
 }
 
-export const ViewMode = ({ onChange, viewMode, style }: IToggleProps) => {
+export const ViewMode: FC<IToggleProps> = ({ onChange, viewMode, style }) => {
   const [mode, setMode] = useState<EViewMode>(viewMode);
   const getActivatedStyle = useCallback((currentMode) => (mode === currentMode ? activeStyle : ""), [mode]);
   const action = (mode: EViewMode) => {

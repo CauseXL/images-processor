@@ -1,4 +1,5 @@
-export const CropLockIcon = ({ color }: { color?: string }) => (
+import type { FC } from "react";
+export const CropLockIcon: FC<{ color?: string }> = ({ color }) => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       d="M0 2C0 0.89543 0.895431 0 2 0H22C23.1046 0 24 0.895431 24 2V22C24 23.1046 23.1046 24 22 24H2C0.89543 24 0 23.1046 0 22V2Z"
@@ -22,7 +23,7 @@ export const CropLockIcon = ({ color }: { color?: string }) => (
 
 // * ---------------------------
 
-export const FlipHorizontalIcon = ({ color }: { color?: string }) => (
+export const FlipHorizontalIcon: FC<{ color?: string }> = ({ color }) => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M6 6.00001L18 10L6 10L6 6.00001Z" fill={color ? color : "currentColor"} />
     <path
@@ -42,7 +43,7 @@ export const FlipHorizontalIcon = ({ color }: { color?: string }) => (
 
 // * ---------------------------
 
-export const FlipVerticalIcon = ({ color }: { color?: string }) => (
+export const FlipVerticalIcon: FC<{ color?: string }> = ({ color }) => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M6.00001 18.0001L10 6.00009V18.0001H6.00001Z" fill={color ? color : "currentColor"} />
     <path
@@ -62,7 +63,7 @@ export const FlipVerticalIcon = ({ color }: { color?: string }) => (
 
 // * ---------------------------
 
-export const RotateLeftIcon = ({ color }: { color?: string }) => (
+export const RotateLeftIcon: FC<{ color?: string }> = ({ color }) => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       fillRule="evenodd"
@@ -87,7 +88,7 @@ export const RotateLeftIcon = ({ color }: { color?: string }) => (
 
 // * ---------------------------
 
-export const RotateRightIcon = ({ color }: { color?: string }) => (
+export const RotateRightIcon: FC<{ color?: string }> = ({ color }) => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       fillRule="evenodd"
@@ -112,7 +113,7 @@ export const RotateRightIcon = ({ color }: { color?: string }) => (
 
 // * ---------------------------
 
-export const RotateCropIcon = ({ color }: { color?: string }) => (
+export const RotateCropIcon: FC<{ color?: string }> = ({ color }) => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       fillRule="evenodd"
@@ -131,7 +132,7 @@ export const RotateCropIcon = ({ color }: { color?: string }) => (
 
 // * ---------------------------
 
-export const DirectionIcon = ({ color }: { color?: string }) => (
+export const DirectionIcon: FC<{ color?: string }> = ({ color }) => (
   <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       fillRule="evenodd"

@@ -1,4 +1,4 @@
-import React from "react";
+import type { FC } from "react";
 import { Menu } from "tezign-ui";
 import { SCALE_LIST } from "./useScaleService";
 
@@ -18,7 +18,7 @@ const useZoomListService = () => {
 
 // * --------------------------------------------------------------------------- comp
 
-export const ZoomList: React.FC = () => {
+export const ZoomList: FC = () => {
   const { handleUpdateScaleByList, handleUpdateScaleToContain, handleUpdateScaleToFill } = useZoomListService();
 
   return (
