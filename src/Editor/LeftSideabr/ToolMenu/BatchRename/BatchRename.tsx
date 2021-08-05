@@ -1,31 +1,108 @@
 import { ButtonGroup } from "@/Editor/LeftSideabr/ToolMenu/components/ButtonGroup";
+import { useBatchStatus } from "@/hooks/useBathStatus";
+import { renameImage } from "@/logic/action/imageList";
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
-import type { FC } from "react";
-import { Checkbox, Divider, Input } from "tezign-ui";
+import { FC, useCallback, useMemo, useState } from "react";
+import { Checkbox, Divider, Input, InputNumber, message } from "tezign-ui";
 import tw from "twin.macro";
 
+const log = console.log.bind(console);
 // * --------------------------------------------------------------------------- comp
 
 export const BatchRename: FC = () => {
+  const [name, setName] = useState<string>("");
+  const [hasOrder, setHasOrder] = useState<boolean>(false);
+  const [order, setOrder] = useState<number | undefined>();
+
+  const batchStatus = useBatchStatus();
+
+  const cancel = () => {
+    setName("");
+    setHasOrder(false);
+    setOrder(undefined);
+  };
+
+  const info = useMemo(() => {
+    const renameByDefault = name && !hasOrder;
+    const renameByOrder = name && hasOrder && order && order > 0;
+    if (renameByDefault) {
+      return {
+        disabled: false,
+        text: `${name}1、${name}2`,
+      };
+    } else if (renameByOrder) {
+      return {
+        disabled: false,
+        text: `${name}${order}、${name}${order! + 1}`,
+      };
+    } else {
+      return {
+        disabled: true,
+        text: "无",
+      };
+    }
+  }, [name, hasOrder, order]);
+
+  const rename = useCallback(() => {
+    log("ok", name, hasOrder, order);
+    renameImage({
+      name,
+      hasOrder,
+      order,
+      batchStatus: batchStatus,
+    });
+    message.success("批量命名成功！");
+  }, [name, hasOrder, order, batchStatus]);
+
   return (
     <div css={tw`flex flex-col`}>
       <p css={tw`mt-2`}>替换全部文件前缀名称</p>
 
-      <Input placeholder="例如：特赞图片" css={[tw`mt-4`, inputStyle]} size="small" />
+      <Input
+        placeholder="例如：特赞图片"
+        css={[tw`mt-4`, inputStyle]}
+        size="small"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
 
-      <Checkbox css={[tw`mt-4`, checkboxStyle]}>添加序号</Checkbox>
-
-      <div css={tw`flex items-center mt-2`}>
-        <WarningIcon />
-        <p css={tw`ml-2 text-xs`}>无添加序号，则默认序号从 1 开始</p>
+      <div css={[tw`flex items-center mt-4`, orderStyle]}>
+        <Checkbox css={[checkboxStyle]} checked={hasOrder} onChange={(e) => setHasOrder(e.target.checked)}>
+          添加序号
+        </Checkbox>
+        {hasOrder && (
+          <InputNumber
+            size="small"
+            css={inputNumberStyle}
+            indicated={false}
+            placeholder="请输入整数"
+            value={order}
+            onChange={(v) => {
+              if (typeof v === "number") {
+                let value: number = v;
+                if (v === 0) {
+                  value += 1;
+                }
+                setOrder(value);
+              }
+            }}
+          />
+        )}
       </div>
+
+      {!hasOrder && (
+        <div css={tw`flex items-center mt-2`}>
+          <WarningIcon />
+          <p css={tw`ml-2 text-xs`}>无添加序号，则默认序号从 1 开始</p>
+        </div>
+      )}
 
       <Divider css={dividerStyle} />
 
-      <p css={tw`mb-2`}>示例：无</p>
+      <p css={tw`mb-2`}>示例：{info.text}</p>
 
-      <ButtonGroup />
+      <ButtonGroup onOk={rename} disableOnOk={info.disabled} onCancel={() => cancel()} />
     </div>
   );
 };
@@ -39,6 +116,9 @@ const inputStyle = css`
   }
 `;
 
+const orderStyle = css`
+  min-height: 30px;
+`;
 const checkboxStyle = css`
   color: ${theme.colors.default};
   .ant-checkbox-checked .ant-checkbox-inner {
@@ -46,6 +126,15 @@ const checkboxStyle = css`
   }
   .ant-checkbox-inner {
     background-color: transparent;
+  }
+`;
+
+const inputNumberStyle = css`
+  margin-left: 20px;
+  width: 140px;
+  background-color: transparent;
+  .ant-input-number-input {
+    color: ${theme.colors.white};
   }
 `;
 
