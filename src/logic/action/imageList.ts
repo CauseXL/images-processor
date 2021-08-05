@@ -52,3 +52,35 @@ export const resetImageList = () => {
     console.log("批量还原图片数据 snap", Snap.index);
   });
 };
+
+/** 批量替换图片名称 */
+export const renameImage = ({
+  name,
+  hasOrder,
+  order,
+  batchStatus,
+}: {
+  name: string;
+  hasOrder: boolean;
+  order?: number;
+  batchStatus: boolean;
+}) => {
+  rafBatch(() => {
+    pageData.set((data) => {
+      if (batchStatus) {
+        // 默认从 1 添加序号
+        const start = hasOrder ? order! : 1;
+        data.imgList = data.imgList.map((img, i) => {
+          img.name = name + (i + start);
+          return img;
+        });
+      } else {
+        const current = data.imgList.filter((item) => item.active)[0];
+        current.name = hasOrder ? name + order : name;
+      }
+    });
+  }).then(() => {
+    Snap.take();
+    console.log("批量命名图片数据 snap", Snap.stack);
+  });
+};
