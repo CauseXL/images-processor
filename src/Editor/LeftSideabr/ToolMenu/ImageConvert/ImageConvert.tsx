@@ -1,6 +1,10 @@
+import { pageData } from "@/core/data";
+import { useValue } from "@/core/utils";
 import { ButtonGroup } from "@/Editor/LeftSideabr/ToolMenu/components/ButtonGroup";
 import { useBatchStatus } from "@/hooks/useBathStatus";
-import { resetImageList, updateCurrentImage, useCurrentImage, usePageData } from "@/store/pageData";
+import { updateCurrentImage } from "@/logic/action/currentImage";
+import { resetImageList } from "@/logic/action/imageList";
+import { getCurrentImage } from "@/logic/get/currentImage";
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
 import type { FC } from "react";
@@ -17,8 +21,7 @@ const defaultCompressConfig: ICompressConfig = {
 
 // * --------------------------------------------------------------------------- comp
 export const ImageConvert: FC = () => {
-  const pageData = usePageData();
-  const currentImage = useCurrentImage();
+  const currentImage = useValue(getCurrentImage);
   const batchStatus = useBatchStatus();
   const [compressConfig, setCompressConfig] = useState<ICompressConfig>(defaultCompressConfig);
 
@@ -53,7 +56,7 @@ export const ImageConvert: FC = () => {
 
     if (compressConfig.type === "custom" && compressConfig.targetSize) {
       if (batchStatus) {
-        await batchCompress(pageData, compressConfig);
+        await batchCompress(pageData.get(), compressConfig);
       } else {
         if ((currentImage.size || 0) / 1024 <= compressConfig.targetSize) {
           message.warning(

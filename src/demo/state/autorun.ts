@@ -1,4 +1,4 @@
-import { autorun, batch, store } from "@/core/state-util";
+import { autorun, batch, store } from "@/core/utils";
 
 // * ------------------------------------------------ autorun
 

@@ -1,7 +1,8 @@
+import { pageData } from "@/core/data";
+import { useValue } from "@/core/utils";
 import { useDrag } from "@/hooks/useDrag";
 import { useRafState } from "@/hooks/useRafState";
 import { off, on } from "@/hooks/util";
-import { usePageData } from "@/store/pageData";
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
 import React, { useEffect, useMemo, useState } from "react";
@@ -26,8 +27,7 @@ export const RightSidebar: React.FC = () => {
   // @ts-ignore
   // const [list, setList] = useState(mockList);
 
-  const pageData = usePageData();
-  const { imgList: list } = pageData;
+  const list = useValue(() => pageData.get().imgList);
 
   const [screenWidth, setScreenWidth] = useRafState(() => window.innerWidth);
 

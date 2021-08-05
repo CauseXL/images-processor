@@ -1,4 +1,5 @@
-import { updateAllImages, updateCurrentImage } from "@/store/pageData";
+import { updateCurrentImage } from "@/logic/action/currentImage";
+import { updateAllImages } from "@/logic/action/imageList";
 import { clone } from "ramda";
 import { message } from "tezign-ui";
 import { compressAccurately, proportion } from "./compressAccurately";

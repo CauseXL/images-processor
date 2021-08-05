@@ -1,4 +1,4 @@
-import { resetPageData } from "@/store/pageData";
+import { resetPageData } from "@/logic/action/resetPageData";
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
 import type { FC } from "react";

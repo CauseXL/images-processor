@@ -1,23 +1,21 @@
-import {
-  changeCurrentImage,
-  updateAllImages,
-  updateCurrentImage,
-  updatePageTitle,
-  useCurrentImage,
-  usePageData,
-} from "@/store/pageData";
+import { pageData } from "@/core/data";
+import { useValue } from "@/core/utils";
+import { changeCurrentImage, updateCurrentImage } from "@/logic/action/currentImage";
+import { updateAllImages } from "@/logic/action/imageList";
+import { updatePageTitle } from "@/logic/action/updatePageTitle";
+import { getCurrentImage } from "@/logic/get/currentImage";
 import type { FC } from "react";
 import { Button } from "tezign-ui";
 
 export const DemoBtnGroup: FC = () => {
-  const pageData = usePageData();
-  const currentImage = useCurrentImage();
+  const data = useValue(() => pageData.get());
+  const currentImage = useValue(() => getCurrentImage());
 
   return (
     <div>
       <p>
         <strong>TITLE: </strong>
-        {pageData.title}
+        {data.title}
       </p>
       <p>
         <strong>CURRENT IMAGE: </strong>
@@ -25,7 +23,7 @@ export const DemoBtnGroup: FC = () => {
       </p>
       <p>
         <strong>ALL IMAGES COUNT: </strong>
-        {pageData.imgList.length}
+        {data.imgList.length}
       </p>
       <p>
         <img style={{ width: 100 }} src={currentImage?.url} alt="" />

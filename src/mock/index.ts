@@ -1,4 +1,4 @@
-import { PageDataType } from "@/store/pageData";
+import { PageDataType } from "@/core/data/types";
 
 export const mockPageData: PageDataType = {
   title: "test image processor",

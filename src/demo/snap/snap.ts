@@ -1,4 +1,4 @@
-import { Snapshot } from "@/core/snapshot/Snapshot";
+import { Snapshot } from "@/core/utils";
 
 interface SnapFrame {
   a: number;

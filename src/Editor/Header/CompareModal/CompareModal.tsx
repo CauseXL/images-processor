@@ -1,4 +1,5 @@
-import { usePageData } from "@/store/pageData";
+import { pageData } from "@/core/data";
+import { useValue } from "@/core/utils";
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
 import type { FC } from "react";
@@ -8,12 +9,12 @@ import tw from "twin.macro";
 
 // * --------------------------------------------------------------------------- comp
 export const CompareModal: FC<any> = () => {
-  const pageData = usePageData().imgList;
+  const imgList = useValue(() => pageData.get().imgList);
   // 当前选中图片的index
-  let activeIndex = pageData.findIndex((item) => item.active);
+  let activeIndex = imgList.findIndex((item) => item.active);
   activeIndex = activeIndex >= 0 ? activeIndex : 0;
   const [modalVisible, setModalVisible] = useState<boolean>(false);
-  const [modalItem, setModalItem] = useState(pageData[activeIndex]);
+  const [modalItem, setModalItem] = useState(imgList[activeIndex]);
   const [count, setCount] = useState(activeIndex);
 
   useEffect(() => {
@@ -21,11 +22,11 @@ export const CompareModal: FC<any> = () => {
   }, [activeIndex]);
 
   useEffect(() => {
-    setModalItem(pageData[count]);
-  }, [count, pageData]);
+    setModalItem(imgList[count]);
+  }, [count, imgList]);
 
   const getPreview = () => {
-    const maxLength = pageData.length;
+    const maxLength = imgList.length;
     if (count - 1 < 0) {
       setCount(maxLength - 1);
     } else {
@@ -34,7 +35,7 @@ export const CompareModal: FC<any> = () => {
   };
 
   const getNext = () => {
-    const maxLength = pageData.length;
+    const maxLength = imgList.length;
     if (count + 1 >= maxLength) {
       setCount(0);
     } else {
@@ -109,7 +110,7 @@ export const CompareModal: FC<any> = () => {
               background-color: rgba(12, 197, 174, 0.16);
             }
           `,
-          pageData.length === 0 && disabledCss,
+          imgList.length === 0 && disabledCss,
         ]}
         onClick={() => setModalVisible(true)}
       >

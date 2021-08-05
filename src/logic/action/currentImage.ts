@@ -1,12 +1,6 @@
-import { rafBatch, useValue } from "@/core/state-util";
-import { ImgItemType, pageData } from "@/store/pageData";
-import { Snap } from "@/store/snap";
-
-/** get 选中图片 */
-export const useCurrentImage = () => {
-  const data = useValue(() => pageData.get().imgList.filter((item) => item.active), [pageData]);
-  return data[0];
-};
+import { pageData, Snap } from "@/core/data";
+import { ImgItemType } from "@/core/data/types";
+import { rafBatch } from "@/core/utils";
 
 /** set 选中图片 */
 export const updateCurrentImage = (currentImage) => {
@@ -36,12 +30,6 @@ export const changeCurrentImage = (id: number) => {
       });
     });
   }).then(() => console.log("update current image success"));
-};
-
-/** get 图片裁切信息 */
-export const useCurrentImageCropInfo = () => {
-  const currentImage = useCurrentImage();
-  return currentImage.crop;
 };
 
 /** set 图片裁切信息 */

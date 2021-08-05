@@ -1,6 +1,6 @@
 /* eslint-disable max-nested-callbacks */
 
-import { batch, store, useValue } from "@/core/state-util";
+import { batch, store, useValue } from "@/core/utils";
 import React, { FC, memo, useState } from "react";
 
 const d1 = store({ s: { a: 10 } });

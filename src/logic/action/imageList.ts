@@ -1,7 +1,6 @@
-import { rafBatch } from "@/core/state-util";
+import { pageData, Snap } from "@/core/data";
+import { rafBatch } from "@/core/utils";
 import { mockPageData } from "@/mock";
-import { pageData } from "@/store/pageData";
-import { Snap } from "@/store/snap";
 import { message } from "tezign-ui";
 
 /** 全量更新图片列表 */

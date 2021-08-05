@@ -1,8 +1,3 @@
-import { store } from "@/core/state-util";
-import { mockPageData } from "@/mock";
-
-// * --------------------------------------------------------------------------- type
-
 interface ImageType {
   name: string;
   url: string;
@@ -33,14 +28,3 @@ export interface PageDataType {
   title: string;
   imgList: ImgItemType[];
 }
-
-// * --------------------------------------------------------------------------- store
-
-export const pageData = store(mockPageData);
-
-// * ---------------------------
-
-export * from "./currentImage";
-export * from "./imageList";
-export * from "./pageData";
-export * from "./pageTitle";

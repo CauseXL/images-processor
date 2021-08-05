@@ -1,12 +1,6 @@
-import { rafBatch, useValue } from "@/core/state-util";
+import { pageData, Snap } from "@/core/data";
+import { rafBatch } from "@/core/utils";
 import { mockPageData } from "@/mock";
-import { pageData } from "@/store/pageData";
-import { Snap } from "@/store/snap";
-
-/** 获取当前页面所有数据 */
-export const usePageData = () => {
-  return useValue(() => pageData.get());
-};
 
 /** 一键还原当前页面所有数据 */
 export const resetPageData = () => {

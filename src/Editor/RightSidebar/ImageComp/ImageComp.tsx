@@ -1,4 +1,4 @@
-import { deleteImage } from "@/store/pageData";
+import { deleteImage } from "@/logic/action/imageList";
 import { css } from "@emotion/react";
 import React, { useState } from "react";
 import { Icon } from "tezign-ui";

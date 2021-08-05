@@ -1,4 +1,7 @@
-import { changeCurrentImage, deleteImage, useCurrentImage } from "@/store/pageData";
+import { useValue } from "@/core/utils";
+import { changeCurrentImage } from "@/logic/action/currentImage";
+import { deleteImage } from "@/logic/action/imageList";
+import { getCurrentImage } from "@/logic/get/currentImage";
 import { css } from "@emotion/react";
 import React from "react";
 import { Icon } from "tezign-ui";
@@ -12,7 +15,7 @@ export const List = ({ list, width }) => {
   const extraInfoDisplayWidth = 300;
   const showExtraInfo = width > extraInfoDisplayWidth;
 
-  const current = useCurrentImage();
+  const current = useValue(getCurrentImage);
 
   return (
     <div css={[listStyle]}>
