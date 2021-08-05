@@ -1,124 +1,82 @@
-import { ButtonGroup } from "@/Editor/LeftSideabr/ToolMenu/components/ButtonGroup";
 import { SizeScaleItem } from "@/Editor/LeftSideabr/ToolMenu/SizeScale/SizeScaleItem";
-import { currentImageService } from "@/Editor/Main/Canvas/ImageItem/useCurrentImageService";
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
-import type { FC } from "react";
-import { useEffect, useState } from "react";
-import { selector, useRecoilState } from "recoil";
+import { FC, memo, useState } from "react";
 import { Radio } from "tezign-ui";
 import tw from "twin.macro";
+import { ButtonGroup } from "../components/ButtonGroup";
 
-// * --------------------------------------------------------------------------- type
+// * --------------------------------------------------------------------------- inner state helper
 
-export interface SizeScaleItemType {
-  text: string;
-  type: "height" | "width" | "percent";
+type SCALE_OPTION_TYPE = "height" | "width" | "percent";
+
+interface SCALE_OPTION {
+  type: SCALE_OPTION_TYPE;
   value?: number;
 }
 
-// * --------------------------------------------------------------------------- service
+const SCALE_OPTION_LIST = [
+  ["height", "按照高度"],
+  ["width", "按照宽度"],
+  ["percent", "按照百分比"],
+];
 
-export const sizeScaleService = selector<
-  | {
-      width: number;
-      height: number;
-      percent: number;
-    }
-  | undefined
->({
-  key: "sizeScaleService",
-  get: ({ get }) => {
-    const curImgState = get(currentImageService);
-
-    if (!curImgState) return undefined;
-
-    const { height, width } = curImgState;
-    // TODO: 这里注入裁切数据，百分比功能未完成 // XuYuCheng 2021/07/28
-    const percent = Number(((width / width) * 100).toFixed(0));
-    return { height, width, percent };
-  },
-  set: ({ set }, newValue) => {
-    set(currentImageService, (old) => {
-      if (old) {
-        return { ...old, ...newValue };
-      }
-      return;
-    });
-  },
-});
+const DEFAULT_SCALE_OPTION: Record<SCALE_OPTION_TYPE, SCALE_OPTION> = {
+  height: { type: "height" },
+  width: { type: "width" },
+  percent: { type: "percent", value: 100 },
+};
 
 // * --------------------------------------------------------------------------- comp
 
-export const SizeScale: FC = () => {
-  const [activeKey, setActiveKey] = useState<number | null>();
-  const [sizeState, setSizeState] = useRecoilState(sizeScaleService);
-  const [sizeSnapShot, setSizeSnapShot] = useState(sizeState);
-
-  const handleInputChange = (type: SizeScaleItemType["type"], value: number) => {
-    if (!sizeState || !sizeSnapShot) {
-      return;
-    }
-
-    let result = { [type]: value };
-    const { width, height } = sizeState;
-
-    if (type === "width") result.height = Number((value / (width / height)).toFixed(0));
-    if (type === "height") result.width = Number((value * (width / height)).toFixed(0));
-
-    // TODO: 这里的 width height 数据应该是 cropService 注入进来的 // XuYuCheng 2021/07/28
-    if (type === "percent") {
-      result.width = Number(((value / 100) * width).toFixed(0));
-      result.height = Number(((value / 100) * height).toFixed(0));
-      console.log(result, 11111111111);
-    }
-
-    setSizeSnapShot((size) => (size ? { ...size, ...result } : undefined));
-  };
-
-  const resetSnapShot = () => setSizeSnapShot(sizeState);
-
-  const handleOk = () => setSizeState(sizeSnapShot);
-
-  const handleCancel = () => resetSnapShot();
-
-  const handleRadioChange = (e: any) => {
-    setActiveKey(e.target.value);
-    resetSnapShot();
-  };
-
-  useEffect(() => {
-    setSizeSnapShot(sizeState);
-  }, [sizeState]);
+export const SizeScale: FC = memo(() => {
+  const [opt, setOpt] = useState(DEFAULT_SCALE_OPTION.percent);
+  const { type: curType, value } = opt;
 
   // * ---------------------------
 
-  const sizeScaleItemList: SizeScaleItemType[] = [
-    { text: "按照高度", type: "height", value: sizeSnapShot?.height },
-    { text: "按照宽度", type: "width", value: sizeSnapShot?.width },
-    { text: "按照百分比", type: "percent", value: sizeSnapShot?.percent },
-  ];
-
   return (
     <div>
-      <Radio.Group className="layout-rows" onChange={handleRadioChange} css={[tw`w-full mb-3`, radioGroupStyle]}>
-        {sizeScaleItemList.map(({ text, type, value }, index) => (
+      <Radio.Group
+        className="layout-rows"
+        // @ts-ignore
+        onChange={(e) => {
+          // @ts-ignore
+          const nextType: SCALE_OPTION_TYPE = e.target.value;
+          setOpt(DEFAULT_SCALE_OPTION[nextType]);
+        }}
+        css={[tw`w-full mb-3`, radioGroupStyle]}
+      >
+        {SCALE_OPTION_LIST.map(([type, label]) => (
           <SizeScaleItem
-            key={index}
-            text={text}
+            key={type}
             type={type}
+            text={label}
+            active={type === curType}
             value={value}
-            active={activeKey === index}
-            radio={<Radio value={index} css={tw`mr-2`} />}
+            radio={<Radio value={type} css={tw`mr-2`} />}
             // @ts-ignore
-            onChange={(value) => handleInputChange(type, value)}
+            onChange={(value: number) => {
+              setOpt((s) => ({ ...s, value }));
+            }}
           />
         ))}
       </Radio.Group>
-      <ButtonGroup onOk={handleOk} onCancel={handleCancel} disableOnOk={!sizeSnapShot?.width} />
+      <ButtonGroup
+        onOk={() => {
+          console.log("TODO scale images", opt);
+        }}
+        onCancel={() => {
+          // TODO cancel
+        }}
+        disableOnOk={
+          // TODO
+          false
+        }
+      />
     </div>
   );
-};
+});
 
 // * --------------------------------------------------------------------------- style
 
