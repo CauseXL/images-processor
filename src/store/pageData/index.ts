@@ -6,4 +6,3 @@ export * from "./pageData";
 export * from "./resetPageData";
 export * from "./types";
 export * from "./updatePageTitle";
-export * from "./usePageData";

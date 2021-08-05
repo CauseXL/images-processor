@@ -1,4 +1,5 @@
-import { useCurrentImage, usePageData } from "@/store/pageData";
+import { useValue } from "@/core/state-util";
+import { pageData, useCurrentImage } from "@/store/pageData";
 import { saveAs } from "file-saver";
 import JSZip from "jszip";
 import type { FC } from "react";
@@ -10,30 +11,30 @@ import { downloadFile } from "./logic/download";
 // * --------------------------------------------------------------------------- comp
 
 export const DownloadButton: FC = () => {
-  const pageData = usePageData();
+  const imgList = useValue(() => pageData.get().imgList);
   const currentImage = useCurrentImage();
   const [progress, setProgress] = useState<number>(0);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
-  const PERCENT = Math.ceil(100 / pageData.imgList.length);
+  const PERCENT = Math.ceil(100 / imgList.length);
 
   const menu = (
     <Menu>
       <Menu.Item
         disabled={!currentImage}
         onClick={() => {
-          downloadFile(pageData.title, currentImage.url);
+          downloadFile(pageData.get().title, currentImage.url);
         }}
       >
         当前图片下载
       </Menu.Item>
       <Menu.Item
-        disabled={!pageData.imgList.length}
+        disabled={!imgList.length}
         onClick={() => {
           setProgress(0);
           setModalVisible(true);
           const zip = new JSZip();
-          const folder = zip.folder(pageData.title);
-          pageData.imgList.forEach((item) => {
+          const folder = zip.folder(pageData.get().title);
+          imgList.forEach((item) => {
             const blobPromise = fetch(item.url).then((response) => {
               setProgress((progress) => progress + PERCENT);
               if (response.status === 200 || response.status === 0) {
@@ -49,7 +50,7 @@ export const DownloadButton: FC = () => {
           zip
             .generateAsync({ type: "blob" })
             .then((blob) => {
-              saveAs(blob, pageData.title);
+              saveAs(blob, pageData.get().title);
               setModalVisible(false);
             })
             .catch((e) => {

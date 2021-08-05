@@ -1,4 +1,5 @@
-import { updatePageTitle, useCurrentImage, usePageData } from "@/store/pageData";
+import { useValue } from "@/core/state-util";
+import { pageData, updatePageTitle, useCurrentImage } from "@/store/pageData";
 import { Snap } from "@/store/snap";
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
@@ -15,7 +16,7 @@ import { DownloadButton } from "./DownloadButton/DownloadButton";
 export const Header: FC = (props: any) => {
   const { onCancel } = props;
   const hasUnsavedData = true;
-  const pageData = usePageData();
+  const title = useValue(() => pageData.get().title);
 
   useKeyPress(["meta.z", "ctrl.z"], (event) => {
     !event.shiftKey && Snap.undo();
@@ -37,13 +38,14 @@ export const Header: FC = (props: any) => {
 
   const onTitleChange = (e) => {
     const { value } = e.target;
-    if (!value.trim().length) {
-      updatePageTitle(pageData.title);
-      return true;
-    } else {
-      updatePageTitle(value);
-      return true;
-    }
+
+    // TODO check logic @xiaoliang
+
+    const isEmpty = !value.trim().length;
+    if (isEmpty) return true;
+
+    updatePageTitle(value);
+    return true;
   };
 
   return useMemo(
@@ -54,7 +56,7 @@ export const Header: FC = (props: any) => {
             <Icon type="left" css={tw`pr-1 flex items-center`} /> 返回
           </div>
           <div css={[tw`mx-4`, titleInputStyle]}>
-            <Input.Text style={{ width: 120 }} value={pageData?.title} onInputBlur={onTitleChange} />
+            <Input.Text style={{ width: 120 }} value={title} onInputBlur={onTitleChange} />
           </div>
           <div css={tw`mx-4 cursor-pointer`}>
             <CompareModal />
@@ -85,7 +87,7 @@ export const Header: FC = (props: any) => {
         </div>
       </div>
     ),
-    [pageData?.title],
+    [title],
   );
 };
 
