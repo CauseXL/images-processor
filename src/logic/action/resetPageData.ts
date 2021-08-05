@@ -1,7 +1,6 @@
-import { rafBatch } from "@/core/state-util";
+import { pageData, Snap } from "@/core/data";
+import { rafBatch } from "@/core/utils";
 import { mockPageData } from "@/mock";
-import { Snap } from "@/store/snap";
-import { pageData } from "./pageData";
 
 /** 一键还原当前页面所有数据 */
 export const resetPageData = () => {

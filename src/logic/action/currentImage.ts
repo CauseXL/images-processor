@@ -1,14 +1,6 @@
-import { rafBatch } from "@/core/state-util";
-import { Snap } from "@/store/snap";
-import { pageData } from "./pageData";
-import { ImgItemType } from "./types";
-
-// * ------------------------------------------------
-
-/** get 选中图片 */
-export const getCurrentImage = () => pageData.get().imgList.filter((item) => item.active)[0];
-
-// * ------------------------------------------------
+import { pageData, Snap } from "@/core/data";
+import { ImgItemType } from "@/core/data/types";
+import { rafBatch } from "@/core/utils";
 
 /** set 选中图片 */
 export const updateCurrentImage = (currentImage) => {

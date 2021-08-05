@@ -1,5 +1,7 @@
-import { useValue } from "@/core/state-util";
-import { changeCurrentImage, deleteImage, getCurrentImage } from "@/store/pageData";
+import { useValue } from "@/core/utils";
+import { changeCurrentImage } from "@/logic/action/currentImage";
+import { deleteImage } from "@/logic/action/imageList";
+import { getCurrentImage } from "@/logic/get/currentImage";
 import { css } from "@emotion/react";
 import React from "react";
 import { Icon } from "tezign-ui";

@@ -1,6 +1,6 @@
 // * --------------------------------------------------------------------------- store
 
-import { store } from "@/core/state-util";
 import { mockPageData } from "@/mock";
+import { store } from "../utils";
 
 export const pageData = store(mockPageData);

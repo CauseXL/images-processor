@@ -1,5 +1,6 @@
-import { useValue } from "@/core/state-util";
-import { changeCurrentImage, getCurrentImage } from "@/store/pageData";
+import { useValue } from "@/core/utils";
+import { changeCurrentImage } from "@/logic/action/currentImage";
+import { getCurrentImage } from "@/logic/get/currentImage";
 import { css } from "@emotion/react";
 import React from "react";
 import { formatOrder } from "../format";

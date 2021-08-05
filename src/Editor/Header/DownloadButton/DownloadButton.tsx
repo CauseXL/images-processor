@@ -1,5 +1,6 @@
-import { useValue } from "@/core/state-util";
-import { getCurrentImage, pageData } from "@/store/pageData";
+import { pageData } from "@/core/data";
+import { useValue } from "@/core/utils";
+import { getCurrentImage } from "@/logic/get/currentImage";
 import { saveAs } from "file-saver";
 import JSZip from "jszip";
 import type { FC } from "react";

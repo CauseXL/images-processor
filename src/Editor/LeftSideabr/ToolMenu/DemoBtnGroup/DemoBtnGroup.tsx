@@ -1,12 +1,9 @@
-import { useValue } from "@/core/state-util";
-import {
-  changeCurrentImage,
-  getCurrentImage,
-  pageData,
-  updateAllImages,
-  updateCurrentImage,
-  updatePageTitle,
-} from "@/store/pageData";
+import { pageData } from "@/core/data";
+import { useValue } from "@/core/utils";
+import { changeCurrentImage, updateCurrentImage } from "@/logic/action/currentImage";
+import { updateAllImages } from "@/logic/action/imageList";
+import { updatePageTitle } from "@/logic/action/updatePageTitle";
+import { getCurrentImage } from "@/logic/get/currentImage";
 import type { FC } from "react";
 import { Button } from "tezign-ui";
 

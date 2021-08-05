@@ -1,8 +1,7 @@
-import { rafBatch } from "@/core/state-util";
+import { pageData, Snap } from "@/core/data";
+import { rafBatch } from "@/core/utils";
 import { mockPageData } from "@/mock";
-import { Snap } from "@/store/snap";
 import { message } from "tezign-ui";
-import { pageData } from "./pageData";
 
 /** 全量更新图片列表 */
 export const updateAllImages = (imgList) => {

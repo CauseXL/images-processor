@@ -1,6 +1,7 @@
-import { useValue } from "@/core/state-util";
-import { getCurrentImage, pageData, updatePageTitle } from "@/store/pageData";
-import { Snap } from "@/store/snap";
+import { pageData, Snap } from "@/core/data";
+import { useValue } from "@/core/utils";
+import { updatePageTitle } from "@/logic/action/updatePageTitle";
+import { getCurrentImage } from "@/logic/get/currentImage";
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
 import { useKeyPress } from "ahooks";

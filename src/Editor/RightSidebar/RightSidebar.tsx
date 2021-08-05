@@ -1,8 +1,8 @@
-import { useValue } from "@/core/state-util";
+import { pageData } from "@/core/data";
+import { useValue } from "@/core/utils";
 import { useDrag } from "@/hooks/useDrag";
 import { useRafState } from "@/hooks/useRafState";
 import { off, on } from "@/hooks/util";
-import { pageData } from "@/store/pageData";
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
 import React, { useEffect, useMemo, useState } from "react";

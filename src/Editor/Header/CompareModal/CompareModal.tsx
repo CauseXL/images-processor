@@ -1,5 +1,5 @@
-import { useValue } from "@/core/state-util";
-import { pageData } from "@/store/pageData";
+import { pageData } from "@/core/data";
+import { useValue } from "@/core/utils";
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
 import type { FC } from "react";
