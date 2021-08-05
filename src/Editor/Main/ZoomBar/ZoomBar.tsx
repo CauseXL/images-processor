@@ -1,30 +1,20 @@
 import { css } from "@emotion/react";
 import type { FC } from "react";
+import { memo } from "react";
 import { Dropdown, Icon } from "tezign-ui";
 import tw from "twin.macro";
-import { useScaleService } from "./useScaleService";
+import { getFormatScale, scaleDown, scaleUp, useScale } from "../logic/scale";
 import { ZoomList } from "./ZoomList";
-
-// * --------------------------------------------------------------------------- service
-
-// const useZoomBar = () => {
-//   const { scale } = useScaleService();
-// };
 
 // * --------------------------------------------------------------------------- comp
 
-export const ZoomBar: FC = () => {
-  const { scale } = useScaleService();
-
-  const handleIncreaseScale = () => {
-    // const nextScaleIndex = findIndex((e) => e > current, scaleList);
-  };
-  const handleDecreaseScale = () => console.log(123);
+export const ZoomBar: FC = memo(() => {
+  const scaleValue = useScale();
 
   return (
     <div css={[tw`absolute bottom-10 left-1/2 z-50 flex justify-between`, zoomBarContainerStyle]}>
       <div css={[tw`h-9 px-3 flex items-center justify-between`, zoomBarStyle]}>
-        <div css={[tw`p-1 flex items-center mr-2 cursor-pointer`, iconJustifyStyle]} onClick={handleIncreaseScale}>
+        <div css={[tw`p-1 flex items-center mr-2 cursor-pointer`, iconJustifyStyle]} onClick={scaleDown}>
           <Icon type="stop" className="fz-16" />
         </div>
 
@@ -34,16 +24,16 @@ export const ZoomBar: FC = () => {
           placement="topCenter"
           css={tw`cursor-pointer h-full flex items-center select-none`}
         >
-          <span>{(scale * 100).toFixed(0)}%</span>
+          <span>{getFormatScale(scaleValue)}</span>
         </Dropdown>
 
-        <div css={tw`p-1 flex items-center ml-2 cursor-pointer`} onClick={handleDecreaseScale}>
+        <div css={tw`p-1 flex items-center ml-2 cursor-pointer`} onClick={scaleUp}>
           <Icon type="add-plus" className="fz-16" />
         </div>
       </div>
     </div>
   );
-};
+});
 
 // * --------------------------------------------------------------------------- style
 

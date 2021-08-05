@@ -64,11 +64,11 @@ export const BatchRename: FC = () => {
         css={[tw`mt-4`, inputStyle]}
         size="small"
         value={name}
-        onChange={(e) => setName(e.target.value)}
+        onChange={(e: any) => setName(e.target.value)}
       />
 
       <div css={[tw`flex items-center mt-4`, orderStyle]}>
-        <Checkbox css={[checkboxStyle]} checked={hasOrder} onChange={(e) => setHasOrder(e.target.checked)}>
+        <Checkbox css={[checkboxStyle]} checked={hasOrder} onChange={(e: any) => setHasOrder(e.target.checked)}>
           添加序号
         </Checkbox>
         {hasOrder && (

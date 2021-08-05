@@ -3,7 +3,7 @@ import { css } from "@emotion/react";
 import type { FC, RefObject } from "react";
 import { useMemo, useRef } from "react";
 import tw from "twin.macro";
-import { useScaleService } from "../ZoomBar/useScaleService";
+import { useScale } from "../logic/scale";
 import { ImageItem } from "./ImageItem/ImageItem";
 import { useCanvasService } from "./useCanvasService";
 
@@ -11,7 +11,7 @@ import { useCanvasService } from "./useCanvasService";
 
 const useCanvas = (ref: RefObject<HTMLElement>) => {
   const { width, height } = useCanvasService();
-  const { scale } = useScaleService();
+  const scale = useScale();
 
   const containerStyle = useMemo(
     () => ({ width: ~~(width * scale), height: ~~(height * scale) }),
