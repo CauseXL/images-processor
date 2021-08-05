@@ -1,5 +1,5 @@
 import { rafBatch, useValue } from "@/core/state-util";
-import { ImgItemType, pageData } from "@/store/index";
+import { ImgItemType, pageData } from "@/store/pageData";
 import { Snap } from "@/store/snap";
 
 /** get 选中图片 */

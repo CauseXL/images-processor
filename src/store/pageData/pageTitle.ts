@@ -1,5 +1,5 @@
 import { rafBatch } from "@/core/state-util";
-import { pageData } from "@/store/index";
+import { pageData } from "@/store/pageData";
 import { Snap } from "@/store/snap";
 
 /** 更新项目标题 */

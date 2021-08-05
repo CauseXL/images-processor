@@ -1,7 +1,7 @@
 import { Snapshot } from "@/core/snapshot/Snapshot";
 import { useSubscribableValue } from "@/core/snapshot/useSubscribableValue";
 import { batch } from "@/core/state-util";
-import { pageData } from "@/store/index";
+import { pageData } from "@/store/pageData";
 
 export const Snap = new Snapshot({
   createSaveFrame: () => pageData.get(),

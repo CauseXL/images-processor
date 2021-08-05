@@ -1,6 +1,6 @@
 import { rafBatch, useValue } from "@/core/state-util";
 import { mockPageData } from "@/mock";
-import { pageData } from "@/store/index";
+import { pageData } from "@/store/pageData";
 import { Snap } from "@/store/snap";
 
 /** 获取当前页面所有数据 */

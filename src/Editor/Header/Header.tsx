@@ -1,6 +1,4 @@
-import { useCurrentImage } from "@/store/currentImage";
-import { usePageData } from "@/store/pageData";
-import { updatePageTitle } from "@/store/pageTitle";
+import { updatePageTitle, useCurrentImage, usePageData } from "@/store/pageData";
 import { Snap } from "@/store/snap";
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
