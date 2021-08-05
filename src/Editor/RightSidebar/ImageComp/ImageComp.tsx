@@ -1,4 +1,4 @@
-import { deleteImage } from "@/hooks/usePageData";
+import { deleteImage } from "@/store/pageData";
 import { css } from "@emotion/react";
 import React, { useState } from "react";
 import { Icon } from "tezign-ui";
@@ -98,7 +98,7 @@ const labelStyle = css`
 `;
 
 const countStyle = css`
-  ${labelStyle}
+  ${labelStyle};
   top: 8px;
   left: 8px;
 
@@ -120,7 +120,7 @@ const sizeStyle = css`
 `;
 
 const deleteStyle = css`
-  ${labelStyle}
+  ${labelStyle};
   right: 8px;
   bottom: 36px;
 

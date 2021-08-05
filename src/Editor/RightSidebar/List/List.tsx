@@ -1,4 +1,4 @@
-import { changeCurrentImage, deleteImage, useCurrentImage } from "@/hooks/usePageData";
+import { changeCurrentImage, deleteImage, useCurrentImage } from "@/store/pageData";
 import { css } from "@emotion/react";
 import React from "react";
 import { Icon } from "tezign-ui";

@@ -1,4 +1,4 @@
-import { changeCurrentImage, useCurrentImage } from "@/hooks/usePageData";
+import { changeCurrentImage, useCurrentImage } from "@/store/pageData";
 import { css } from "@emotion/react";
 import React from "react";
 import { formatOrder } from "../format";

@@ -5,7 +5,7 @@ import {
   updatePageTitle,
   useCurrentImage,
   usePageData,
-} from "@/hooks/usePageData";
+} from "@/store/pageData";
 import type { FC } from "react";
 import { Button } from "tezign-ui";
 

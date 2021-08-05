@@ -1,6 +1,6 @@
 import { ButtonGroup } from "@/Editor/LeftSideabr/ToolMenu/components/ButtonGroup";
 import { useBatchStatus } from "@/hooks/useBathStatus";
-import { resetImageList, updateCurrentImage, useCurrentImage, usePageData } from "@/hooks/usePageData";
+import { resetImageList, updateCurrentImage, useCurrentImage, usePageData } from "@/store/pageData";
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
 import type { FC } from "react";

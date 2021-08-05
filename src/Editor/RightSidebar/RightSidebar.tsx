@@ -1,7 +1,7 @@
 import { useDrag } from "@/hooks/useDrag";
-import { usePageData } from "@/hooks/usePageData";
 import { useRafState } from "@/hooks/useRafState";
 import { off, on } from "@/hooks/util";
+import { usePageData } from "@/store/pageData";
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
 import React, { useEffect, useMemo, useState } from "react";

@@ -1,5 +1,5 @@
 import { toggleBatchStatus, useBatchStatus } from "@/hooks/useBathStatus";
-import { usePageData } from "@/hooks/usePageData";
+import { usePageData } from "@/store/pageData";
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
 import type { FC } from "react";
