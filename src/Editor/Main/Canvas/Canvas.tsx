@@ -1,16 +1,17 @@
+import { useValue } from "@/core/utils";
 import { useScroll } from "@/hooks/useScroll";
+import { getCurrentImage } from "@/logic/get/currentImage";
 import { css } from "@emotion/react";
 import type { FC, RefObject } from "react";
 import { useMemo, useRef } from "react";
 import tw from "twin.macro";
 import { useScale } from "../logic/scale";
 import { ImageItem } from "./ImageItem/ImageItem";
-import { useCanvasService } from "./useCanvasService";
 
 // * --------------------------------------------------------------------------- service
 
 const useCanvas = (ref: RefObject<HTMLElement>) => {
-  const { width, height } = useCanvasService();
+  const { width, height } = useValue(getCurrentImage);
   const scale = useScale();
 
   const containerStyle = useMemo(
