@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import React from "react";
+import type { FC } from "react";
 import { Dropdown, Icon } from "tezign-ui";
 import tw from "twin.macro";
 import { useScaleService } from "./useScaleService";
@@ -13,7 +13,7 @@ import { ZoomList } from "./ZoomList";
 
 // * --------------------------------------------------------------------------- comp
 
-export const ZoomBar: React.FC = () => {
+export const ZoomBar: FC = () => {
   const { scale } = useScaleService();
 
   const handleIncreaseScale = () => {

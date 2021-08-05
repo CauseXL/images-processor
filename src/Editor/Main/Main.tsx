@@ -1,7 +1,6 @@
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
 import type { FC } from "react";
-import React from "react";
 import tw from "twin.macro";
 import { Canvas } from "./Canvas/Canvas";
 import { ZoomBar } from "./ZoomBar/ZoomBar";

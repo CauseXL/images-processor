@@ -73,7 +73,7 @@ export async function compressAccurately(dataURL: string, config: ICompressConfi
 
   // 图片精度 0 - 1，取0.5作为二分法中间值
   let imageQuality = 0.5;
-  let compressDataURL;
+  let compressDataURL: any;
   const tempDataURLs: string[] = [];
 
   /**

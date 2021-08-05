@@ -8,9 +8,12 @@
     "sourceMap": true,
     "rootDir": "./src",
     "strict": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "noUnusedLocals": true,
+    "strictPropertyInitialization": true,
+    "noUnusedLocals": false,
     "noUnusedParameters": true,
     "moduleResolution": "node",
     //    "jsx": "react",
@@ -21,13 +24,6 @@
     "downlevelIteration": true,
     // * ---------------------------
     "noEmit": true,
-    "noImplicitAny": false,
-    "noImplicitThis": true,
-    "alwaysStrict": true,
-    "strictBindCallApply": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "strictPropertyInitialization": true,
     // * ---------------------------
     "baseUrl": "./",
     "paths": {

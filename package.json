@@ -15,15 +15,13 @@
     "node": ">=10"
   },
   "scripts": {
-    "start": "tsdx --tsconfig ./tsconfig.build.json watch",
+    "start": "tsdx --tsconfig ./tsconfig.json watch",
     "build": "tsdx --tsconfig ./tsconfig.build.json build",
     "test": "tsdx --tsconfig ./tsconfig.build.json test --passWithNoTests",
     "lint": "eslint --fix 'src/**'",
     "prepare": "husky install # && tsdx --tsconfig ./tsconfig.build.json build",
     "size": "size-limit",
     "analyze": "size-limit --why",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
     "semantic-release": "semantic-release"
   },
   "babelMacros": {
@@ -81,12 +79,8 @@
     "@semantic-release/gitlab": "^6.2.1",
     "@semantic-release/npm": "^7.1.3",
     "@size-limit/preset-small-lib": "^5.0.1",
-    "@storybook/addon-essentials": "^6.3.4",
-    "@storybook/addon-info": "^5.3.21",
-    "@storybook/addon-links": "^6.3.4",
-    "@storybook/addons": "^6.3.4",
-    "@storybook/react": "^6.3.4",
     "@types/eslint": "^7.28.0",
+    "@types/file-saver": "^2.0.3",
     "@types/prettier": "^2.3.2",
     "@types/ramda": "^0.27.44",
     "@types/react": "^17.0.14",

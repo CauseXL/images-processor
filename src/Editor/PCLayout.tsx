@@ -1,7 +1,6 @@
 import { theme } from "@/styles/theme";
 import { css, useTheme } from "@emotion/react";
 import type { FC } from "react";
-import React from "react";
 import tw from "twin.macro";
 import { Header } from "./Header/Header";
 import { LeftSidebar } from "./LeftSideabr/LeftSidebar";

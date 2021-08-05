@@ -1,8 +1,9 @@
 import { css } from "@emotion/react";
-import React, { useState } from "react";
+import type { FC } from "react";
+import { useState } from "react";
 import tw from "twin.macro";
 
-export const Thumbnail = ({ item }) => {
+export const Thumbnail: FC<{ item: any }> = ({ item }) => {
   const [loaded, setLoaded] = useState<boolean>(false);
 
   return (

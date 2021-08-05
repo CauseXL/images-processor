@@ -166,6 +166,7 @@ export async function imagetoCanvas(
   let width;
   for (const i in myConfig) {
     if (Object.prototype.hasOwnProperty.call(myConfig, i)) {
+      // @ts-ignore
       myConfig[i] = Number(myConfig[i]);
     }
   }

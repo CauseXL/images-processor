@@ -6,7 +6,7 @@ import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
 import { useKeyPress } from "ahooks";
 import type { FC } from "react";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Icon, Input } from "tezign-ui";
 import tw from "twin.macro";
 import { CompareModal } from "./CompareModal/CompareModal";
@@ -37,7 +37,7 @@ export const Header: FC = (props: any) => {
     }
   }, [hasUnsavedData, onCancel]);
 
-  const onTitleChange = (e) => {
+  const onTitleChange = (e: any) => {
     const { value } = e.target;
 
     // TODO check logic @xiaoliang

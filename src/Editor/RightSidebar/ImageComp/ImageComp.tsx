@@ -1,5 +1,6 @@
 import { deleteImage } from "@/logic/action/imageList";
 import { css } from "@emotion/react";
+import type { FC } from "react";
 import React, { useState } from "react";
 import { Icon } from "tezign-ui";
 import tw from "twin.macro";
@@ -8,7 +9,7 @@ import { getImgSizeStyle, getPositionStyle } from "../size";
 
 const log = console.log.bind(console);
 
-export const ImageComp = ({ item, order, active, onClick }: any) => {
+export const ImageComp: FC<any> = ({ item, order, active, onClick }) => {
   const [loaded, setLoaded] = useState(false);
 
   return (
@@ -33,6 +34,7 @@ export const ImageComp = ({ item, order, active, onClick }: any) => {
           <div css={[sizeStyle]}>{formatSize(item.size)}</div>
           <div
             css={[deleteStyle]}
+            // @ts-ignore
             onClick={(e) => {
               e.stopPropagation();
               deleteImage(item.id);

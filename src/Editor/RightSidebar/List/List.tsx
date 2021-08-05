@@ -3,7 +3,7 @@ import { changeCurrentImage } from "@/logic/action/currentImage";
 import { deleteImage } from "@/logic/action/imageList";
 import { getCurrentImage } from "@/logic/get/currentImage";
 import { css } from "@emotion/react";
-import React from "react";
+import type { FC } from "react";
 import { Icon } from "tezign-ui";
 import tw from "twin.macro";
 import { formatSize } from "../format";
@@ -11,7 +11,7 @@ import { Thumbnail } from "./Thumbnail";
 
 const log = console.log.bind(console);
 
-export const List = ({ list, width }) => {
+export const List: FC<{ list: any[]; width: number }> = ({ list, width }) => {
   const extraInfoDisplayWidth = 300;
   const showExtraInfo = width > extraInfoDisplayWidth;
 
@@ -35,7 +35,12 @@ export const List = ({ list, width }) => {
   );
 };
 
-const Item = ({ item, showExtraInfo, active, onClick }) => {
+const Item: FC<{
+  item: any;
+  showExtraInfo: any;
+  active: any;
+  onClick: any;
+}> = ({ item, showExtraInfo, active, onClick }) => {
   return (
     <div
       key={item.name}
@@ -57,7 +62,7 @@ const Item = ({ item, showExtraInfo, active, onClick }) => {
         <Icon
           type="delete"
           css={tw`cursor-pointer`}
-          onClick={(e) => {
+          onClick={(e: any) => {
             e.stopPropagation();
             deleteImage(item.id);
             log("del");

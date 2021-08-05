@@ -1,7 +1,7 @@
 import { useScroll } from "@/hooks/useScroll";
 import { css } from "@emotion/react";
 import type { FC, RefObject } from "react";
-import React, { useMemo, useRef } from "react";
+import { useMemo, useRef } from "react";
 import tw from "twin.macro";
 import { useScaleService } from "../ZoomBar/useScaleService";
 import { ImageItem } from "./ImageItem/ImageItem";
