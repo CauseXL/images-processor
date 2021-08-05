@@ -11,7 +11,11 @@ import tw from "twin.macro";
 
 // * --------------------------------------------------------------------------- type
 
-export interface SizeScaleItemType { text: string; type: "height" | "width" | "percent"; value?: number }
+export interface SizeScaleItemType {
+  text: string;
+  type: "height" | "width" | "percent";
+  value?: number;
+}
 
 // * --------------------------------------------------------------------------- service
 
@@ -78,7 +82,7 @@ export const SizeScale: FC = () => {
 
   const handleCancel = () => resetSnapShot();
 
-  const handleRadioChange = (e) => {
+  const handleRadioChange = (e: any) => {
     setActiveKey(e.target.value);
     resetSnapShot();
   };
@@ -106,6 +110,7 @@ export const SizeScale: FC = () => {
             value={value}
             active={activeKey === index}
             radio={<Radio value={index} css={tw`mr-2`} />}
+            // @ts-ignore
             onChange={(value) => handleInputChange(type, value)}
           />
         ))}

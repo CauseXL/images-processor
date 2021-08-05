@@ -37,7 +37,7 @@ export const Header: FC = (props: any) => {
     }
   }, [hasUnsavedData, onCancel]);
 
-  const onTitleChange = (e) => {
+  const onTitleChange = (e: any) => {
     const { value } = e.target;
 
     // TODO check logic @xiaoliang

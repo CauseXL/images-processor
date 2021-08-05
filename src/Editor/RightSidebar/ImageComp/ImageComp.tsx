@@ -33,6 +33,7 @@ export const ImageComp = ({ item, order, active, onClick }: any) => {
           <div css={[sizeStyle]}>{formatSize(item.size)}</div>
           <div
             css={[deleteStyle]}
+            // @ts-ignore
             onClick={(e) => {
               e.stopPropagation();
               deleteImage(item.id);

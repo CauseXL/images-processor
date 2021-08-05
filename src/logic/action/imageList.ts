@@ -4,7 +4,7 @@ import { mockPageData } from "@/mock";
 import { message } from "tezign-ui";
 
 /** 全量更新图片列表 */
-export const updateAllImages = (imgList) => {
+export const updateAllImages = (imgList: any) => {
   rafBatch(() => {
     pageData.set((data) => {
       data.imgList = [...imgList];

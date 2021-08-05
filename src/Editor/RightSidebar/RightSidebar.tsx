@@ -66,7 +66,8 @@ export const RightSidebar: React.FC = () => {
         <div css={tw`flex items-center mb-4`}>
           <ViewMode
             viewMode={viewMode}
-            onChange={(v) => {
+            onChange={(v: any) => {
+              // @ts-ignore
               setViewMode(v);
             }}
           />

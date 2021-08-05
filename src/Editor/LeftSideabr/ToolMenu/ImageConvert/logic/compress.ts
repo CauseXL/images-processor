@@ -1,3 +1,4 @@
+import { PageDataType } from "@/core/data";
 import { updateCurrentImage } from "@/logic/action/currentImage";
 import { updateAllImages } from "@/logic/action/imageList";
 import { clone } from "ramda";
@@ -10,7 +11,7 @@ export interface ICompressConfig {
 }
 
 /** 批量压缩 */
-export const batchCompress = async (pageData, compressConfig: ICompressConfig) => {
+export const batchCompress = async (pageData: PageDataType, compressConfig: ICompressConfig) => {
   const imgList = clone(pageData.imgList);
   const promiseQueue = imgList.map(async (item) => {
     return await compressAccurately(item.url, { size: compressConfig.targetSize as number });
@@ -32,7 +33,7 @@ export const batchCompress = async (pageData, compressConfig: ICompressConfig) =
 };
 
 /** 单张压缩 */
-export const compress = (currentImage, compressConfig: ICompressConfig) => {
+export const compress = (currentImage: any, compressConfig: ICompressConfig) => {
   compressAccurately(currentImage.url, { size: compressConfig.targetSize as number })
     .then((res) => {
       updateCurrentImage({ url: res, size: res.length * proportion });

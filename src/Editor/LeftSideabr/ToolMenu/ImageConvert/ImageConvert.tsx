@@ -25,11 +25,11 @@ export const ImageConvert: FC = () => {
   const batchStatus = useBatchStatus();
   const [compressConfig, setCompressConfig] = useState<ICompressConfig>(defaultCompressConfig);
 
-  const handleRadioChange = (e) => {
+  const handleRadioChange = (e: any) => {
     setCompressConfig({ ...compressConfig, type: e.target.value });
   };
 
-  const handleInputChange = (value) => {
+  const handleInputChange = (value: any) => {
     setCompressConfig({ ...compressConfig, targetSize: value });
   };
 
