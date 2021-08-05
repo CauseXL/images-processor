@@ -1,17 +1,12 @@
-import { rafBatch, useValue } from "@/core/state-util";
+import { rafBatch } from "@/core/state-util";
 import { Snap } from "@/store/snap";
 import { pageData } from "./pageData";
 import { ImgItemType } from "./types";
 
 // * ------------------------------------------------
 
-export const getCurrentImage = () => pageData.get().imgList.filter((item) => item.active)[0];
-
 /** get 选中图片 */
-export const useCurrentImage = () => useValue(getCurrentImage);
-
-/** get 图片裁切信息 */
-export const useCurrentImageCropInfo = () => useValue(() => getCurrentImage().crop);
+export const getCurrentImage = () => pageData.get().imgList.filter((item) => item.active)[0];
 
 // * ------------------------------------------------
 

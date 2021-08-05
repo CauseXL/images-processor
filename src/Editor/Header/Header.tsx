@@ -1,5 +1,5 @@
 import { useValue } from "@/core/state-util";
-import { pageData, updatePageTitle, useCurrentImage } from "@/store/pageData";
+import { getCurrentImage, pageData, updatePageTitle } from "@/store/pageData";
 import { Snap } from "@/store/snap";
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
@@ -92,7 +92,7 @@ export const Header: FC = (props: any) => {
 };
 
 const ProjectTitle: FC = () => {
-  const { width, height } = useCurrentImage() || {};
+  const { width, height } = useValue(getCurrentImage) ?? {};
   const [isChanging, setIsChanging] = useState<boolean>(false);
   useEffect(() => {
     setIsChanging(true);

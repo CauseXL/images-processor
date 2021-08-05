@@ -1,18 +1,18 @@
 import { useValue } from "@/core/state-util";
 import {
   changeCurrentImage,
+  getCurrentImage,
   pageData,
   updateAllImages,
   updateCurrentImage,
   updatePageTitle,
-  useCurrentImage,
 } from "@/store/pageData";
 import type { FC } from "react";
 import { Button } from "tezign-ui";
 
 export const DemoBtnGroup: FC = () => {
   const data = useValue(() => pageData.get());
-  const currentImage = useCurrentImage();
+  const currentImage = useValue(() => getCurrentImage());
 
   return (
     <div>

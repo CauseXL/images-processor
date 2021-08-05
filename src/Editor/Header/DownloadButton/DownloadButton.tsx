@@ -1,5 +1,5 @@
 import { useValue } from "@/core/state-util";
-import { pageData, useCurrentImage } from "@/store/pageData";
+import { getCurrentImage, pageData } from "@/store/pageData";
 import { saveAs } from "file-saver";
 import JSZip from "jszip";
 import type { FC } from "react";
@@ -12,7 +12,7 @@ import { downloadFile } from "./logic/download";
 
 export const DownloadButton: FC = () => {
   const imgList = useValue(() => pageData.get().imgList);
-  const currentImage = useCurrentImage();
+  const currentImage = useValue(getCurrentImage);
   const [progress, setProgress] = useState<number>(0);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const PERCENT = Math.ceil(100 / imgList.length);
