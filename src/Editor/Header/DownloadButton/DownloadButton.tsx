@@ -23,7 +23,7 @@ export const DownloadButton: FC = () => {
       <Menu.Item
         disabled={!currentImage}
         onClick={() => {
-          downloadFile(pageData.get().title, currentImage.url);
+          downloadFile(currentImage.name, currentImage.url);
         }}
       >
         当前图片下载

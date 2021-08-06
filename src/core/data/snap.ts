@@ -11,5 +11,5 @@ export const Snap = new Snapshot({
   debounceTime: 200,
 });
 
-export const useUndoable = () => useSubscribableValue(Snap, () => 0 < Snap.index);
+export const useUndoable = () => useSubscribableValue(Snap, () => 1 < Snap.index);
 export const useRedoable = () => useSubscribableValue(Snap, () => Snap.index < Snap.stack.length - 1);

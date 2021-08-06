@@ -70,6 +70,7 @@ export class Snapshot<T> extends SimpleEmitter {
     this.lastAction = actionName;
     this.stack[this.index] = frame;
     this.stack.length = this.index + 1;
+    this.emit();
   }
 
   // * ---------------------------------------------------------------- undo redo go
