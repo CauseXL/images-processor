@@ -10,7 +10,6 @@ import { useEffect, useMemo, useState } from "react";
 import tw from "twin.macro";
 import { Card } from "./Card/Card";
 import { List } from "./List/List";
-// import { mockList } from "./mock";
 import { EViewMode, ViewMode } from "./ViewMode/ViewMode";
 
 // * --------------------------------------------------------------------------- comp
@@ -24,9 +23,6 @@ const HEADER_HEIGHT = 54;
 
 export const RightSidebar: FC = () => {
   const [viewMode, setViewMode] = useState<EViewMode>(EViewMode.CARD);
-
-  // @ts-ignore
-  // const [list, setList] = useState(mockList);
 
   const list = useValue(() => pageData.get().imgList);
 

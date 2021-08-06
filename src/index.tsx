@@ -1,19 +1,32 @@
+import { initActive, pageData, PageDataType, Snap } from "@/core/data";
 import { globalStyle } from "@/styles/global";
 import { theme } from "@/styles/theme";
 import { Global, ThemeProvider } from "@emotion/react";
 import type { FC } from "react";
+import { useEffect } from "react";
 import { LocaleProvider } from "tezign-ui";
 import zh_CN from "tezign-ui/lib/locale-provider/zh_CN";
 import { PCLayout } from "./Editor/PCLayout";
 
 // * --------------------------------------------------------------------------- comp
 
-export const ImagesProcessorEditor: FC = () => {
+export interface IEditor {
+  data: PageDataType;
+  onCancel: () => void;
+}
+export const ImagesProcessorEditor: FC<IEditor> = (props) => {
+  const { data, onCancel } = props;
+  useEffect(() => {
+    const initData = initActive(data);
+    pageData.set(initData);
+    Snap.take();
+    console.log("initData", initData);
+  });
   return (
     <LocaleProvider locale={zh_CN}>
       <ThemeProvider theme={theme}>
         <Global styles={globalStyle} />
-        <PCLayout />
+        <PCLayout onCancel={onCancel} />
       </ThemeProvider>
     </LocaleProvider>
   );

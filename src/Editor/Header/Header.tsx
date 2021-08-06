@@ -1,4 +1,4 @@
-import { pageData, Snap } from "@/core/data";
+import { pageData, Snap, useRedoable, useUndoable } from "@/core/data";
 import { useValue } from "@/core/utils";
 import { updatePageTitle } from "@/logic/action/updatePageTitle";
 import { getCurrentImage } from "@/logic/get/currentImage";
@@ -13,11 +13,15 @@ import { CompareModal } from "./CompareModal/CompareModal";
 import { DownloadButton } from "./DownloadButton/DownloadButton";
 
 // * --------------------------------------------------------------------------- comp
-// TODO: props type
-export const Header: FC = (props: any) => {
+export interface IHeader {
+  onCancel: () => void;
+}
+export const Header: FC<IHeader> = (props) => {
   const { onCancel } = props;
   const hasUnsavedData = true;
   const title = useValue(() => pageData.get().title);
+  const undoable = useUndoable();
+  const redoable = useRedoable();
 
   useKeyPress(["meta.z", "ctrl.z"], (event) => {
     !event.shiftKey && Snap.undo();
@@ -63,16 +67,15 @@ export const Header: FC = (props: any) => {
             <CompareModal />
           </div>
           <div
-            css={[tw`mx-4 cursor-pointer`]}
+            css={[tw`mx-4 cursor-pointer`, !undoable && disabledCss]}
             onClick={() => {
               Snap.undo();
-              console.log("undo");
             }}
           >
             <Icon type="undo" css={tw`text-xl flex items-center`} />
           </div>
           <div
-            css={[tw`cursor-pointer`]}
+            css={[tw`cursor-pointer`, !redoable && disabledCss]}
             onClick={() => {
               Snap.redo();
             }}
@@ -88,7 +91,7 @@ export const Header: FC = (props: any) => {
         </div>
       </div>
     ),
-    [title],
+    [title, undoable, redoable],
   );
 };
 
@@ -133,4 +136,10 @@ const titleInputStyle = css`
 
 const infoChangingStyle = css`
   color: #0cc5ae;
+`;
+
+const disabledCss = css`
+  opacity: 0.3;
+  cursor: not-allowed;
+  pointer-events: none;
 `;
