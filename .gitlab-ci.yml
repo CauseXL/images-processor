@@ -10,4 +10,4 @@ publish:
     - NPM_PACKAGE_VERSION=$(node -p "require('./package.json').version")
 
     - echo "Version ${NPM_PACKAGE_VERSION} of ${NPM_PACKAGE_NAME}"
-    - npm run semantic-release
+    - npm run build && npm run semantic-release

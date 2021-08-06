@@ -1,4 +1,3 @@
-import { SizeScaleItemType } from "@/Editor/LeftSideabr/ToolMenu/SizeScale/SizeScale";
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
 import type { FC, ReactNode } from "react";
@@ -10,7 +9,7 @@ import tw from "twin.macro";
 interface SizeScaleItemProps {
   text: string;
   radio: ReactNode;
-  type: SizeScaleItemType["type"];
+  type: string;
   active?: boolean;
   value?: number;
   onChange: (value: number) => void;
