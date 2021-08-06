@@ -1,6 +1,5 @@
 import { pageData, Snap } from "@/core/data";
 import { rafBatch } from "@/core/utils";
-import { mockPageData } from "@/mock";
 import { message } from "tezign-ui";
 
 /** 全量更新图片列表 */
@@ -45,7 +44,8 @@ export const deleteImage = (id: number) => {
 export const resetImageList = () => {
   rafBatch(() => {
     pageData.set((data) => {
-      data.imgList = [...mockPageData.imgList];
+      const dataFromEntry = Snap.stack[1];
+      data.imgList = [...dataFromEntry.imgList];
     });
   }).then(() => {
     Snap.take();
