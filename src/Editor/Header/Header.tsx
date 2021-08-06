@@ -14,7 +14,10 @@ import { DownloadButton } from "./DownloadButton/DownloadButton";
 
 // * --------------------------------------------------------------------------- comp
 // TODO: props type
-export const Header: FC = (props: any) => {
+export interface IHeader {
+  onCancel: () => void;
+}
+export const Header: FC<IHeader> = (props) => {
   const { onCancel } = props;
   const hasUnsavedData = true;
   const title = useValue(() => pageData.get().title);

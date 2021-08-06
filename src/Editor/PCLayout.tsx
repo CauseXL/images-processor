@@ -9,11 +9,17 @@ import { RightSidebar } from "./RightSidebar/RightSidebar";
 
 // * --------------------------------------------------------------------------- comp
 
-export const PCLayout: FC = () => {
+export interface IPCLayout {
+  onCancel: () => void;
+}
+
+export const PCLayout: FC<IPCLayout> = (props) => {
   const theme = useTheme();
+  const { onCancel } = props;
+
   return (
     <div css={[tw`flex flex-col h-screen w-screen`, layoutStyle]} style={{ color: theme.colors.default }}>
-      <Header />
+      <Header onCancel={onCancel} />
       <div css={[tw`flex flex-1 h-full`, containerStyle]}>
         <LeftSidebar />
         <Main />
