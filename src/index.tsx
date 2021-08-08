@@ -21,6 +21,10 @@ export const ImagesProcessorEditor: FC<IEditor> = (props) => {
     pageData.set(initData);
     Snap.take();
     console.log("initData", initData);
+    return () => {
+      pageData.reset();
+      Snap.destroy();
+    };
   });
   return (
     <LocaleProvider locale={zh_CN}>

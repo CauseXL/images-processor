@@ -20,3 +20,13 @@ export const downloadFileByBase64 = (name: string, base64: string) => {
 export const isBase64 = (dataUrl: string) => {
   return dataUrl.includes(";base64,");
 };
+
+export const formatExtension = (extStr: string) => {
+  if (extStr?.includes("/")) {
+    // "image/jpeg"
+    const ext = extStr.split("/")[1];
+    return ext;
+  } else {
+    return extStr;
+  }
+};
