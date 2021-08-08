@@ -7,7 +7,7 @@ import type { FC } from "react";
 import React, { useMemo, useState } from "react";
 import { Button, Dropdown, Icon, Menu, ModalV2 as Modal, Progress } from "tezign-ui";
 import tw from "twin.macro";
-import { downloadFile } from "./logic/download";
+import { downloadFile, formatExtension } from "./logic/download";
 
 // * --------------------------------------------------------------------------- comp
 
@@ -44,7 +44,7 @@ export const DownloadButton: FC = () => {
                 return Promise.reject(new Error(response.statusText));
               }
             });
-            const downloadName = `${item.name}.${item.type}`;
+            const downloadName = `${item.name}.${formatExtension(item.type)}`;
             folder!.file(downloadName, blobPromise, { base64: true });
           });
 

@@ -2,7 +2,7 @@ import { PageDataType } from "@/core/data";
 import { updateCurrentImage } from "@/logic/action/currentImage";
 import { updateAllImages } from "@/logic/action/imageList";
 import { clone } from "ramda";
-import { message } from "tezign-ui";
+import { message, ModalV2 as Modal } from "tezign-ui";
 import { compressAccurately, proportion } from "./compressAccurately";
 
 export interface ICompressConfig {
@@ -12,6 +12,14 @@ export interface ICompressConfig {
 
 /** 批量压缩 */
 export const batchCompress = async (pageData: PageDataType, compressConfig: ICompressConfig) => {
+  const modal = Modal.alert({
+    type: "danger",
+    width: 300,
+    footer: null,
+    closable: false,
+    maskClosable: false,
+    content: "正在压缩...",
+  });
   const imgList = clone(pageData.imgList);
   const promiseQueue = imgList.map(async (item) => {
     return await compressAccurately(item.url, { size: compressConfig.targetSize as number });
@@ -25,11 +33,13 @@ export const batchCompress = async (pageData: PageDataType, compressConfig: ICom
         return item;
       });
       updateAllImages(compressedList);
+      modal.destroy();
       message.success("批量品质压缩操作成功！");
     })
     .catch((e) => {
       message.error(`批量品质压缩操作失败！${e}`);
-    });
+    })
+    .finally(() => modal.destroy());
 };
 
 /** 单张压缩 */

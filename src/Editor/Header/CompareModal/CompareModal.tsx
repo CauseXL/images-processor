@@ -8,7 +8,7 @@ import { Icon, ModalV2 as Modal } from "tezign-ui";
 import tw from "twin.macro";
 
 // * --------------------------------------------------------------------------- comp
-export const CompareModal: FC<any> = () => {
+export const CompareModal: FC = () => {
   const imgList = useValue(() => pageData.get().imgList);
   // 当前选中图片的index
   let activeIndex = imgList.findIndex((item) => item.active);
