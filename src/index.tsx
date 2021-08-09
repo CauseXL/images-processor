@@ -1,4 +1,4 @@
-import { initActive, pageData, PageDataType, Snap } from "@/core/data";
+import { pageData, PageDataType, Snap } from "@/core/data";
 import { globalStyle } from "@/styles/global";
 import { theme } from "@/styles/theme";
 import { Global, ThemeProvider } from "@emotion/react";
@@ -17,10 +17,8 @@ export interface IEditor {
 export const ImagesProcessorEditor: FC<IEditor> = (props) => {
   const { data, onCancel } = props;
   useEffect(() => {
-    const initData = initActive(data);
-    pageData.set(initData);
+    pageData.set(data);
     Snap.take();
-    console.log("initData", initData);
     return () => {
       pageData.reset();
       Snap.destroy();

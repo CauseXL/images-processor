@@ -2,14 +2,6 @@
 import { PageDataType } from "@/core/data/types";
 import { store } from "../utils";
 
-export const initActive = (pageData: PageDataType) => {
-  pageData.imgList.map((img, i) => {
-    img.active = i === 0 ? true : false;
-    return img;
-  });
-  return pageData;
-};
-
 const initialData: PageDataType = {
   title: "",
   imgList: [
