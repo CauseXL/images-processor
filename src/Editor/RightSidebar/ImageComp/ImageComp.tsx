@@ -18,12 +18,10 @@ export const ImageComp: FC<any> = ({ item, order, active, onClick }) => {
         css={[imgStyle, !loaded && tw`opacity-0`, active && activeStyle]}
         src={item.url}
         onLoad={() => {
-          // log("loaded", item.name);
           setLoaded(true);
         }}
         style={getImgSizeStyle(item)}
         onClick={() => {
-          log("clicked", item);
           onClick?.();
         }}
       />
@@ -38,7 +36,6 @@ export const ImageComp: FC<any> = ({ item, order, active, onClick }) => {
             onClick={(e) => {
               e.stopPropagation();
               deleteImage(item.id);
-              log("del");
             }}
           >
             <Icon type="delete" />

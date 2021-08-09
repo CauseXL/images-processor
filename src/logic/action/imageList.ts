@@ -10,7 +10,6 @@ export const updateAllImages = (imgList: any) => {
     });
   }).then(() => {
     Snap.take();
-    console.log("snap", Snap.index);
   });
 };
 
@@ -36,7 +35,6 @@ export const deleteImage = (id: number) => {
     });
   }).then(() => {
     Snap.take();
-    console.log("snap", Snap.stack);
   });
 };
 
@@ -49,7 +47,6 @@ export const resetImageList = () => {
     });
   }).then(() => {
     Snap.take();
-    console.log("批量还原图片数据 snap", Snap.index);
   });
 };
 
@@ -81,6 +78,5 @@ export const renameImage = ({
     });
   }).then(() => {
     Snap.take();
-    console.log("批量命名图片数据 snap", Snap.stack);
   });
 };

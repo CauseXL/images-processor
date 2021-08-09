@@ -38,7 +38,6 @@ export const compress = (currentImage: any, compressConfig: ICompressConfig) => 
     .then((res) => {
       updateCurrentImage({ url: res, size: res.length * proportion });
       message.success("品质压缩操作成功！");
-      console.log(res);
     })
     .catch((e) => {
       message.error(`品质压缩操作失败！${e}`);

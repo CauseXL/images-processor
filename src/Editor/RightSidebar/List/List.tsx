@@ -9,8 +9,6 @@ import tw from "twin.macro";
 import { formatSize } from "../format";
 import { Thumbnail } from "./Thumbnail";
 
-const log = console.log.bind(console);
-
 export const List: FC<{ list: any[]; width: number }> = ({ list, width }) => {
   const extraInfoDisplayWidth = 300;
   const showExtraInfo = width > extraInfoDisplayWidth;
@@ -46,7 +44,6 @@ const Item: FC<{
       key={item.name}
       css={[tw`flex items-center mb-4`, itemStyle, showExtraInfo ? infoHoverStyle : "", active && activeStyle]}
       onClick={() => {
-        log("clicked", item);
         onClick();
       }}
     >
@@ -65,7 +62,6 @@ const Item: FC<{
           onClick={(e: any) => {
             e.stopPropagation();
             deleteImage(item.id);
-            log("del");
           }}
         />
       </div>

@@ -11,6 +11,5 @@ export const resetPageData = () => {
     });
   }).then(() => {
     Snap.take();
-    console.log("一键还原 snap", Snap.index);
   });
 };
