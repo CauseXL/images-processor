@@ -19,7 +19,7 @@ export const deleteImage = (id: number) => {
   rafBatch(() => {
     pageData.set((data) => {
       if (data.imgList.length === 1) {
-        message.error("您确定您是在批量吗？");
+        message.error("图片不可小于1张");
         return;
       }
 

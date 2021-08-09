@@ -9,9 +9,9 @@ import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
 import type { FC } from "react";
 import { useState } from "react";
-import { InputNumber, message, Radio } from "tezign-ui";
+import { InputNumber, message, ModalV2 as Modal, Radio } from "tezign-ui";
 import tw from "twin.macro";
-import { batchCompress, compress, ICompressConfig } from "./logic/compress";
+import { batchCompress, compress, ICompressConfig, sleep } from "./logic/compress";
 
 const { Group } = Radio;
 const defaultCompressConfig: ICompressConfig = {
@@ -37,6 +37,20 @@ export const ImageConvert: FC = () => {
     setCompressConfig({ ...defaultCompressConfig });
   };
 
+  const batchCompressAction = () => {
+    const modal = Modal.alert({
+      type: "danger",
+      width: 300,
+      footer: null,
+      closable: false,
+      maskClosable: false,
+      content: "正在批量压缩，请稍后...",
+    });
+    sleep(500)
+      .then(() => batchCompress(pageData.get(), compressConfig))
+      .then(() => modal.destroy());
+  };
+
   const onSubmit = async () => {
     if (compressConfig.type === "custom" && !compressConfig.targetSize) {
       message.warn("请输入目标大小");
@@ -56,7 +70,7 @@ export const ImageConvert: FC = () => {
 
     if (compressConfig.type === "custom" && compressConfig.targetSize) {
       if (batchStatus) {
-        await batchCompress(pageData.get(), compressConfig);
+        await batchCompressAction();
       } else {
         if ((currentImage.size || 0) / 1024 <= compressConfig.targetSize) {
           message.warning(

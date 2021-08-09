@@ -48,7 +48,8 @@ export class Snapshot<T> extends SimpleEmitter {
     this.take();
   }
   public destroy() {
-    this.stack = [];
+    this.index = -1;
+    this.stack.length = 0;
   }
 
   // * ---------------------------------------------------------------- take
