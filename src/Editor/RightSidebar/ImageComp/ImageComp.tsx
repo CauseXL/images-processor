@@ -55,7 +55,7 @@ const imgCompStyle = css`
   position: absolute;
   color: rgba(255, 255, 255, 0.78);
 
-  min-height: 138px;
+  min-height: 72px;
   border-radius: 4px;
   font-size: 12px;
 
@@ -75,6 +75,7 @@ const activeStyle = css`
 const imgStyle = css`
   position: relative;
   border-radius: 4px;
+  min-height: 72px;
 `;
 
 const nameStyle = css`
