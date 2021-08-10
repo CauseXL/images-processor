@@ -20,4 +20,5 @@ export const Main: FC = () => {
 
 const mainStyle = css`
   //background-color: ${theme.bgColors.dark};
+  user-select: none;
 `;

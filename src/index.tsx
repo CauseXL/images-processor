@@ -19,11 +19,13 @@ export const ImagesProcessorEditor: FC<IEditor> = (props) => {
   useEffect(() => {
     pageData.set(data);
     Snap.take();
+    console.log("mount");
     return () => {
       pageData.reset();
-      Snap.destroy();
+      Snap.reset();
+      console.log("unmount");
     };
-  });
+  }, [data]);
   return (
     <LocaleProvider locale={zh_CN}>
       <ThemeProvider theme={theme}>
