@@ -52,6 +52,12 @@ export class Snapshot<T> extends SimpleEmitter {
     this.stack.length = 0;
   }
 
+  // reset snap to created status
+  public reset() {
+    this.index = 0;
+    this.stack.length = 1;
+  }
+
   // * ---------------------------------------------------------------- take
 
   public take(actionName = "") {
@@ -82,10 +88,6 @@ export class Snapshot<T> extends SimpleEmitter {
 
   public redo() {
     this.go(+1);
-  }
-
-  public reset() {
-    this.jumpTo(0);
   }
 
   public go(delta: number) {

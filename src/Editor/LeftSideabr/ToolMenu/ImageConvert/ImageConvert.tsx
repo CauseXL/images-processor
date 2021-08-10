@@ -11,7 +11,7 @@ import type { FC } from "react";
 import { useState } from "react";
 import { InputNumber, message, ModalV2 as Modal, Radio } from "tezign-ui";
 import tw from "twin.macro";
-import { batchCompress, compress, ICompressConfig, sleep } from "./logic/compress";
+import { batchCompress, compress, debouncePromise, ICompressConfig } from "./logic/compress";
 
 const { Group } = Radio;
 const defaultCompressConfig: ICompressConfig = {
@@ -46,7 +46,7 @@ export const ImageConvert: FC = () => {
       maskClosable: false,
       content: "正在批量压缩，请稍后...",
     });
-    sleep(500)
+    debouncePromise(200)
       .then(() => batchCompress(pageData.get(), compressConfig))
       .then(() => modal.destroy());
   };

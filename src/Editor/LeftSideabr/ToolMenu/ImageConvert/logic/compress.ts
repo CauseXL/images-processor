@@ -1,4 +1,4 @@
-import { PageDataType } from "@/core/data";
+import { ImgItemType, PageDataType } from "@/core/data";
 import { updateCurrentImage } from "@/logic/action/currentImage";
 import { updateAllImages } from "@/logic/action/imageList";
 import { clone } from "ramda";
@@ -33,7 +33,7 @@ export const batchCompress = async (pageData: PageDataType, compressConfig: ICom
 };
 
 /** 单张压缩 */
-export const compress = (currentImage: any, compressConfig: ICompressConfig) => {
+export const compress = (currentImage: ImgItemType, compressConfig: ICompressConfig) => {
   compressAccurately(currentImage.url, { size: compressConfig.targetSize as number })
     .then((res) => {
       updateCurrentImage({ url: res, size: res.length * proportion });
@@ -44,7 +44,7 @@ export const compress = (currentImage: any, compressConfig: ICompressConfig) => 
     });
 };
 
-export const sleep = (time: number) => {
+export const debouncePromise = (time: number) => {
   // eslint-disable-next-line no-promise-executor-return
   return new Promise((resolve) => setTimeout(resolve, time));
 };
