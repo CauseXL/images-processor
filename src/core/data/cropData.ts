@@ -1,7 +1,7 @@
 import { CropType } from "@/core/data/types";
 import { store } from "@/core/utils";
 
-type CropDataType = CropType & { originWidth: number; originHeight: number };
+export type CropDataType = CropType & { originWidth: number; originHeight: number };
 
 export const defaultCropInfo: CropDataType = {
   x: 0,
