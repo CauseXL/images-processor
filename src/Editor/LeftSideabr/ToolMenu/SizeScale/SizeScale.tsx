@@ -78,6 +78,7 @@ export const SizeScale: FC = () => {
       const { url: curOriginUrl } = currentImage.origin;
       const imgData = await scaleImage(curOriginUrl, sizeState);
       const newData = { ...currentImage, ...imgData, crop: { ...currentImage.crop, ...imgData } };
+      // @ts-ignore
       updateCurrentImage(newData);
     }
   };

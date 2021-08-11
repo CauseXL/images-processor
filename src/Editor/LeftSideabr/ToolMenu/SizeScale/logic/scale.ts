@@ -45,6 +45,7 @@ export const batchScaleImage = async (pageData: PageDataType, sizeState: SizeSca
       const batchedList = imgList.map((item, index: number) => {
         return { ...item, crop: { ...item.crop, ...res[index] }, ...res[index] };
       });
+      // @ts-ignore
       updateAllImages(batchedList);
       message.success("批量尺寸缩放操作成功！");
     })
