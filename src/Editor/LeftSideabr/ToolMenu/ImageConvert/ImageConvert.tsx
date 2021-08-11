@@ -1,17 +1,18 @@
 import { pageData } from "@/core/data";
 import { useValue } from "@/core/utils";
 import { ButtonGroup } from "@/Editor/LeftSideabr/ToolMenu/components/ButtonGroup";
-import { useBatchStatus } from "@/hooks/useBathStatus";
 import { updateCurrentImage } from "@/logic/action/currentImage";
 import { resetImageList } from "@/logic/action/imageList";
+import { getBathStatus } from "@/logic/get/batchStatus";
 import { getCurrentImage } from "@/logic/get/currentImage";
 import { theme } from "@/styles/theme";
+import { debouncePromise } from "@/utils/debouncePromise";
 import { css } from "@emotion/react";
 import type { FC } from "react";
 import { useState } from "react";
 import { InputNumber, message, ModalV2 as Modal, Radio } from "tezign-ui";
 import tw from "twin.macro";
-import { batchCompress, compress, debouncePromise, ICompressConfig } from "./logic/compress";
+import { batchCompress, compress, ICompressConfig } from "./logic/compress";
 
 const { Group } = Radio;
 const defaultCompressConfig: ICompressConfig = {
@@ -22,7 +23,7 @@ const defaultCompressConfig: ICompressConfig = {
 // * --------------------------------------------------------------------------- comp
 export const ImageConvert: FC = () => {
   const currentImage = useValue(getCurrentImage);
-  const batchStatus = useBatchStatus();
+  const batchStatus = useValue(() => getBathStatus());
   const [compressConfig, setCompressConfig] = useState<ICompressConfig>(defaultCompressConfig);
 
   const handleRadioChange = (e: any) => {
