@@ -1,7 +1,52 @@
+import { cropData } from "@/core/data/cropData";
+import { rafBatch, useValue } from "@/core/utils";
+import { useMove } from "@/hooks/useMove";
+import { getCropData } from "@/logic/get/cropData";
+import { cx } from "@emotion/css";
 import type { FC } from "react";
+import { useMemo } from "react";
+// @ts-ignore
+import { tw } from "twind";
+
+// * --------------------------------------------------------------------------- serv
+
+export const useCropperDrag = () => {
+  const { width: cropWidth, height: cropHeight, originHeight, originWidth } = useValue(getCropData);
+  const maxLeft = originWidth - cropWidth;
+  const maxTop = originHeight - cropHeight;
+
+  const { moveProps } = useMove({
+    onMove: ({ deltaX, deltaY }) => {
+      rafBatch(() => {
+        cropData.set((data) => {
+          const [newTop, newLeft] = [data.y + deltaY, data.x + deltaX];
+          const [resTop, resLeft] = [limitPos(newTop, maxTop), limitPos(newLeft, maxLeft)];
+          data.y = resTop;
+          data.x = resLeft;
+        });
+      }).then();
+    },
+  });
+
+  return { moveProps };
+};
 
 // * --------------------------------------------------------------------------- comp
 
 export const CropperDrag: FC = () => {
-  return <div />;
+  const { moveProps } = useCropperDrag();
+
+  return useMemo(
+    () => (
+      <div {...moveProps} className={cx("cropper-face cropper-move", tw`absolute w-full h-full cursor-move inset-0`)} />
+    ),
+    [moveProps],
+  );
+};
+
+// * --------------------------------------------------------------------------- util
+
+const limitPos = (newVal: number, maxVal: number) => {
+  if (newVal < 0) return 0;
+  return newVal > maxVal ? maxVal : newVal;
 };
