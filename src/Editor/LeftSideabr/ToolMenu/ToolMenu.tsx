@@ -5,7 +5,6 @@ import { ToolMenuItem } from "@/Editor/LeftSideabr/ToolMenu/ToolMenuItem";
 import type { FC, ReactNode } from "react";
 import { useState } from "react";
 import tw from "twin.macro";
-import { DemoBtnGroup } from "./DemoBtnGroup/DemoBtnGroup";
 import { ImageCrop } from "./ImageCrop/ImageCrop";
 import { SizeScale } from "./SizeScale/SizeScale";
 
@@ -61,7 +60,7 @@ export const ToolMenu: FC = () => {
         />
       ))}
       {/* TODO: Remove */}
-      <DemoBtnGroup />
+      {/* <DemoBtnGroup /> */}
     </div>
   );
 };

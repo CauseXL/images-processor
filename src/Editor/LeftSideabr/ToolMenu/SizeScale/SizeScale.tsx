@@ -10,7 +10,7 @@ import { debouncePromise } from "@/utils/debouncePromise";
 import { css } from "@emotion/react";
 import type { FC } from "react";
 import { useEffect, useState } from "react";
-import { ModalV2 as Modal, Radio } from "tezign-ui";
+import { message, ModalV2 as Modal, Radio } from "tezign-ui";
 import tw from "twin.macro";
 import { batchScaleImage, scaleImage, SizeScaleType } from "./logic/scale";
 
@@ -33,6 +33,7 @@ export const SizeScale: FC = () => {
 
   useEffect(() => {
     setSizeState({
+      ...sizeState,
       width: currentImage.width,
       height: currentImage.height,
     });
@@ -43,7 +44,7 @@ export const SizeScale: FC = () => {
     const { width, height } = currentImage;
 
     if (!Object.keys(sizeState).length) {
-      setSizeState({ width, height });
+      setSizeState({ ...sizeState, width, height });
       return;
     }
     if (type === "width") result.height = Number((value / (width / height)).toFixed(0));
@@ -52,10 +53,15 @@ export const SizeScale: FC = () => {
       result.width = Number(((value / 100) * width).toFixed(0));
       result.height = Number(((value / 100) * height).toFixed(0));
     }
-    setSizeState({ ...sizeState, ...result });
+    setSizeState({ ...sizeState, ...result, type, scale: value });
   };
 
   const handleOk = async () => {
+    if (!sizeState.width || !sizeState.height) {
+      message.warning("请输入大小！");
+      return;
+    }
+    console.log(sizeState);
     if (batchStatus) {
       const modal = Modal.alert({
         type: "danger",
@@ -71,7 +77,9 @@ export const SizeScale: FC = () => {
     } else {
       const { url: curOriginUrl } = currentImage.origin;
       const imgData = await scaleImage(curOriginUrl, sizeState);
-      updateCurrentImage(imgData);
+      const newData = { ...currentImage, ...imgData, crop: { ...currentImage.crop, ...imgData } };
+      // @ts-ignore
+      updateCurrentImage(newData);
     }
   };
 
@@ -80,7 +88,9 @@ export const SizeScale: FC = () => {
   };
 
   const handleRadioChange = (e: any) => {
+    const { type, value } = sizeScaleItemList[e.target.value];
     setActiveKey(e.target.value);
+    setSizeState({ ...sizeState, type, scale: value });
   };
 
   const sizeScaleItemList: SizeScaleItemType[] = [

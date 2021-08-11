@@ -1,6 +1,6 @@
 import { pageData } from "@/core/data";
 import { useValue } from "@/core/utils";
-import { changeCurrentImage, updateCurrentImage } from "@/logic/action/currentImage";
+import { changeCurrentImage } from "@/logic/action/currentImage";
 import { updateAllImages } from "@/logic/action/imageList";
 import { updatePageTitle } from "@/logic/action/updatePageTitle";
 import { getCurrentImage } from "@/logic/get/currentImage";
@@ -44,7 +44,7 @@ export const DemoBtnGroup: FC = () => {
         <Button
           type="primary"
           onClick={() => {
-            updateCurrentImage({ width: 1, height: 1 });
+            // updateCurrentImage({ width: 1, height: 1 });
           }}
         >
           set current image size to 1

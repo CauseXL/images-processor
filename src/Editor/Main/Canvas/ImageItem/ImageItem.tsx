@@ -23,8 +23,8 @@ export const ImageItem: FC<{ style?: CSSProperties }> = ({ style }) => {
   } = imageState;
 
   const imageWrapperStyle = {
-    width,
-    height,
+    width: cropWidth,
+    height: cropHeight,
     top: -y,
     left: -x,
   };

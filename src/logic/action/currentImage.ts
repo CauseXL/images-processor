@@ -3,7 +3,7 @@ import { ImgItemType } from "@/core/data/types";
 import { rafBatch } from "@/core/utils";
 
 /** set 选中图片 */
-export const updateCurrentImage = (currentImage: any) => {
+export const updateCurrentImage = (currentImage: ImgItemType) => {
   rafBatch(() => {
     pageData.set((data) => {
       data.imgList = data.imgList.map((img) => {
