@@ -15,8 +15,9 @@ export const Canvas: FC = () => {
 
   return (
     <div ref={ref} className={cx("CENTER_CONTAINER", tw`w-full h-full overflow-auto`, center)}>
-      <CropLayer style={{ display: isCropMod ? undefined : "none" }} />
-      <ImageItem style={{ display: isCropMod ? "none" : undefined }} />
+      {/* <CropLayer style={{ display: isCropMod ? undefined : "none" }} /> */}
+      {/* <ImageItem style={{ display: isCropMod ? "none" : undefined }} /> */}
+      {isCropMod ? <CropLayer /> : <ImageItem />}
     </div>
   );
 };
