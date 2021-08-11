@@ -17,16 +17,20 @@ const useCropperViewer = () => {
     height,
     originWidth,
     originHeight,
+
     x,
     y,
     flip: [scaleX, scaleY],
+    rotate,
   } = useValue(getCropData);
+  const isVertical = rotate === 90 || rotate === -90;
 
   const imgStyle = {
     transformOrigin: `0 0`,
     transform: getTransformStyle({
-      width: originWidth,
-      height: originHeight,
+      width: isVertical ? originHeight : originWidth,
+      height: isVertical ? originWidth : originHeight,
+      rotate,
       scaleX,
       scaleY,
       crop: { top: y, left: x },

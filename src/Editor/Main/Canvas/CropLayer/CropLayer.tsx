@@ -5,8 +5,6 @@ import { getCropData } from "@/logic/get/cropData";
 import { getCurrentImage } from "@/logic/get/currentImage";
 import type { CSSProperties, FC } from "react";
 import { memo, useEffect, useMemo } from "react";
-// @ts-ignore
-import { tw } from "twind";
 import { Cropper } from "./Cropper/Cropper";
 
 // * --------------------------------------------------------------------------- comp
@@ -27,17 +25,10 @@ export const CropLayer: FC<{ style?: CSSProperties }> = memo(({ style }) => {
   // sync when unmount
   useEffect(() => {
     return () => {
-      const { width, height, x, y, flip } = cropStore;
-      updateCurrentImageCropInfo({ width, height, x, y, flip });
+      const { width, height, x, y, flip, rotate } = cropStore;
+      updateCurrentImageCropInfo({ width, height, x, y, flip, rotate });
     };
   }, [cropStore]);
 
-  return useMemo(
-    () => (
-      <div className={tw`m-auto my-24 w-full h-full`} style={{ ...style }}>
-        <Cropper />
-      </div>
-    ),
-    [style],
-  );
+  return useMemo(() => <Cropper />, [style]);
 });
