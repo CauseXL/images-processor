@@ -16,7 +16,6 @@ export const DownloadButton: FC = () => {
   const currentImage = useValue(getCurrentImage);
   const [progress, setProgress] = useState<number>(0);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
-  const PERCENT = Math.ceil(100 / imgList.length);
 
   const menu = (
     <Menu>
@@ -37,7 +36,6 @@ export const DownloadButton: FC = () => {
           const folder = zip.folder(pageData.get().title);
           imgList.forEach((item) => {
             const blobPromise = fetch(item.url).then((response) => {
-              setProgress((progress) => progress + PERCENT);
               if (response.status === 200 || response.status === 0) {
                 return Promise.resolve(response.blob());
               } else {
@@ -47,9 +45,10 @@ export const DownloadButton: FC = () => {
             const downloadName = `${item.name}.${formatExtension(item.type)}`;
             folder!.file(downloadName, blobPromise, { base64: true });
           });
-
           zip
-            .generateAsync({ type: "blob" })
+            .generateAsync({ type: "blob" }, (metadata) => {
+              setProgress(metadata.percent);
+            })
             .then((blob) => {
               saveAs(blob, pageData.get().title);
               setModalVisible(false);
