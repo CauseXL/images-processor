@@ -7,7 +7,7 @@ import { Cropper } from "./Cropper/Cropper";
 
 export const CropLayer: FC<{ style?: CSSProperties }> = ({ style }) => {
   return (
-    <div className={tw`m-auto my-24`} style={{ ...style }}>
+    <div className={tw`m-auto my-24 w-full h-full`} style={{ ...style }}>
       <Cropper />
     </div>
   );
