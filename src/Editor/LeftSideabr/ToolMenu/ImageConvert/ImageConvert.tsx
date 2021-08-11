@@ -2,7 +2,7 @@ import { pageData } from "@/core/data";
 import { useValue } from "@/core/utils";
 import { ButtonGroup } from "@/Editor/LeftSideabr/ToolMenu/components/ButtonGroup";
 import { updateCurrentImage } from "@/logic/action/currentImage";
-import { resetImageList } from "@/logic/action/imageList";
+import { resetImageListWithoutName } from "@/logic/action/imageList";
 import { getBathStatus } from "@/logic/get/batchStatus";
 import { getCurrentImage } from "@/logic/get/currentImage";
 import { theme } from "@/styles/theme";
@@ -60,11 +60,12 @@ export const ImageConvert: FC = () => {
 
     if (compressConfig.type === "origin") {
       if (batchStatus) {
-        resetImageList();
+        resetImageListWithoutName();
         message.success("批量还原成功！");
       } else {
-        const { url: oUrl, size: oSize } = currentImage.origin;
-        updateCurrentImage({ url: oUrl, size: oSize });
+        const { origin, crop } = currentImage;
+        const name = currentImage.name;
+        updateCurrentImage({ ...currentImage, ...origin, crop: { ...crop, ...origin }, name });
         message.success("还原成功！");
       }
     }

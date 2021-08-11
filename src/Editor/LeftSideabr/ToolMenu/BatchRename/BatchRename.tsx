@@ -101,7 +101,9 @@ export const BatchRename: FC = () => {
 
       <Divider css={dividerStyle} />
 
-      <p css={tw`mb-2`}>示例：{info.text}</p>
+      <div css={tw`mb-2 overflow-hidden overflow-ellipsis`} style={{ width: 248 }}>
+        示例：{info.text}
+      </div>
 
       <ButtonGroup onOk={rename} disableOnOk={info.disabled} onCancel={() => cancel()} />
     </div>
