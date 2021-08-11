@@ -1,9 +1,9 @@
 import { pageData } from "@/core/data";
 import { useValue } from "@/core/utils";
 import { ButtonGroup } from "@/Editor/LeftSideabr/ToolMenu/components/ButtonGroup";
-import { useBatchStatus } from "@/hooks/useBathStatus";
 import { updateCurrentImage } from "@/logic/action/currentImage";
 import { resetImageList } from "@/logic/action/imageList";
+import { getBathStatus } from "@/logic/get/batchStatus";
 import { getCurrentImage } from "@/logic/get/currentImage";
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
@@ -22,7 +22,7 @@ const defaultCompressConfig: ICompressConfig = {
 // * --------------------------------------------------------------------------- comp
 export const ImageConvert: FC = () => {
   const currentImage = useValue(getCurrentImage);
-  const batchStatus = useBatchStatus();
+  const batchStatus = useValue(() => getBathStatus());
   const [compressConfig, setCompressConfig] = useState<ICompressConfig>(defaultCompressConfig);
 
   const handleRadioChange = (e: any) => {

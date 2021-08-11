@@ -1,6 +1,7 @@
 import { pageData } from "@/core/data";
 import { useValue } from "@/core/utils";
-import { toggleBatchStatus, useBatchStatus } from "@/hooks/useBathStatus";
+import { toggleBatchStatus } from "@/logic/action/toggleBathStatus";
+import { getBathStatus } from "@/logic/get/batchStatus";
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
 import type { FC } from "react";
@@ -11,11 +12,12 @@ import tw from "twin.macro";
 
 export const LeftHeader: FC = () => {
   const length = useValue(() => pageData.get().imgList.length);
-  const batchStatus = useBatchStatus();
+  const status = useValue(() => getBathStatus());
+
   return (
     <div css={[leftHeaderStyle, tw`flex justify-between`]}>
       <div>批量应用（共处理 {length} 张图片）</div>
-      <Switch checked={batchStatus} onChange={() => toggleBatchStatus()} />
+      <Switch checked={status} onChange={() => toggleBatchStatus()} />
     </div>
   );
 };

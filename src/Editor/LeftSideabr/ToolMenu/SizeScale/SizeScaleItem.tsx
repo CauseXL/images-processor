@@ -1,6 +1,7 @@
+import { SizeScaleItemType } from "@/Editor/LeftSideabr/ToolMenu/SizeScale/SizeScale";
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
-import type { FC, ReactNode } from "react";
+import { FC, ReactNode } from "react";
 import { InputNumber } from "tezign-ui";
 import tw from "twin.macro";
 
@@ -9,7 +10,7 @@ import tw from "twin.macro";
 interface SizeScaleItemProps {
   text: string;
   radio: ReactNode;
-  type: string;
+  type: SizeScaleItemType["type"];
   active?: boolean;
   value?: number;
   onChange: (value: number) => void;

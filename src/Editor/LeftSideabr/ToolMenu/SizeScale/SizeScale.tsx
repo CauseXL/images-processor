@@ -1,82 +1,113 @@
+import { pageData } from "@/core/data";
+import { useValue } from "@/core/utils";
+import { ButtonGroup } from "@/Editor/LeftSideabr/ToolMenu/components/ButtonGroup";
 import { SizeScaleItem } from "@/Editor/LeftSideabr/ToolMenu/SizeScale/SizeScaleItem";
+import { updateCurrentImage } from "@/logic/action/currentImage";
+import { getBathStatus } from "@/logic/get/batchStatus";
+import { getCurrentImage } from "@/logic/get/currentImage";
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
-import { FC, memo, useState } from "react";
-import { Radio } from "tezign-ui";
+import type { FC } from "react";
+import { useEffect, useState } from "react";
+import { ModalV2 as Modal, Radio } from "tezign-ui";
 import tw from "twin.macro";
-import { ButtonGroup } from "../components/ButtonGroup";
+import { sleep } from "../ImageConvert/logic/compress";
+import { batchScaleImage, scaleImage, SizeScaleType } from "./logic/scale";
 
-// * --------------------------------------------------------------------------- inner state helper
+// * --------------------------------------------------------------------------- type
 
-type SCALE_OPTION_TYPE = "height" | "width" | "percent";
-
-interface SCALE_OPTION {
-  type: SCALE_OPTION_TYPE;
+export interface SizeScaleItemType {
+  text: string;
+  type: "height" | "width" | "percent";
   value?: number;
 }
 
-const SCALE_OPTION_LIST = [
-  ["height", "按照高度"],
-  ["width", "按照宽度"],
-  ["percent", "按照百分比"],
-];
-
-const DEFAULT_SCALE_OPTION: Record<SCALE_OPTION_TYPE, SCALE_OPTION> = {
-  height: { type: "height" },
-  width: { type: "width" },
-  percent: { type: "percent", value: 100 },
-};
-
 // * --------------------------------------------------------------------------- comp
 
-export const SizeScale: FC = memo(() => {
-  const [opt, setOpt] = useState(DEFAULT_SCALE_OPTION.percent);
-  const { type: curType, value } = opt;
+export const SizeScale: FC = () => {
+  const [activeKey, setActiveKey] = useState<number | null>();
+  const data = useValue(() => pageData.get());
+  const currentImage = useValue(() => getCurrentImage());
+  const batchStatus = useValue(() => getBathStatus());
+  const [sizeState, setSizeState] = useState<SizeScaleType>({});
 
-  // * ---------------------------
+  useEffect(() => {
+    setSizeState({
+      width: currentImage.width,
+      height: currentImage.height,
+    });
+  }, [currentImage]);
+
+  const handleInputChange = (type: SizeScaleItemType["type"], value: number) => {
+    let result = { [type]: value };
+    const { width, height } = currentImage;
+
+    if (!Object.keys(sizeState).length) {
+      setSizeState({ width, height });
+      return;
+    }
+    if (type === "width") result.height = Number((value / (width / height)).toFixed(0));
+    if (type === "height") result.width = Number((value * (width / height)).toFixed(0));
+    if (type === "percent") {
+      result.width = Number(((value / 100) * width).toFixed(0));
+      result.height = Number(((value / 100) * height).toFixed(0));
+    }
+    setSizeState({ ...sizeState, ...result });
+  };
+
+  const handleOk = async () => {
+    if (batchStatus) {
+      const modal = Modal.alert({
+        type: "danger",
+        width: 300,
+        footer: null,
+        closable: false,
+        maskClosable: false,
+        content: "正在处理批量尺寸缩放，请稍后...",
+      });
+      sleep(200)
+        .then(() => batchScaleImage(data, sizeState))
+        .then(() => modal.destroy());
+    } else {
+      const { url: curOriginUrl } = currentImage.origin;
+      const imgData = await scaleImage(curOriginUrl, sizeState);
+      updateCurrentImage(imgData);
+    }
+  };
+
+  const handleCancel = () => {
+    setActiveKey(null);
+  };
+
+  const handleRadioChange = (e: any) => {
+    setActiveKey(e.target.value);
+  };
+
+  const sizeScaleItemList: SizeScaleItemType[] = [
+    { text: "按照高度", type: "height", value: sizeState?.height },
+    { text: "按照宽度", type: "width", value: sizeState?.width },
+    { text: "按照百分比", type: "percent", value: 100 },
+  ];
 
   return (
     <div>
-      <Radio.Group
-        className="layout-rows"
-        // @ts-ignore
-        onChange={(e) => {
-          // @ts-ignore
-          const nextType: SCALE_OPTION_TYPE = e.target.value;
-          setOpt(DEFAULT_SCALE_OPTION[nextType]);
-        }}
-        css={[tw`w-full mb-3`, radioGroupStyle]}
-      >
-        {SCALE_OPTION_LIST.map(([type, label]) => (
+      <Radio.Group className="layout-rows" onChange={handleRadioChange} css={[tw`w-full mb-3`, radioGroupStyle]}>
+        {sizeScaleItemList.map(({ text, type, value }, index) => (
           <SizeScaleItem
-            key={type}
+            key={index}
+            text={text}
             type={type}
-            text={label}
-            active={type === curType}
             value={value}
-            radio={<Radio value={type} css={tw`mr-2`} />}
-            // @ts-ignore
-            onChange={(value: number) => {
-              setOpt((s) => ({ ...s, value }));
-            }}
+            active={activeKey === index}
+            radio={<Radio value={index} css={tw`mr-2`} />}
+            onChange={(value: any) => handleInputChange(type, value)}
           />
         ))}
       </Radio.Group>
-      <ButtonGroup
-        onOk={() => {
-          console.log("TODO scale images", opt);
-        }}
-        onCancel={() => {
-          // TODO cancel
-        }}
-        disableOnOk={
-          // TODO
-          false
-        }
-      />
+      <ButtonGroup onOk={handleOk} onCancel={handleCancel} disableOnOk={!(typeof activeKey === "number")} />
     </div>
   );
-});
+};
 
 // * --------------------------------------------------------------------------- style
 

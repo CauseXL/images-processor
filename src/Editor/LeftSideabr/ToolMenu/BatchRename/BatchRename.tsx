@@ -1,6 +1,7 @@
+import { useValue } from "@/core/utils";
 import { ButtonGroup } from "@/Editor/LeftSideabr/ToolMenu/components/ButtonGroup";
-import { useBatchStatus } from "@/hooks/useBathStatus";
 import { renameImage } from "@/logic/action/imageList";
+import { getBathStatus } from "@/logic/get/batchStatus";
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
 import { FC, useCallback, useMemo, useState } from "react";
@@ -15,7 +16,7 @@ export const BatchRename: FC = () => {
   const [hasOrder, setHasOrder] = useState<boolean>(false);
   const [order, setOrder] = useState<number | undefined>();
 
-  const batchStatus = useBatchStatus();
+  const batchStatus = useValue(() => getBathStatus());
 
   const cancel = () => {
     setName("");
