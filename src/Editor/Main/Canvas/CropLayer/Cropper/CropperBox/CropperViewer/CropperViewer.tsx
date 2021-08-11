@@ -2,6 +2,7 @@ import { useValue } from "@/core/utils";
 import { getCropData } from "@/logic/get/cropData";
 import { getCurrentImage } from "@/logic/get/currentImage";
 import { getTransformStyle } from "@/utils/getTransformStyle";
+import { getTureCropSize } from "@/utils/getTureCropSize";
 import { css, cx } from "@emotion/css";
 import type { FC } from "react";
 import React, { memo, useMemo } from "react";
@@ -12,24 +13,16 @@ import { tw } from "twind";
 
 const useCropperViewer = () => {
   const { url } = useValue(getCurrentImage);
-  const {
-    width,
-    height,
-    originWidth,
-    originHeight,
-
-    x,
-    y,
-    flip: [scaleX, scaleY],
-    rotate,
-  } = useValue(getCropData);
-  const isVertical = rotate === 90 || rotate === -90;
+  const cropInfo = useValue(getCropData);
+  const { width, height } = getTureCropSize(cropInfo);
+  const { x, y, flip, rotate } = cropInfo;
+  const [scaleX, scaleY] = flip;
 
   const imgStyle = {
     transformOrigin: `0 0`,
     transform: getTransformStyle({
-      width: isVertical ? originHeight : originWidth,
-      height: isVertical ? originWidth : originHeight,
+      width,
+      height,
       rotate,
       scaleX,
       scaleY,

@@ -1,6 +1,7 @@
 import { WRAPPER_PADDING } from "@/constant";
 import { store, useValue } from "@/core/utils";
 import { getCropData } from "@/logic/get/cropData";
+import { getTureCropSize } from "@/utils/getTureCropSize";
 import { css, cx } from "@emotion/css";
 import type { FC } from "react";
 import { memo, useMemo, useRef } from "react";
@@ -21,12 +22,12 @@ export const getCropperContainer = () => cropperContainer.get();
 
 export const useCropperContainer = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const { originWidth, originHeight, rotate } = useValue(getCropData);
-  const isVertical = rotate === 90 || rotate === -90;
+  const cropInfo = useValue(getCropData);
+  const { width, height } = getTureCropSize(cropInfo);
 
   const wrapperStyle = {
-    width: (isVertical ? originHeight : originWidth) + WRAPPER_PADDING * 2,
-    height: (isVertical ? originWidth : originHeight) + WRAPPER_PADDING * 2,
+    width: width + WRAPPER_PADDING * 2,
+    height: height + WRAPPER_PADDING * 2,
   };
 
   return { containerRef, wrapperStyle };
