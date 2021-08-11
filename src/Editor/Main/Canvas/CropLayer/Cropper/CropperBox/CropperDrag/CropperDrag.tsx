@@ -4,7 +4,7 @@ import { useMove } from "@/hooks/useMove";
 import { getCropData } from "@/logic/get/cropData";
 import { cx } from "@emotion/css";
 import type { FC } from "react";
-import { useMemo } from "react";
+import { memo, useMemo } from "react";
 // @ts-ignore
 import { tw } from "twind";
 
@@ -33,7 +33,7 @@ export const useCropperDrag = () => {
 
 // * --------------------------------------------------------------------------- comp
 
-export const CropperDrag: FC = () => {
+export const CropperDrag: FC = memo(() => {
   const { moveProps } = useCropperDrag();
 
   return useMemo(
@@ -42,7 +42,7 @@ export const CropperDrag: FC = () => {
     ),
     [moveProps],
   );
-};
+});
 
 // * --------------------------------------------------------------------------- util
 

@@ -1,17 +1,17 @@
 import { css, cx } from "@emotion/css";
 import type { FC } from "react";
-import React from "react";
+import React, { memo } from "react";
 // @ts-ignore
 import { tw } from "twind";
 
 // * --------------------------------------------------------------------------- comp
 
-export const CropperDashed: FC = () => (
+export const CropperDashed: FC = memo(() => (
   <>
     <span className={cx("cropper-dashed dashed-h", tw`block absolute opacity-50`, dashedStyle, hDashedStyle)} />
     <span className={cx("cropper-dashed dashed-v", tw`block absolute opacity-50`, dashedStyle, vDashedStyle)} />
   </>
-);
+));
 
 // * --------------------------------------------------------------------------- style
 

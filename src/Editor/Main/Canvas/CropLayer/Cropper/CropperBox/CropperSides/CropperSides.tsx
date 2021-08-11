@@ -1,6 +1,6 @@
 import { css, cx } from "@emotion/css";
 import type { FC } from "react";
-import React from "react";
+import React, { memo, useMemo } from "react";
 // @ts-ignore
 import { tw } from "twind";
 import { useLineMove } from "./useLineMove";
@@ -11,23 +11,21 @@ export type CropperLineType = "left" | "top" | "right" | "bottom";
 
 // * --------------------------------------------------------------------------- comp
 
-export const CropperSides: FC = () => {
-  return (
-    <>
-      <CropperLine className="line-w" type="left" />
-      <CropperLine className="line-n" type="top" />
-      <CropperLine className="line-e" type="right" />
-      <CropperLine className="line-s" type="bottom" />
-    </>
-  );
-};
+export const CropperSides: FC = memo(() => (
+  <>
+    <CropperLine className="line-w" type="left" />
+    <CropperLine className="line-n" type="top" />
+    <CropperLine className="line-e" type="right" />
+    <CropperLine className="line-s" type="bottom" />
+  </>
+));
 
 // * ---------------------------
 
-const CropperLine: FC<{ className: string; type: CropperLineType }> = ({ className, type }) => {
+const CropperLine: FC<{ className: string; type: CropperLineType }> = memo(({ className, type }) => {
   const { moveProps } = useLineMove(type);
-  return <span className={cx(className, cropperSides, line)} {...moveProps} />;
-};
+  return useMemo(() => <span className={cx(className, cropperSides, line)} {...moveProps} />, [moveProps]);
+});
 
 // * --------------------------------------------------------------------------- style
 

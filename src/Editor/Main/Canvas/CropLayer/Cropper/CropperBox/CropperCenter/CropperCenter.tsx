@@ -1,13 +1,14 @@
 import { css, cx } from "@emotion/css";
 import type { FC } from "react";
+import { memo } from "react";
 // @ts-ignore
 import { tw } from "twind";
 
 // * --------------------------------------------------------------------------- comp
 
-export const CropperCenter: FC = () => (
+export const CropperCenter: FC = memo(() => (
   <span className={cx("cropper-center", tw`block absolute h-0 w-0 left-2/4 top-2/4 opacity-75`, center)} />
-);
+));
 
 // * --------------------------------------------------------------------------- style
 

@@ -2,6 +2,7 @@ import { useValue } from "@/core/utils";
 import { getCropData } from "@/logic/get/cropData";
 import { css, cx } from "@emotion/css";
 import type { FC } from "react";
+import { memo, useMemo } from "react";
 // @ts-ignore
 import { tw } from "twind";
 import { CropperCenter } from "./CropperCenter/CropperCenter";
@@ -22,20 +23,23 @@ const useCropperBox = () => {
 
 // * --------------------------------------------------------------------------- comp
 
-export const CropperBox: FC = () => {
+export const CropperBox: FC = memo(() => {
   const cropperBoxStyle = useCropperBox();
 
-  return (
-    <div className={cx("cropper-crop-box", tw`absolute`, cropBox)} style={cropperBoxStyle}>
-      <CropperViewer />
-      <CropperDashed />
-      <CropperCenter />
-      <CropperDrag />
-      <CropperSides />
-      <CropperCorner />
-    </div>
+  return useMemo(
+    () => (
+      <div className={cx("cropper-crop-box", tw`absolute`, cropBox)} style={cropperBoxStyle}>
+        <CropperViewer />
+        <CropperDashed />
+        <CropperCenter />
+        <CropperDrag />
+        <CropperSides />
+        <CropperCorner />
+      </div>
+    ),
+    [cropperBoxStyle],
   );
-};
+});
 
 // * --------------------------------------------------------------------------- style
 

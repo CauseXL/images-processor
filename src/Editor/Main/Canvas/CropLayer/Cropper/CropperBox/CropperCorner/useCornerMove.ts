@@ -6,6 +6,7 @@ import { getCropData } from "@/logic/get/cropData";
 import { limitSize } from "@/utils/limitSize";
 import { CornerDirectionType } from "./CropperCorner";
 
+// TODO: calculateLogic --> pureFunc // XuYuCheng 2021/08/11
 export const useCornerMove = (direction: CornerDirectionType) => {
   const { width, height, y: top, x: left, originWidth, originHeight } = useValue(getCropData);
 

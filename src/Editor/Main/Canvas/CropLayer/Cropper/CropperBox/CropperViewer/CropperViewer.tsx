@@ -4,7 +4,7 @@ import { getCurrentImage } from "@/logic/get/currentImage";
 import { getTransformStyle } from "@/utils/getTransformStyle";
 import { css, cx } from "@emotion/css";
 import type { FC } from "react";
-import React from "react";
+import React, { memo, useMemo } from "react";
 // @ts-ignore
 import { tw } from "twind";
 
@@ -38,15 +38,18 @@ const useCropperViewer = () => {
 
 // * --------------------------------------------------------------------------- comp
 
-export const CropperViewer: FC = () => {
+export const CropperViewer: FC = memo(() => {
   const { url, imgStyle } = useCropperViewer();
 
-  return (
-    <span className={cx(tw`block overflow-hidden w-full h-full`, imgWrapper)}>
-      <img alt="" crossOrigin="anonymous" src={url} style={imgStyle} className={cx(image)} />
-    </span>
+  return useMemo(
+    () => (
+      <span className={cx(tw`block overflow-hidden w-full h-full`, imgWrapper)}>
+        <img alt="" crossOrigin="anonymous" src={url} style={imgStyle} className={cx(image)} />
+      </span>
+    ),
+    [url, imgStyle],
   );
-};
+});
 
 // * --------------------------------------------------------------------------- style
 

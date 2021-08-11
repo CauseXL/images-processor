@@ -1,13 +1,13 @@
 import { css, cx } from "@emotion/css";
 import type { FC } from "react";
-import { useMemo } from "react";
+import { memo, useMemo } from "react";
 // @ts-ignore
 import { tw } from "twind";
 import { useCropperImage } from "./useCropperImage";
 
 // * --------------------------------------------------------------------------- comp
 
-export const CropperImage: FC = () => {
+export const CropperImage: FC = memo(() => {
   const { url, onLoad, imgStyle, imgWrapperStyle } = useCropperImage();
 
   return useMemo(() => {
@@ -18,7 +18,7 @@ export const CropperImage: FC = () => {
       </div>
     );
   }, [url, onLoad, imgStyle, imgWrapperStyle]);
-};
+});
 
 // * --------------------------------------------------------------------------- style
 

@@ -7,6 +7,7 @@ import { getCurrentImage } from "@/logic/get/currentImage";
 import { limitSize } from "@/utils/limitSize";
 import { CropperLineType } from "./CropperSides";
 
+// TODO: calculateLogic --> pureFunc // XuYuCheng 2021/08/11
 export const useLineMove = (direction: CropperLineType) => {
   const cropInfo = useValue(getCropData);
   const originInfo = useValue(getCurrentImage).origin;
