@@ -1,7 +1,8 @@
 import { theme } from "@/styles/theme";
-import { css } from "@emotion/react";
+import { css, cx } from "@emotion/css";
 import type { FC } from "react";
-import tw from "twin.macro";
+// @ts-ignore
+import { tw } from "twind";
 import { LeftHeader } from "./LeftHeader/LeftHeader";
 import { ResetButton } from "./ResetButton/ResetButton";
 import { ToolMenu } from "./ToolMenu/ToolMenu";
@@ -10,7 +11,7 @@ import { ToolMenu } from "./ToolMenu/ToolMenu";
 
 export const LeftSidebar: FC = () => {
   return (
-    <div css={[leftSidebarStyle, tw`flex flex-col justify-start`]}>
+    <div className={cx(tw`flex flex-col justify-start overflow-auto`, left)}>
       <LeftHeader />
       <ToolMenu />
       <ResetButton />
@@ -20,7 +21,7 @@ export const LeftSidebar: FC = () => {
 
 // * --------------------------------------------------------------------------- style
 
-const leftSidebarStyle = css`
+const left = css`
   min-width: 280px;
   background-color: ${theme.bgColors.medium};
 `;
