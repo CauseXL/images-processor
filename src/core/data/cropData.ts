@@ -8,6 +8,7 @@ export const defaultCropInfo: CropDataType = {
   y: 0,
   width: 0,
   height: 0,
+  rotate: 0,
   flip: [1, 1],
   originWidth: 0,
   originHeight: 0,

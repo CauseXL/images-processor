@@ -7,13 +7,9 @@ import { getTransformStyle } from "@/utils/getTransformStyle";
 
 export const useCropperImage = () => {
   const { url } = useValue(getCurrentImage);
-  const {
-    width,
-    height,
-    originWidth,
-    originHeight,
-    flip: [scaleX, scaleY],
-  } = useValue(getCropData);
+  const { rotate, originWidth, originHeight, flip } = useValue(getCropData);
+  const [scaleX, scaleY] = flip;
+  const isVertical = rotate === 90 || rotate === -90;
 
   const onLoad = () => {
     console.log("image load");
@@ -21,12 +17,18 @@ export const useCropperImage = () => {
 
   const imgStyle = {
     transformOrigin: "0 0",
-    transform: getTransformStyle({ width: originWidth, height: originHeight, scaleX, scaleY }),
+    transform: getTransformStyle({
+      width: isVertical ? originHeight : originWidth,
+      height: isVertical ? originWidth : originHeight,
+      rotate,
+      scaleX,
+      scaleY,
+    }),
   };
 
   const imgWrapperStyle = {
-    width: originWidth,
-    height: originHeight,
+    width: isVertical ? originHeight : originWidth,
+    height: isVertical ? originWidth : originHeight,
   };
 
   return { url, onLoad, imgStyle, imgWrapperStyle };

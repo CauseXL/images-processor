@@ -6,7 +6,7 @@ import { CropperImage } from "./CropperImage/CropperImage";
 
 export const Cropper: FC = memo(() => (
   <CropperContainer>
-    <CropperBox />
     <CropperImage />
+    <CropperBox />
   </CropperContainer>
 ));

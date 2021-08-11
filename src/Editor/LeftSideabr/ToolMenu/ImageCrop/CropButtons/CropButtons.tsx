@@ -1,9 +1,10 @@
+import { CropType } from "@/core/data";
 import { cropData } from "@/core/data/cropData";
 import { rafBatch } from "@/core/utils";
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
 import type { FC, ReactElement } from "react";
-import { memo } from "react";
+import { memo, useState } from "react";
 import { Button, Tooltip } from "tezign-ui";
 import tw from "twin.macro";
 import {
@@ -14,34 +15,64 @@ import {
   RotateRightIcon,
 } from "../ImageCropIcons";
 
+// notice arr sort
+const rotateArr: CropType["rotate"][] = [0, 90, 180, -90];
+
+type RotateIndexType = 0 | 1 | 2 | 3;
+
 // * --------------------------------------------------------------------------- comp
 
 export const CropButtons: FC = memo(() => {
-  const handleScaleX = () => {
+  const [rotateIndex, setRotateIndex] = useState<RotateIndexType>(0);
+
+  // * ---------------------------
+
+  const handleScale = (axis: "x" | "y") => {
     rafBatch(() => {
       cropData.set((data) => {
         const [scaleX, scaleY] = data.flip;
-        data.flip = [-scaleX as 1 | -1, scaleY];
+        const [resultX, resultY] = axis === "x" ? [-scaleX as 1 | -1, scaleY] : [scaleX, -scaleY as 1 | -1];
+        data.flip = [resultX, resultY];
       });
     }).then();
   };
 
-  const handleScaleY = () => {
+  // * ---------------------------
+
+  const handleRotate = (direction: "left" | "right") => {
+    const offset = direction === "left" ? -1 : +1;
+    const newIndex = ((rotateIndex + rotateArr.length + offset) % 4) as RotateIndexType;
+    setRotateIndex(newIndex);
     rafBatch(() => {
       cropData.set((data) => {
-        const [scaleX, scaleY] = data.flip;
-        data.flip = [scaleX, -scaleY as 1 | -1];
+        data.rotate = rotateArr[newIndex];
       });
     }).then();
   };
+
+  // * ---------------------------
+
+  const handleRotateCrop = () => {
+    rafBatch(() => {
+      cropData.set((data) => {
+        const { width, height, x, y } = data;
+        data.width = height;
+        data.height = width;
+        data.x = y;
+        data.y = x;
+      });
+    }).then();
+  };
+
+  // * ---------------------------
 
   return (
     <div css={tw`flex justify-between items-center mt-4`}>
-      <CropButton icon={<FlipHorizontalIcon />} alt="垂直翻转" onClick={handleScaleY} />
-      <CropButton icon={<FlipVerticalIcon />} alt="水平翻转" onClick={handleScaleX} />
-      <CropButton icon={<RotateLeftIcon />} alt="旋转 -90 度" />
-      <CropButton icon={<RotateRightIcon />} alt="旋转 90 度" />
-      <CropButton icon={<RotateCropIcon />} alt="裁剪框旋转" />
+      <CropButton icon={<FlipHorizontalIcon />} alt="垂直翻转" onClick={() => handleScale("y")} />
+      <CropButton icon={<FlipVerticalIcon />} alt="水平翻转" onClick={() => handleScale("x")} />
+      <CropButton icon={<RotateLeftIcon />} alt="旋转 -90 度" onClick={() => handleRotate("left")} />
+      <CropButton icon={<RotateRightIcon />} alt="旋转 90 度" onClick={() => handleRotate("right")} />
+      <CropButton icon={<RotateCropIcon />} alt="裁剪框旋转" onClick={handleRotateCrop} />
     </div>
   );
 });
