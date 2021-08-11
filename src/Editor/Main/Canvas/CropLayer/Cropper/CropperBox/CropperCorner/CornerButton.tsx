@@ -4,6 +4,9 @@ import { useMemo } from "react";
 // @ts-ignore
 import { tw } from "twind";
 import { CornerDirectionType } from "./CropperCorner";
+import { useCornerMove } from "./useCornerMove";
+
+const size = 32;
 
 // * --------------------------------------------------------------------------- comp
 
@@ -11,13 +14,14 @@ export const CornerButton: FC<{
   axis: [1 | -1, 1 | -1];
   className: string;
   direction: CornerDirectionType;
-}> = ({ axis, className, children }) => {
+}> = ({ axis, className, direction, children }) => {
   const [ax, ay] = axis;
-  // const { moveProps } = useCropPointMove(direction);
+  const { moveProps } = useCornerMove(direction);
 
   return useMemo(() => {
     return (
       <div
+        {...moveProps}
         className={cx(className, tw`absolute`, corner)}
         style={{
           [ax === -1 ? "left" : "right"]: `-${size / 2}px`,
@@ -31,8 +35,6 @@ export const CornerButton: FC<{
 };
 
 // * --------------------------------------------------------------------------- style
-
-const size = 32;
 
 const corner = css`
   width: ${size}px;

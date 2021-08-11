@@ -12,20 +12,25 @@ import { Cropper } from "./Cropper/Cropper";
 // * --------------------------------------------------------------------------- comp
 
 export const CropLayer: FC<{ style?: CSSProperties }> = ({ style }) => {
-  const cropInfo = useValue(getCurrentImage).crop;
+  const currImage = useValue(getCurrentImage);
   const cropStore = useValue(getCropData);
 
+  // init when mount
   useEffect(() => {
-    // init
     rafBatch(() => {
-      cropData.set(cropInfo);
+      const { width: originWidth, height: originHeight } = currImage.origin;
+      cropData.set({ ...currImage.crop, originWidth, originHeight });
     }).then();
-    // sync
-    return () => {
-      cropStore && updateCurrentImageCropInfo(cropStore);
-    };
     // eslint-disable-next-line
   }, []);
+
+  // sync when unmount
+  useEffect(() => {
+    return () => {
+      const { width, height, x, y, flip } = cropStore;
+      updateCurrentImageCropInfo({ width, height, x, y, flip });
+    };
+  }, [cropStore]);
 
   return (
     <div className={tw`m-auto my-24 w-full h-full`} style={{ ...style }}>

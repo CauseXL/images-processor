@@ -11,6 +11,8 @@ import { CropperDrag } from "./CropperDrag/CropperDrag";
 import { CropperSides } from "./CropperSides/CropperSides";
 import { CropperViewer } from "./CropperViewer/CropperViewer";
 
+// * --------------------------------------------------------------------------- util
+
 // * --------------------------------------------------------------------------- serv
 
 const useCropperBox = () => {

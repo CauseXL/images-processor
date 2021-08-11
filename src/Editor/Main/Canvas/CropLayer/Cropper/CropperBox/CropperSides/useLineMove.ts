@@ -1,15 +1,11 @@
+import { MIN_CROP_LENGTH } from "@/constant";
 import { cropData } from "@/core/data/cropData";
 import { rafBatch, useValue } from "@/core/utils";
 import { useMove } from "@/hooks/useMove";
 import { getCropData } from "@/logic/get/cropData";
 import { getCurrentImage } from "@/logic/get/currentImage";
+import { limitSize } from "@/utils/limitSize";
 import { CropperLineType } from "./CropperSides";
-
-// * --------------------------------------------------------------------------- constant
-
-export const MIN_CROP_LENGTH = 20;
-
-// * --------------------------------------------------------------------------- serv
 
 export const useLineMove = (direction: CropperLineType) => {
   const cropInfo = useValue(getCropData);
@@ -60,7 +56,3 @@ export const useLineMove = (direction: CropperLineType) => {
 
   return { moveProps };
 };
-
-// * --------------------------------------------------------------------------- util
-
-export const limitSize = (val: number, min: number, max: number) => (val < min ? min : val > max ? max : val);
