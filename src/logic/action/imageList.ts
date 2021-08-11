@@ -1,10 +1,10 @@
-import { pageData, Snap } from "@/core/data";
+import { ImgItemType, pageData, Snap } from "@/core/data";
 import { rafBatch } from "@/core/utils";
 import { clone } from "ramda";
 import { message } from "tezign-ui";
 
 /** 全量更新图片列表 */
-export const updateAllImages = (imgList: any) => {
+export const updateAllImages = (imgList: ImgItemType[]) => {
   rafBatch(() => {
     pageData.set((data) => {
       data.imgList = [...imgList];
@@ -40,15 +40,15 @@ export const deleteImage = (id: number) => {
 };
 
 /** 批量还原图片数据 */
-export const resetImageList = () => {
+export const resetImageListWithoutName = () => {
   const currentList = clone(pageData.get().imgList);
-  currentList.forEach((item) => {
-    item.url = item.origin.url;
-    item.size = item.origin.size;
+  const originList = currentList.map((item) => {
+    const { origin, crop, name } = item;
+    return { ...item, ...origin, crop: { ...crop, ...origin }, name };
   });
   rafBatch(() => {
     pageData.set((data) => {
-      data.imgList = [...currentList];
+      data.imgList = [...originList];
     });
   }).then(() => {
     Snap.take();

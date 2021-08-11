@@ -8,6 +8,8 @@ import { proportion } from "../../ImageConvert/logic/compressAccurately";
 export interface SizeScaleType {
   width?: number;
   height?: number;
+  scale?: number;
+  type?: "height" | "width" | "percent";
 }
 
 export const scaleImage = async (curOriginUrl: string, sizeState: SizeScaleType) => {
@@ -21,8 +23,21 @@ export const scaleImage = async (curOriginUrl: string, sizeState: SizeScaleType)
 
 export const batchScaleImage = async (pageData: PageDataType, sizeState: SizeScaleType) => {
   const imgList = clone(pageData.imgList);
+  const { type, scale = 0 } = sizeState;
   const promiseQueue = imgList.map(async (item) => {
-    return await scaleImage(item.origin.url, sizeState);
+    const { width, height } = item;
+    let scaleConfig: SizeScaleType = {};
+    if (type === "width") {
+      scaleConfig.width = scale;
+      scaleConfig.height = Number((scale / (width / height)).toFixed(0));
+    } else if (type === "height") {
+      scaleConfig.width = Number((scale * (width / height)).toFixed(0));
+      scaleConfig.height = scale;
+    } else if (type === "percent") {
+      scaleConfig.width = Number(((scale / 100) * width).toFixed(0));
+      scaleConfig.height = Number(((scale / 100) * height).toFixed(0));
+    }
+    return await scaleImage(item.origin.url, scaleConfig);
   });
   Promise.all(promiseQueue)
     .then((res) => {
