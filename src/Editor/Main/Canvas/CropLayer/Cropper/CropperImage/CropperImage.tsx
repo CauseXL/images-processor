@@ -8,16 +8,16 @@ import { useCropperImage } from "./useCropperImage";
 // * --------------------------------------------------------------------------- comp
 
 export const CropperImage: FC = () => {
-  const { src, onLoad, imgStyle, imgWrapperStyle } = useCropperImage();
+  const { url, onLoad, imgStyle, imgWrapperStyle } = useCropperImage();
 
   return useMemo(() => {
     return (
       <div className={cx("cropper-canvas", tw`absolute`, canvas)} style={imgWrapperStyle}>
-        <img alt="" src={src} onLoad={onLoad} style={imgStyle} className={cx(image)} />
+        <img alt="" src={url} onLoad={onLoad} style={imgStyle} className={cx(image)} />
         <div className={cx(tw`absolute inset-0`, skin)} />
       </div>
     );
-  }, [src, onLoad, imgStyle, imgWrapperStyle]);
+  }, [url, onLoad, imgStyle, imgWrapperStyle]);
 };
 
 // * --------------------------------------------------------------------------- style

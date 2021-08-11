@@ -1,11 +1,19 @@
 import { useValue } from "@/core/utils";
+import { getCropData } from "@/logic/get/cropData";
 import { getCurrentImage } from "@/logic/get/currentImage";
+import { getTransformStyle } from "@/utils/getTransformStyle";
 
 // * --------------------------------------------------------------------------- serv
 
 export const useCropperImage = () => {
-  const { url: src, origin } = useValue(getCurrentImage);
-  const { width, height } = origin;
+  const { url } = useValue(getCurrentImage);
+  const {
+    width,
+    height,
+    originWidth,
+    originHeight,
+    flip: [scaleX, scaleY],
+  } = useValue(getCropData);
 
   const onLoad = () => {
     console.log("image load");
@@ -13,12 +21,13 @@ export const useCropperImage = () => {
 
   const imgStyle = {
     transformOrigin: "0 0",
+    transform: getTransformStyle({ width: originWidth, height: originHeight, scaleX, scaleY }),
   };
 
   const imgWrapperStyle = {
-    width,
-    height,
+    width: originWidth,
+    height: originHeight,
   };
 
-  return { src, onLoad, imgStyle, imgWrapperStyle };
+  return { url, onLoad, imgStyle, imgWrapperStyle };
 };

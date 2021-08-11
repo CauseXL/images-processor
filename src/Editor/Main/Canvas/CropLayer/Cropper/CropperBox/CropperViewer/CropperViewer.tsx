@@ -1,5 +1,7 @@
 import { useValue } from "@/core/utils";
+import { getCropData } from "@/logic/get/cropData";
 import { getCurrentImage } from "@/logic/get/currentImage";
+import { getTransformStyle } from "@/utils/getTransformStyle";
 import { css, cx } from "@emotion/css";
 import type { FC } from "react";
 import React from "react";
@@ -10,9 +12,25 @@ import { tw } from "twind";
 
 const useCropperViewer = () => {
   const { url } = useValue(getCurrentImage);
+  const {
+    width,
+    height,
+    originWidth,
+    originHeight,
+    x,
+    y,
+    flip: [scaleX, scaleY],
+  } = useValue(getCropData);
 
   const imgStyle = {
     transformOrigin: `0 0`,
+    transform: getTransformStyle({
+      width: originWidth,
+      height: originHeight,
+      scaleX,
+      scaleY,
+      crop: { top: y, left: x },
+    }),
   };
 
   return { url, imgStyle };

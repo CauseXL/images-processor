@@ -12,7 +12,7 @@ export interface CropType {
   y: number;
   width: number; // 初始值和 imageOriginWidth 一致
   height: number; // 初始值和 imageOriginHeight 一致
-  flip: [number, number]; // [水平翻转, 垂直翻转]
+  flip: [1 | -1, 1 | -1]; // [水平翻转, 垂直翻转]
 }
 
 // * ---------------------------
