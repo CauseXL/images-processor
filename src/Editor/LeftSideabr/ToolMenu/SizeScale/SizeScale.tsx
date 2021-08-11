@@ -6,12 +6,12 @@ import { updateCurrentImage } from "@/logic/action/currentImage";
 import { getBathStatus } from "@/logic/get/batchStatus";
 import { getCurrentImage } from "@/logic/get/currentImage";
 import { theme } from "@/styles/theme";
+import { debouncePromise } from "@/utils/debouncePromise";
 import { css } from "@emotion/react";
 import type { FC } from "react";
 import { useEffect, useState } from "react";
 import { ModalV2 as Modal, Radio } from "tezign-ui";
 import tw from "twin.macro";
-import { sleep } from "../ImageConvert/logic/compress";
 import { batchScaleImage, scaleImage, SizeScaleType } from "./logic/scale";
 
 // * --------------------------------------------------------------------------- type
@@ -65,7 +65,7 @@ export const SizeScale: FC = () => {
         maskClosable: false,
         content: "正在处理批量尺寸缩放，请稍后...",
       });
-      sleep(200)
+      debouncePromise(200)
         .then(() => batchScaleImage(data, sizeState))
         .then(() => modal.destroy());
     } else {

@@ -43,8 +43,3 @@ export const compress = (currentImage: ImgItemType, compressConfig: ICompressCon
       message.error(`品质压缩操作失败！${e}`);
     });
 };
-
-export const debouncePromise = (time: number) => {
-  // eslint-disable-next-line no-promise-executor-return
-  return new Promise((resolve) => setTimeout(resolve, time));
-};
