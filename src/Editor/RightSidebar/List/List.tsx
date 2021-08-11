@@ -3,6 +3,7 @@ import { changeCurrentImage } from "@/logic/action/currentImage";
 import { deleteImage } from "@/logic/action/imageList";
 import { getCurrentImage } from "@/logic/get/currentImage";
 import { css } from "@emotion/react";
+import { useDebounceFn } from "ahooks";
 import type { FC } from "react";
 import { Icon } from "tezign-ui";
 import tw from "twin.macro";
@@ -39,6 +40,7 @@ const Item: FC<{
   active: any;
   onClick: any;
 }> = ({ item, showExtraInfo, active, onClick }) => {
+  const { run } = useDebounceFn(deleteImage, { wait: 500 });
   return (
     <div
       key={item.name}
@@ -61,7 +63,7 @@ const Item: FC<{
           css={tw`cursor-pointer`}
           onClick={(e: any) => {
             e.stopPropagation();
-            deleteImage(item.id);
+            run(item.id);
           }}
         />
       </div>

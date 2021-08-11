@@ -1,5 +1,6 @@
 import { deleteImage } from "@/logic/action/imageList";
 import { css } from "@emotion/react";
+import { useDebounceFn } from "ahooks";
 import type { FC } from "react";
 import React, { useState } from "react";
 import { Icon } from "tezign-ui";
@@ -11,6 +12,7 @@ const log = console.log.bind(console);
 
 export const ImageComp: FC<any> = ({ item, order, active, onClick }) => {
   const [loaded, setLoaded] = useState(false);
+  const { run } = useDebounceFn(deleteImage, { wait: 500 });
 
   return (
     <div css={[imgCompStyle]} style={getPositionStyle(item, loaded)}>
@@ -35,7 +37,7 @@ export const ImageComp: FC<any> = ({ item, order, active, onClick }) => {
             // @ts-ignore
             onClick={(e) => {
               e.stopPropagation();
-              deleteImage(item.id);
+              run(item.id);
             }}
           >
             <Icon type="delete" />
