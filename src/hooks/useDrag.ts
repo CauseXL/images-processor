@@ -6,14 +6,18 @@ import { off, on } from "./util";
 
 const log = console.log.bind(console);
 
-interface IDragProps {
-  list: any;
+interface IDragProps<T> {
+  list: T[];
   minWidth: number;
   maxWidth: number;
   screenWidth: number;
 }
+export interface ISize {
+  width: number;
+  height: number;
+}
 
-export const useDrag = ({ list, minWidth, maxWidth, screenWidth }: IDragProps) => {
+export const useDrag = <T extends ISize>({ list, minWidth, maxWidth, screenWidth }: IDragProps<T>) => {
   const barRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 

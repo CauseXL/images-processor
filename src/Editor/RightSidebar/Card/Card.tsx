@@ -1,4 +1,6 @@
+import { ImgItemType } from "@/core/data";
 import { useValue } from "@/core/utils";
+import { TPositionList } from "@/hooks/useWaterFall";
 import { changeCurrentImage } from "@/logic/action/currentImage";
 import { getCurrentImage } from "@/logic/get/currentImage";
 import { css } from "@emotion/react";
@@ -6,7 +8,11 @@ import type { FC } from "react";
 import { formatOrder } from "../format";
 import { ImageComp } from "../ImageComp/ImageComp";
 
-export const Card: FC<{ list: any[] }> = ({ list }) => {
+export interface ICardProps {
+  list: TPositionList<ImgItemType>;
+}
+
+export const Card: FC<ICardProps> = ({ list }) => {
   const current = useValue(getCurrentImage);
 
   return (

@@ -1,3 +1,5 @@
+import { ImgItemType } from "@/core/data";
+import { TImage } from "@/hooks/useWaterFall";
 import { deleteImage } from "@/logic/action/imageList";
 import { css } from "@emotion/react";
 import { useDebounceFn } from "ahooks";
@@ -10,12 +12,19 @@ import { getImgSizeStyle, getPositionStyle } from "../size";
 
 const log = console.log.bind(console);
 
-export const ImageComp: FC<any> = ({ item, order, active, onClick }) => {
+export interface IImageCompProps {
+  item: TImage<ImgItemType>;
+  order: string;
+  active: boolean;
+  onClick: () => void;
+}
+
+export const ImageComp: FC<IImageCompProps> = ({ item, order, active, onClick }) => {
   const [loaded, setLoaded] = useState(false);
   const { run } = useDebounceFn(deleteImage, { wait: 500 });
 
   return (
-    <div css={[imgCompStyle]} style={getPositionStyle(item, loaded)}>
+    <div css={[imgCompStyle]} style={getPositionStyle(item)}>
       <img
         css={[imgStyle, !loaded && tw`opacity-0`, active && activeStyle]}
         src={item.url}
@@ -30,8 +39,7 @@ export const ImageComp: FC<any> = ({ item, order, active, onClick }) => {
       {loaded ? (
         <>
           <div css={[countStyle]}>{order}</div>
-          {/* TODO: 不会直接有 size 属性，使用 utils 里的方法 */}
-          <div css={[sizeStyle]}>{formatSize(item.size)}</div>
+          <div css={[sizeStyle]}>{formatSize(item.size!)}</div>
           <div
             css={[deleteStyle]}
             // @ts-ignore

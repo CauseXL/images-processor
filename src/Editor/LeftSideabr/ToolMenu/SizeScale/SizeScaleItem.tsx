@@ -38,6 +38,7 @@ export const SizeScaleItem: FC<SizeScaleItemProps> = ({
           size="small"
           value={value}
           indicated={false}
+          precision={0}
           placeholder="请输入整数"
           min={type === "percent" ? MIN_PERCENT : MIN_SHAPE}
           suffix={type === "percent" && "%"}
