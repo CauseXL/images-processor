@@ -36,6 +36,7 @@ export const batchCompress = async (pageData: PageDataType, compressConfig: ICom
 export const compress = (currentImage: ImgItemType, compressConfig: ICompressConfig) => {
   compressAccurately(currentImage.url, { size: compressConfig.targetSize as number })
     .then((res) => {
+      // @ts-ignore
       updateCurrentImage({ url: res, size: res.length * proportion });
       message.success("品质压缩操作成功！");
     })

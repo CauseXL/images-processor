@@ -6,8 +6,8 @@ export const waterfallSize = {
   nameHeightWithMargin: 28,
 };
 
-export const getPositionStyle = (item: any, loaded: boolean) => {
-  return loaded ? { top: item.pos[0] || 0, left: item.pos[1] || 0 } : {};
+export const getPositionStyle = (item: any) => {
+  return { top: item.pos[0] || 0, left: item.pos[1] || 0 };
 };
 
 export const getImgSizeStyle = (item: any): CSSProperties => {

@@ -15,7 +15,7 @@ export const ImageComp: FC<any> = ({ item, order, active, onClick }) => {
   const { run } = useDebounceFn(deleteImage, { wait: 500 });
 
   return (
-    <div css={[imgCompStyle]} style={getPositionStyle(item, loaded)}>
+    <div css={[imgCompStyle]} style={getPositionStyle(item)}>
       <img
         css={[imgStyle, !loaded && tw`opacity-0`, active && activeStyle]}
         src={item.url}
