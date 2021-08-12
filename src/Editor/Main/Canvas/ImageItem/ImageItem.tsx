@@ -41,7 +41,7 @@ export const ImageItem: FC<{ style?: CSSProperties }> = ({ style }) => {
         <div style={{ width: cropWidth, height: cropHeight, ...borderStyle, boxSizing: "content-box" }}>
           <div css={tw`relative origin-center w-full h-full overflow-hidden`}>
             <div style={{ ...imageWrapperStyle, transform: `scale(${scaleX}, ${scaleY})` }} css={tw`absolute`}>
-              <img src={url} crossOrigin="anonymous" alt="" width={width} height={height} />
+              <img src={url} crossOrigin="anonymous" alt="" width={cropWidth} height={cropHeight} />
             </div>
           </div>
         </div>
