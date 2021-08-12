@@ -1,4 +1,6 @@
-export const formatSize = (size: number) => {
+export const formatSize = (size?: number) => {
+  if (!size) return;
+
   const KB = size / 1024;
   const MB = size / 1024 / 1024;
   if (typeof size !== "number") {
