@@ -39,7 +39,7 @@ export const CropperContainer: FC = memo(({ children }) => {
   const { containerRef, wrapperStyle } = useCropperContainer();
   return useMemo(
     () => (
-      <div ref={containerRef} className={cx("cropper-container", tw`w-full h-full overflow-auto relative`)}>
+      <div ref={containerRef} className={cx("cropper-container", tw`w-full h-full overflow-auto relative flex`)}>
         <div className={cx("cropper-wrapper", tw`m-auto`, wrapper)} style={wrapperStyle}>
           <div className={tw`relative w-full h-full select-none`}>{children}</div>
         </div>
