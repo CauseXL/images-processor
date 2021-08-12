@@ -1,10 +1,19 @@
 import { useCallback } from "react";
 import { useRafState } from "./useRafState";
 
-interface ISize {
+export interface ISize {
   width: number;
   height: number;
 }
+
+export interface IPosition {
+  sizes: [number, number];
+  pos: [number, number];
+}
+
+export type TImage<T> = T & IPosition & ISize;
+export type TPositionList<T> = TImage<T>[];
+
 interface IWaterfallProps<T> {
   list: T[];
   containerWidth: number;
@@ -12,6 +21,7 @@ interface IWaterfallProps<T> {
   gap: number;
   subNodeHeight: number;
 }
+
 export const useWaterFall = <T extends ISize>({
   list,
   containerWidth,
@@ -19,7 +29,7 @@ export const useWaterFall = <T extends ISize>({
   gap,
   subNodeHeight,
 }: IWaterfallProps<T>) => {
-  const [positionList, setList] = useRafState<any>([]);
+  const [positionList, setList] = useRafState<TPositionList<T>>([]);
   const calc = useCallback(() => {
     const column = Math.floor((containerWidth - width) / (width + gap)) + 1;
 
@@ -34,7 +44,7 @@ export const useWaterFall = <T extends ISize>({
       const sw = width;
       const sh = item.height * factor;
 
-      const sizes = [sw, sh];
+      const sizes: [number, number] = [sw, sh];
 
       let pos: [number, number] = [0, 0];
       if (column === 1) {

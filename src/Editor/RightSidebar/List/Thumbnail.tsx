@@ -1,9 +1,11 @@
+import { ImgItemType } from "@/core/data";
+import { TImage } from "@/hooks/useWaterFall";
 import { css } from "@emotion/react";
 import type { FC } from "react";
 import { useState } from "react";
 import tw from "twin.macro";
 
-export const Thumbnail: FC<{ item: any }> = ({ item }) => {
+export const Thumbnail: FC<{ item: TImage<ImgItemType> }> = ({ item }) => {
   const [loaded, setLoaded] = useState<boolean>(false);
 
   return (

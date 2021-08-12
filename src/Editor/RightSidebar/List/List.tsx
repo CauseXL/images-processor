@@ -1,4 +1,6 @@
+import { ImgItemType } from "@/core/data";
 import { useValue } from "@/core/utils";
+import { TImage, TPositionList } from "@/hooks/useWaterFall";
 import { changeCurrentImage } from "@/logic/action/currentImage";
 import { deleteImage } from "@/logic/action/imageList";
 import { getCurrentImage } from "@/logic/get/currentImage";
@@ -10,7 +12,12 @@ import tw from "twin.macro";
 import { formatSize } from "../format";
 import { Thumbnail } from "./Thumbnail";
 
-export const List: FC<{ list: any[]; width: number }> = ({ list, width }) => {
+export interface IListProps {
+  list: TPositionList<ImgItemType>;
+  width: number;
+}
+
+export const List: FC<IListProps> = ({ list, width }) => {
   const extraInfoDisplayWidth = 300;
   const showExtraInfo = width > extraInfoDisplayWidth;
 
@@ -34,12 +41,14 @@ export const List: FC<{ list: any[]; width: number }> = ({ list, width }) => {
   );
 };
 
-const Item: FC<{
-  item: any;
-  showExtraInfo: any;
-  active: any;
-  onClick: any;
-}> = ({ item, showExtraInfo, active, onClick }) => {
+export interface IListItem {
+  item: TImage<ImgItemType>;
+  showExtraInfo: boolean;
+  active: boolean;
+  onClick: () => void;
+}
+
+const Item: FC<IListItem> = ({ item, showExtraInfo, active, onClick }) => {
   const { run } = useDebounceFn(deleteImage, { wait: 500 });
   return (
     <div
