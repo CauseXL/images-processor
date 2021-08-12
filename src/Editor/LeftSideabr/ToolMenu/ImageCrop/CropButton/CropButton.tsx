@@ -18,6 +18,8 @@ const useSyncCrop = () => {
 
   const onOk = () => {
     const image = urlToImage(currImg.origin.url);
+    console.log(image.width);
+    console.log(image.height);
     const canvas = cropImageToCanvas(image, { ...crop });
     const resultUrl = canvas.toDataURL();
     const { width, height } = crop;
