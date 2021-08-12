@@ -2,6 +2,7 @@ import { cropData } from "@/core/data/cropData";
 import { rafBatch, useValue } from "@/core/utils";
 import { useMove } from "@/hooks/useMove";
 import { getCropData } from "@/logic/get/cropData";
+import { getTureCropSize } from "@/utils/getTureCropSize";
 import { cx } from "@emotion/css";
 import type { FC } from "react";
 import { memo, useMemo } from "react";
@@ -11,9 +12,12 @@ import { tw } from "twind";
 // * --------------------------------------------------------------------------- serv
 
 export const useCropperDrag = () => {
-  const { width: cropWidth, height: cropHeight, originHeight, originWidth } = useValue(getCropData);
-  const maxLeft = originWidth - cropWidth;
-  const maxTop = originHeight - cropHeight;
+  const cropInfo = useValue(getCropData);
+  const { width, height } = getTureCropSize(cropInfo);
+  const { width: cropWidth, height: cropHeight } = cropInfo;
+
+  const maxLeft = width - cropWidth;
+  const maxTop = height - cropHeight;
 
   const { moveProps } = useMove({
     onMove: ({ deltaX, deltaY }) => {

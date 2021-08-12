@@ -15,10 +15,16 @@ import { CropperViewer } from "./CropperViewer/CropperViewer";
 // * --------------------------------------------------------------------------- serv
 
 const useCropperBox = () => {
-  const { x: left, y: top, width, height } = useValue(getCropData);
+  const { x, y, width, height } = useValue(getCropData);
+
   // return { width, height, left, top };
-  // TODO: transform 会造成抖动，之后用 top/left 方案替代 // XuYuCheng 2021/08/11
-  return { width, height, transform: `translateX(${left}px) translateY(${top}px)` };
+  // TODO: transform 会造成边缘抖动，之后用 top/left 方案替代 // XuYuCheng 2021/08/11
+
+  return {
+    width,
+    height,
+    transform: `translateX(${x}px) translateY(${y}px)`,
+  };
 };
 
 // * --------------------------------------------------------------------------- comp

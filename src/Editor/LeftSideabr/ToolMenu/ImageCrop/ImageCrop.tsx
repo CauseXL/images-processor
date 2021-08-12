@@ -1,21 +1,18 @@
-import { ButtonGroup } from "@/Editor/LeftSideabr/ToolMenu/components/ButtonGroup";
-import { CropButtons } from "@/Editor/LeftSideabr/ToolMenu/ImageCrop/CropButtons/CropButtons";
-import { CropDirection } from "@/Editor/LeftSideabr/ToolMenu/ImageCrop/CropDirection/CropDirection";
-import { CropInput } from "@/Editor/LeftSideabr/ToolMenu/ImageCrop/CropInput/CropInput";
-import { CropList } from "@/Editor/LeftSideabr/ToolMenu/ImageCrop/CropList/CropList";
 import type { FC } from "react";
+import { memo } from "react";
 import tw from "twin.macro";
+import { CropButton } from "./CropButton/CropButton";
+import { CropDirection } from "./CropDirection/CropDirection";
+import { CropHandler } from "./CropHandler/CropHandler";
+import { CropInput } from "./CropInput/CropInput";
+import { CropList } from "./CropList/CropList";
 
-// * --------------------------------------------------------------------------- comp
-
-export const ImageCrop: FC = () => {
-  return (
-    <div css={tw`flex flex-col`}>
-      <CropList />
-      <CropInput />
-      <CropButtons />
-      <CropDirection />
-      <ButtonGroup />
-    </div>
-  );
-};
+export const ImageCrop: FC = memo(() => (
+  <div css={tw`flex flex-col`}>
+    <CropList />
+    <CropInput />
+    <CropHandler />
+    <CropDirection />
+    <CropButton />
+  </div>
+));

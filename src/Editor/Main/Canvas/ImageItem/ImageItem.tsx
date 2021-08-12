@@ -6,13 +6,14 @@ import tw from "twin.macro";
 
 // * --------------------------------------------------------------------------- comp
 
+// TODO: 切换模式时会有抖动，可以用 display 来进行优化// XuYuCheng 2021/08/12
+// TODO: 精简当前代码，直接使用当前的宽高和 url // XuYuCheng 2021/08/12
 export const ImageItem: FC<{ style?: CSSProperties }> = ({ style }) => {
   const imageState = useValue(getCurrentImage);
   const isToolActive = useIsToolActive();
 
   const {
-    url,
-    origin: { width, height },
+    origin: { width, height, url },
     crop: {
       width: cropWidth,
       height: cropHeight,
