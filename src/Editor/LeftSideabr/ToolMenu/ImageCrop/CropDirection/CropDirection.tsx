@@ -2,7 +2,7 @@ import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
 import type { FC } from "react";
 import tw from "twin.macro";
-import { DirectionIcon } from "../ImageCropIcons";
+import { DirectionIcon } from "../Icon";
 
 // * --------------------------------------------------------------------------- comp
 

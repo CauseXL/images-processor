@@ -8,13 +8,7 @@ import type { FC, ReactElement } from "react";
 import { memo, useState } from "react";
 import { Button, Tooltip } from "tezign-ui";
 import tw from "twin.macro";
-import {
-  FlipHorizontalIcon,
-  FlipVerticalIcon,
-  RotateCropIcon,
-  RotateLeftIcon,
-  RotateRightIcon,
-} from "../ImageCropIcons";
+import { FlipHorizontalIcon, FlipVerticalIcon, RotateCropIcon, RotateLeftIcon, RotateRightIcon } from "../Icon";
 
 // notice arr sort
 const rotateArr: CropType["rotate"][] = [0, 90, 180, -90];
