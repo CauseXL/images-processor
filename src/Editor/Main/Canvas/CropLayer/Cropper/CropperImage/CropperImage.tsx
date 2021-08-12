@@ -13,7 +13,7 @@ export const CropperImage: FC = memo(() => {
   return useMemo(() => {
     return (
       <div className={cx("cropper-canvas", tw`absolute`, canvas)} style={imgWrapperStyle}>
-        <img alt="" src={url} onLoad={onLoad} style={imgStyle} className={cx(image)} />
+        <img alt="" className={image} src={url} onLoad={onLoad} style={imgStyle} />
         <div className={cx(tw`absolute inset-0`, skin)} />
       </div>
     );

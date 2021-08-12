@@ -18,9 +18,11 @@ const useSyncCrop = () => {
 
   const onOk = () => {
     const image = urlToImage(currImg.origin.url);
+    console.log(image.width);
+    console.log(image.height);
     const canvas = cropImageToCanvas(image, { ...crop });
     const resultUrl = canvas.toDataURL();
-    const { width, height } = crop;
+    const { x, y, width, height, flip, rotate } = crop;
 
     rafBatch(() => {
       pageData.set((data) => {
@@ -29,6 +31,14 @@ const useSyncCrop = () => {
             item.url = resultUrl;
             item.width = width;
             item.height = height;
+
+            // TODO: 批量 // XuYuCheng 2021/08/12
+            item.crop.x = x;
+            item.crop.y = y;
+            item.crop.width = width;
+            item.crop.height = height;
+            item.crop.flip = flip;
+            item.crop.rotate = rotate;
           }
           return item;
         });
