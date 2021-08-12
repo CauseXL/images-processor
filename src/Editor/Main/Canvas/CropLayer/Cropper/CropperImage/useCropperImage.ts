@@ -7,15 +7,13 @@ import { getTureCropSize } from "@/utils/getTureCropSize";
 // * --------------------------------------------------------------------------- serv
 
 export const useCropperImage = () => {
-  const { url } = useValue(getCurrentImage);
+  const { url } = useValue(getCurrentImage).origin;
   const cropInfo = useValue(getCropData);
   const { width, height } = getTureCropSize(cropInfo);
   const { rotate, flip } = cropInfo;
   const [scaleX, scaleY] = flip;
 
-  const onLoad = () => {
-    console.log("image load");
-  };
+  const onLoad = () => {};
 
   const imgStyle = {
     transformOrigin: "0 0",

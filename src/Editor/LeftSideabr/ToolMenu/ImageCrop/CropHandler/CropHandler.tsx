@@ -2,6 +2,7 @@ import { CropType } from "@/core/data";
 import { cropData } from "@/core/data/cropData";
 import { rafBatch } from "@/core/utils";
 import { theme } from "@/styles/theme";
+import { getTureCropSize } from "@/utils/getTureCropSize";
 import { css } from "@emotion/react";
 import type { FC, ReactElement } from "react";
 import { memo, useState } from "react";
@@ -22,7 +23,7 @@ type RotateIndexType = 0 | 1 | 2 | 3;
 
 // * --------------------------------------------------------------------------- comp
 
-export const CropButtons: FC = memo(() => {
+export const CropHandler: FC = memo(() => {
   const [rotateIndex, setRotateIndex] = useState<RotateIndexType>(0);
 
   // * ---------------------------
@@ -39,6 +40,7 @@ export const CropButtons: FC = memo(() => {
 
   // * ---------------------------
 
+  // TODO: 旋转图片时，一同旋转 cropBox（引入向量计算系统） // XuYuCheng 2021/08/11
   const handleRotate = (direction: "left" | "right") => {
     const offset = direction === "left" ? -1 : +1;
     const newIndex = ((rotateIndex + rotateArr.length + offset) % 4) as RotateIndexType;
@@ -47,11 +49,28 @@ export const CropButtons: FC = memo(() => {
       cropData.set((data) => {
         data.rotate = rotateArr[newIndex];
       });
-    }).then();
+    }).then(() => {
+      // TODO: 这里的逻辑抽离成纯函数 // XuYuCheng 2021/08/11
+      cropData.set((data) => {
+        const { x, y, width, height } = data;
+        const { width: oWidth, height: oHeight } = getTureCropSize(data);
+
+        if (width + x > oWidth) {
+          data.width = oWidth < width ? oWidth : width;
+          data.x = oWidth < width ? 0 : oWidth - width;
+        }
+
+        if (height + y > oHeight) {
+          data.height = oHeight < height ? oHeight : height;
+          data.y = oHeight < height ? 0 : oHeight - height;
+        }
+      });
+    });
   };
 
   // * ---------------------------
 
+  // TODO: 限制大小 // XuYuCheng 2021/08/11
   const handleRotateCrop = () => {
     rafBatch(() => {
       cropData.set((data) => {
@@ -61,25 +80,41 @@ export const CropButtons: FC = memo(() => {
         data.x = y;
         data.y = x;
       });
-    }).then();
+    }).then(() => {
+      // TODO: 这里的逻辑抽离成纯函数 // XuYuCheng 2021/08/11
+      // cropData.set((data) => {
+      //   const { x, y, width, height } = data;
+      //   const { width: oWidth, height: oHeight } = getTureCropSize(data);
+      //
+      //   if (width + x > oWidth) {
+      //     data.width = oWidth < width ? oWidth : width;
+      //     data.x = oWidth < width ? 0 : oWidth - width;
+      //   }
+      //
+      //   if (height + y > oHeight) {
+      //     data.height = oHeight < height ? oHeight : height;
+      //     data.y = oHeight < height ? 0 : oHeight - height;
+      //   }
+      // });
+    });
   };
 
   // * ---------------------------
 
   return (
     <div css={tw`flex justify-between items-center mt-4`}>
-      <CropButton icon={<FlipHorizontalIcon />} alt="垂直翻转" onClick={() => handleScale("y")} />
-      <CropButton icon={<FlipVerticalIcon />} alt="水平翻转" onClick={() => handleScale("x")} />
-      <CropButton icon={<RotateLeftIcon />} alt="旋转 -90 度" onClick={() => handleRotate("left")} />
-      <CropButton icon={<RotateRightIcon />} alt="旋转 90 度" onClick={() => handleRotate("right")} />
-      <CropButton icon={<RotateCropIcon />} alt="裁剪框旋转" onClick={handleRotateCrop} />
+      <CropBtn icon={<FlipHorizontalIcon />} alt="垂直翻转" onClick={() => handleScale("y")} />
+      <CropBtn icon={<FlipVerticalIcon />} alt="水平翻转" onClick={() => handleScale("x")} />
+      <CropBtn icon={<RotateLeftIcon />} alt="旋转 -90 度" onClick={() => handleRotate("left")} />
+      <CropBtn icon={<RotateRightIcon />} alt="旋转 90 度" onClick={() => handleRotate("right")} />
+      <CropBtn icon={<RotateCropIcon />} alt="裁剪框旋转" onClick={handleRotateCrop} />
     </div>
   );
 });
 
 // * ---------------------------
 
-const CropButton: FC<{ icon: string | ReactElement; alt: string; onClick?: () => void }> = memo(
+const CropBtn: FC<{ icon: string | ReactElement; alt: string; onClick?: () => void }> = memo(
   ({ icon, alt, onClick }) => (
     <Tooltip placement="bottom" title={alt}>
       <Button
