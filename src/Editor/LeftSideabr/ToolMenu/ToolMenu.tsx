@@ -68,6 +68,6 @@ export const ToolMenu: FC = () => {
 const menuList: MenuItemType[] = [
   { title: "尺寸缩放", content: <SizeScale />, category: "scale" },
   { title: "图片裁剪", content: <ImageCrop />, category: "crop" },
-  { title: "格式转换和压缩", content: <ImageConvert />, category: "convert" },
+  { title: "品质压缩", content: <ImageConvert />, category: "convert" },
   { title: "批量命名", content: <BatchRename />, category: "rename" },
 ];
