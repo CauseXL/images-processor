@@ -7,7 +7,7 @@ import { css } from "@emotion/react";
 import { useKeyPress } from "ahooks";
 import type { FC } from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Icon, Input } from "tezign-ui";
+import { Icon, Input, message } from "tezign-ui";
 import tw from "twin.macro";
 import { CompareModal } from "./CompareModal/CompareModal";
 import { DownloadButton } from "./DownloadButton/DownloadButton";
@@ -43,11 +43,13 @@ export const Header: FC<IHeader> = (props) => {
 
   const onTitleChange = (e: any) => {
     const { value } = e.target;
-
-    // TODO check logic @xiaoliang
-
-    const isEmpty = !value.trim().length;
+    const len = value.trim().length;
+    const isEmpty = !len;
     if (isEmpty) return true;
+    if (len > 10) {
+      message.error("最多支持10个文字！");
+      return true;
+    }
 
     updatePageTitle(value);
     return true;
