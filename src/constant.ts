@@ -2,7 +2,7 @@ import { CropTemplateType } from "@/Editor/LeftSideabr/ToolMenu/ImageCrop/CropTe
 
 export const MIN_CROP_LENGTH = 20;
 
-export const WRAPPER_PADDING = 30;
+export const WRAPPER_PADDING = 20;
 
 export const cropTemplateList: CropTemplateType[] = [
   {
