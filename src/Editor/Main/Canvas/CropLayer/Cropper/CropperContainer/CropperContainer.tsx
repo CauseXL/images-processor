@@ -27,7 +27,7 @@ export const useCropperContainer = () => {
 
   const wrapperStyle = {
     width: width + WRAPPER_PADDING * 2,
-    height: height + WRAPPER_PADDING * 2,
+    height: height + WRAPPER_PADDING * 6,
   };
 
   return { containerRef, wrapperStyle };
@@ -35,11 +35,12 @@ export const useCropperContainer = () => {
 
 // * --------------------------------------------------------------------------- comp
 
+// TODO: 宽度超出视窗，调整 scroll 使之居中 // XuYuCheng 2021/08/13
 export const CropperContainer: FC = memo(({ children }) => {
   const { containerRef, wrapperStyle } = useCropperContainer();
   return useMemo(
     () => (
-      <div ref={containerRef} className={cx("cropper-container", tw`w-full h-full overflow-auto relative`)}>
+      <div ref={containerRef} className={cx("cropper-container", tw`w-full h-full overflow-auto relative`, container)}>
         <div className={cx("cropper-wrapper", tw`m-auto`, wrapper)} style={wrapperStyle}>
           <div className={tw`relative w-full h-full select-none`}>{children}</div>
         </div>
@@ -51,6 +52,21 @@ export const CropperContainer: FC = memo(({ children }) => {
 
 // * --------------------------------------------------------------------------- style
 
+const container = css`
+  overflow: overlay;
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.3);
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  &::-webkit-scrollbar-corner {
+    background-color: transparent;
+  }
+`;
+
 const wrapper = css`
   padding: ${WRAPPER_PADDING}px;
+  padding-top: ${WRAPPER_PADDING * 3}px;
+  padding-bottom: ${WRAPPER_PADDING * 3}px;
 `;

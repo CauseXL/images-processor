@@ -32,7 +32,7 @@ const CropperLine: FC<{ className: string; type: CropperLineType }> = memo(({ cl
 const cropperSides = tw`block absolute h-full w-full opacity-10`;
 
 const line = css`
-  background-color: #01d9e1;
+  background-color: #54dec5;
 
   &.line-e {
     width: 5px;
