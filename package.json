@@ -1,6 +1,6 @@
 {
   "name": "tezign-intelligence-images-processor",
-  "version": "1.0.0-dev.17",
+  "version": "1.0.0-dev.18",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "module": "dist/tezign-intelligence-images-processor.esm.js",
