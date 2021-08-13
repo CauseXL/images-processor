@@ -64,7 +64,7 @@ const Item: FC<IListItem> = ({ item, showExtraInfo, active, onClick }) => {
         <div css={tw`mr-2`}>
           {item.width}*{item.height}px
         </div>
-        <div>{formatSize(item.size)}</div>
+        <div>{formatSize(item.size!)}</div>
       </div>
       <div css={operationStyle}>
         <Icon

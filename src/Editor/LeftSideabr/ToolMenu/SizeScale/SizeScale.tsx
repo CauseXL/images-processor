@@ -84,7 +84,11 @@ export const SizeScale: FC = () => {
   };
 
   const handleCancel = () => {
-    setActiveKey(null);
+    if (typeof activeKey === "number") {
+      const { width, height } = currentImage;
+      const { value } = sizeScaleItemList[activeKey];
+      setSizeState({ ...sizeState, width, height, scale: value });
+    }
   };
 
   const handleRadioChange = (e: any) => {
