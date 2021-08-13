@@ -123,6 +123,7 @@ const orderStyle = css`
   min-height: 30px;
 `;
 const checkboxStyle = css`
+  min-width: 90px;
   color: ${theme.colors.default};
   .ant-checkbox-checked .ant-checkbox-inner {
     background-color: #0cc5ae;
@@ -134,10 +135,11 @@ const checkboxStyle = css`
 
 const inputNumberStyle = css`
   margin-left: 20px;
-  width: 140px;
+  width: 100%;
+  flex: 1;
   background-color: transparent;
   .ant-input-number-input {
-    color: ${theme.colors.white};
+    color: ${theme.colors.default};
   }
 `;
 
