@@ -1,3 +1,4 @@
+import { useIsCropMod } from "@/Editor/LeftSideabr/ToolMenu/ToolMenu";
 import { css } from "@emotion/react";
 import type { FC } from "react";
 import { memo } from "react";
@@ -10,27 +11,30 @@ import { ZoomList } from "./ZoomList";
 
 export const ZoomBar: FC = memo(() => {
   const scaleValue = useScale();
+  const isCrop = useIsCropMod();
 
   return (
     <div css={[tw`absolute bottom-10 left-1/2 z-50 flex justify-between`, zoomBarContainerStyle]}>
-      <div css={[tw`h-9 px-3 flex items-center justify-between`, zoomBarStyle]}>
-        <div css={[tw`p-1 flex items-center mr-2 cursor-pointer`, iconJustifyStyle]} onClick={scaleDown}>
-          <Icon type="stop" className="fz-16" />
-        </div>
+      {!isCrop && (
+        <div css={[tw`h-9 px-3 flex items-center justify-between`, zoomBarStyle]}>
+          <div css={[tw`p-1 flex items-center mr-2 cursor-pointer`, iconJustifyStyle]} onClick={scaleDown}>
+            <Icon type="stop" className="fz-16" />
+          </div>
 
-        <Dropdown
-          overlay={<ZoomList />}
-          trigger={["click"]}
-          placement="topCenter"
-          css={tw`cursor-pointer h-full flex items-center select-none`}
-        >
-          <span>{getFormatScale(scaleValue)}</span>
-        </Dropdown>
+          <Dropdown
+            overlay={<ZoomList />}
+            trigger={["click"]}
+            placement="topCenter"
+            css={tw`cursor-pointer h-full flex items-center select-none`}
+          >
+            <span>{getFormatScale(scaleValue)}</span>
+          </Dropdown>
 
-        <div css={tw`p-1 flex items-center ml-2 cursor-pointer`} onClick={scaleUp}>
-          <Icon type="add-plus" className="fz-16" />
+          <div css={tw`p-1 flex items-center ml-2 cursor-pointer`} onClick={scaleUp}>
+            <Icon type="add-plus" className="fz-16" />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 });
