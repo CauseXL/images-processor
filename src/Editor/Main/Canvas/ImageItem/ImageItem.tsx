@@ -6,13 +6,17 @@ import { css, cx } from "@emotion/css";
 import type { CSSProperties, FC } from "react";
 // @ts-ignore
 import { tw } from "twind";
+import { useScale } from "../../logic/scale";
 
 // * --------------------------------------------------------------------------- comp
 
 // TODO: 宽度超出视窗，调整 scroll 使之居中 // XuYuCheng 2021/08/13
 export const ImageItem: FC<{ style?: CSSProperties }> = ({ style }) => {
   const { width, height, url } = useValue(getCurrentImage);
+  const scaleValue = useScale();
   const isToolActive = useIsToolActive();
+  const scaleWidth = width * scaleValue;
+  const scaleHeight = height * scaleValue;
 
   const borderStyle = {
     border: isToolActive ? "2px solid #54dec5" : undefined,
@@ -22,9 +26,9 @@ export const ImageItem: FC<{ style?: CSSProperties }> = ({ style }) => {
   return (
     <div className={tw`flex min-w-full min-h-full relative`} style={style}>
       <div className={cx(tw`flex-shrink-0 m-auto`, padding)} style={{ paddingTop: "60px", width: "1120px" }}>
-        <div style={{ width, height, ...borderStyle, boxSizing: "content-box" }}>
+        <div style={{ width: scaleWidth, height: scaleHeight, ...borderStyle, boxSizing: "content-box" }}>
           <div className={tw`relative origin-center w-full h-full overflow-hidden`}>
-            <div className={tw`absolute`} style={{ width, height }}>
+            <div className={tw`absolute`} style={{ width: scaleWidth, height: scaleHeight }}>
               <img alt="" crossOrigin="anonymous" className={image} src={url} width={width} height={height} />
             </div>
           </div>

@@ -75,7 +75,7 @@ export const SizeScale: FC = () => {
         .then(() => batchScaleImage(data, sizeState))
         .then(() => modal.destroy());
     } else {
-      const { url: curOriginUrl } = currentImage.origin;
+      const { url: curOriginUrl } = currentImage;
       const imgData = await scaleImage(curOriginUrl, sizeState);
       const newData = { ...currentImage, ...imgData, crop: { ...currentImage.crop, ...imgData } };
       // @ts-ignore

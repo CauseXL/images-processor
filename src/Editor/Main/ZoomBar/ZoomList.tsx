@@ -14,8 +14,8 @@ export const ZoomList: FC = memo(() => {
         </Menu.Item>
       ))}
       <Menu.Divider />
+      <Menu.Item onClick={scaleToFill}>实际大小</Menu.Item>
       <Menu.Item onClick={scaleToContain}>适应屏幕</Menu.Item>
-      <Menu.Item onClick={scaleToFill}>填充屏幕</Menu.Item>
     </Menu>
   );
 });
