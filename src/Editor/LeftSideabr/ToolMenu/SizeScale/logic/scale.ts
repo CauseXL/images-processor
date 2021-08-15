@@ -37,7 +37,7 @@ export const batchScaleImage = async (pageData: PageDataType, sizeState: SizeSca
       scaleConfig.width = Number(((scale / 100) * width).toFixed(0));
       scaleConfig.height = Number(((scale / 100) * height).toFixed(0));
     }
-    return await scaleImage(item.origin.url, scaleConfig);
+    return await scaleImage(item.url, scaleConfig);
   });
   Promise.all(promiseQueue)
     .then((res) => {

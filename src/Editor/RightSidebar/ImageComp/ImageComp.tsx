@@ -86,6 +86,7 @@ const imgStyle = css`
   position: relative;
   border-radius: 4px;
   min-height: 72px;
+  object-fit: fill;
 `;
 
 const nameStyle = css`
