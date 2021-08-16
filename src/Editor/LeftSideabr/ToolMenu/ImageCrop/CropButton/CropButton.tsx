@@ -21,7 +21,6 @@ const useSyncCrop = () => {
   const batchStatus = useValue(() => getBathStatus());
 
   const onOk = async () => {
-    console.log("crop", crop);
     if (batchStatus) {
       const modal = Modal.alert({
         type: "danger",
@@ -66,8 +65,9 @@ const useResetCrop = () => {
       ...crop,
       originWidth: width,
       originHeight: height,
+      aspectRatio: width / height,
     };
-    rafBatch(() => cropData.set({ ...defaultCrop }));
+    rafBatch(() => cropData.set({ ...defaultCrop })).then();
   };
 
   return { onCancel };

@@ -23,7 +23,6 @@ export const CropTemplateItem: FC<CropSizeSelectorProps> = memo((props) => {
 
   const handleClick = () => {
     console.log(type, value);
-    console.log("click");
     onClick();
   };
 
