@@ -1,5 +1,6 @@
 import { WRAPPER_PADDING } from "@/constant";
 import { store, useValue } from "@/core/utils";
+import { useScale } from "@/Editor/Main/logic/scale";
 import { getCropData } from "@/logic/get/cropData";
 import { getTureCropSize } from "@/utils/getTureCropSize";
 import { css, cx } from "@emotion/css";
@@ -24,10 +25,11 @@ export const useCropperContainer = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const cropInfo = useValue(getCropData);
   const { width, height } = getTureCropSize(cropInfo);
+  const scale = useScale();
 
   const wrapperStyle = {
-    width: width + WRAPPER_PADDING * 2,
-    height: height + WRAPPER_PADDING * 6,
+    width: width * scale + WRAPPER_PADDING * 2,
+    height: height * scale + WRAPPER_PADDING * 6,
   };
 
   return { containerRef, wrapperStyle };

@@ -8,6 +8,7 @@ export const getTransformStyle = ({
   scaleX = 1,
   scaleY = 1,
   crop,
+  zoom,
 }: {
   width: number;
   height: number;
@@ -18,6 +19,7 @@ export const getTransformStyle = ({
     top: number;
     left: number;
   };
+  zoom: number;
 }) => {
   let translateX = 0;
   let translateY = 0;
@@ -59,7 +61,12 @@ export const getTransformStyle = ({
     };
 
     [translateX, translateY] = cropList[String(rotate) as "0" | "90" | "-90" | "180"][index];
-    return `rotate(${rotate}deg) scaleX(${scaleX}) scaleY(${scaleY}) translate(${translateX}px, ${translateY}px)`;
+    return `
+      rotate(${rotate}deg) 
+      scaleX(${scaleX}) 
+      scaleY(${scaleY}) 
+      translate(${translateX * zoom}px, ${translateY * zoom}px)
+    `;
   }
 
   const list = {
@@ -90,5 +97,10 @@ export const getTransformStyle = ({
   };
 
   [translateX, translateY] = list[String(rotate) as "0" | "90" | "-90" | "180"][index];
-  return `rotate(${rotate}deg) scaleX(${scaleX}) scaleY(${scaleY}) translate(${translateX}px, ${translateY}px)`;
+  return `
+    rotate(${rotate}deg) 
+    scaleX(${scaleX}) 
+    scaleY(${scaleY}) 
+    translate(${translateX}px, ${translateY}px)
+  `;
 };

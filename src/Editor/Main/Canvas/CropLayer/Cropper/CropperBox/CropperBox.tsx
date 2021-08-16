@@ -1,4 +1,5 @@
 import { useValue } from "@/core/utils";
+import { useScale } from "@/Editor/Main/logic/scale";
 import { getCropData } from "@/logic/get/cropData";
 import { css, cx } from "@emotion/css";
 import type { FC } from "react";
@@ -16,14 +17,15 @@ import { CropperViewer } from "./CropperViewer/CropperViewer";
 
 const useCropperBox = () => {
   const { x, y, width, height } = useValue(getCropData);
+  const scale = useScale();
 
   // return { width, height, left, top };
   // TODO: transform 会造成边缘抖动，之后用 top/left 方案替代 // XuYuCheng 2021/08/11
 
   return {
-    width,
-    height,
-    transform: `translateX(${x}px) translateY(${y}px)`,
+    width: width * scale,
+    height: height * scale,
+    transform: `translateX(${x * scale}px) translateY(${y * scale}px)`,
   };
 };
 

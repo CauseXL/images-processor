@@ -1,4 +1,5 @@
 import { useValue } from "@/core/utils";
+import { useScale } from "@/Editor/Main/logic/scale";
 import { getCropData } from "@/logic/get/cropData";
 import { getCurrentImage } from "@/logic/get/currentImage";
 import { getTransformStyle } from "@/utils/getTransformStyle";
@@ -17,8 +18,11 @@ const useCropperViewer = () => {
   const { width, height } = getTureCropSize(cropInfo);
   const { x, y, flip, rotate } = cropInfo;
   const [scaleX, scaleY] = flip;
+  const scale = useScale();
 
   const imgStyle = {
+    width: width * scale,
+    height: height * scale,
     transformOrigin: `0 0`,
     transform: getTransformStyle({
       width,
@@ -27,6 +31,7 @@ const useCropperViewer = () => {
       scaleX,
       scaleY,
       crop: { top: y, left: x },
+      zoom: scale,
     }),
   };
 
