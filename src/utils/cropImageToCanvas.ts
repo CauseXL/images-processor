@@ -1,4 +1,5 @@
 // TODO: 和 imageTransferFunc 的逻辑合并掉 // XuYuCheng 2021/08/12
+import { EImageType } from "./imageTransferFuns";
 
 export interface CropDataType {
   x: number;
@@ -12,11 +13,7 @@ export interface CropDataType {
 /**
  * convert image to canvas based on crop data
  */
-export const cropImageToCanvas = (
-  image: HTMLImageElement,
-  cropData: CropDataType,
-  ratioMap: any,
-): HTMLCanvasElement => {
+export const cropImageToCanvas = (image: HTMLImageElement, cropData: CropDataType): HTMLCanvasElement => {
   const { x, y, width, height } = cropData;
   const { width: iWidth, height: iHeight } = image;
 
@@ -26,22 +23,9 @@ export const cropImageToCanvas = (
   let cropParams;
   let canvasParams;
 
-  if (Object.keys(ratioMap).length) {
-    // const ratioMap = {
-    //   rX: x / iWidth,
-    //   rY: y / iHeight,
-    //   rW: width / iWidth,
-    //   rH: height / iHeight,
-    // };
-    [cvs.width, cvs.height] = [iWidth * ratioMap.rW, iHeight * ratioMap.rH];
-    cropParams = [iWidth * ratioMap.rX, iHeight * ratioMap.rY, width * ratioMap.rW, height * ratioMap.rH];
-    canvasParams = [0, 0, iWidth * ratioMap.rW, iHeight * ratioMap.rH];
-    console.log(iWidth, iHeight);
-  } else {
-    [cvs.width, cvs.height] = [width, height];
-    cropParams = [x, y, width, height];
-    canvasParams = [0, 0, width, height];
-  }
+  [cvs.width, cvs.height] = [width, height];
+  cropParams = [x, y, width, height];
+  canvasParams = [0, 0, width, height];
 
   ctx.imageSmoothingEnabled = true;
   ctx.imageSmoothingQuality = "high";
@@ -55,7 +39,7 @@ export const cropImageToCanvas = (
 
 export const proportion = 0.75;
 
-export const orientateUrl = (image: HTMLImageElement, flip: number[], rotate: number) => {
+export const orientateUrl = (image: HTMLImageElement, type: EImageType, flip: number[], rotate: number) => {
   const cvs = document.createElement("canvas");
   let ctx = cvs.getContext("2d");
   const { width: iWidth, height: iHeight } = image;
@@ -109,5 +93,5 @@ export const orientateUrl = (image: HTMLImageElement, flip: number[], rotate: nu
       ctx!.drawImage(image, 0, 0, cvs.width, cvs.height);
       break;
   }
-  return cvs.toDataURL("image/jpeg", proportion);
+  return cvs.toDataURL(type, proportion);
 };

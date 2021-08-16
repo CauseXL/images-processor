@@ -1,4 +1,4 @@
-import { pageData, Snap } from "@/core/data";
+import { pageData } from "@/core/data";
 import { cropData } from "@/core/data/cropData";
 import { rafBatch, useValue } from "@/core/utils";
 import { ButtonGroup } from "@/Editor/LeftSideabr/ToolMenu/components/ButtonGroup";
@@ -14,7 +14,6 @@ import { batchCrop, cropImage } from "./logic/batchCrop";
 
 // * --------------------------------------------------------------------------- serv
 
-// TODO: canvas 裁切后图片模糊 // XuYuCheng 2021/08/12
 const useSyncCrop = () => {
   const crop = useValue(getCropData);
   const currImg = useValue(() => getCurrentImage());
@@ -35,17 +34,17 @@ const useSyncCrop = () => {
       // TODO: 批量裁剪其他图片时要通过出计算裁切比例来做裁切，现在逻辑不太对，先放着
       // const { x, y, width, height } = crop;
       // const { width: iWidth, height: iHeight } = currImg;
-      // const ratioMap = {
+      // const ratioCrop = {
       //   rX: x / iWidth,
       //   rY: y / iHeight,
       //   rW: width / iWidth,
       //   rH: height / iHeight,
       // };
       debouncePromise(200)
-        .then(() => batchCrop(data, crop, {}))
+        .then(() => batchCrop(data, crop))
         .then(() => modal.destroy());
     } else {
-      const cropData = await cropImage(currImg, crop, {});
+      const cropData = await cropImage(currImg, crop);
       console.log(cropData);
       const newData = { ...currImg, ...cropData, crop: { ...currImg.crop, ...crop } };
       updateCurrentImage(newData);
@@ -59,19 +58,16 @@ const useSyncCrop = () => {
 
 const useResetCrop = () => {
   const currImg = useValue(getCurrentImage);
-
   const onCancel = () => {
-    const { width, height } = currImg.origin;
-    rafBatch(() => {
-      cropData.set((data) => {
-        data.x = 0;
-        data.y = 0;
-        data.width = width;
-        data.height = height;
-      });
-    }).then(() => {
-      Snap.take();
-    });
+    const { origin, crop } = currImg;
+    const { width, height } = origin;
+    crop.rotate = crop.rotate ?? 0;
+    const defaultCrop = {
+      ...crop,
+      originWidth: width,
+      originHeight: height,
+    };
+    rafBatch(() => cropData.set({ ...defaultCrop }));
   };
 
   return { onCancel };
