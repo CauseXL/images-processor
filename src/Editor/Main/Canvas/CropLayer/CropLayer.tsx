@@ -11,8 +11,9 @@ export const CropLayer: FC<{ style?: CSSProperties }> = memo(({ style }) => {
   const currImage = useValue(getCurrentImage);
 
   useEffect(() => {
-    const { width: originWidth, height: originHeight } = currImage.origin;
-    cropData.set({ ...currImage.crop, originWidth, originHeight });
+    const { width, height, origin } = currImage;
+    const { width: originWidth, height: originHeight } = origin;
+    cropData.set({ ...currImage.crop, originWidth, originHeight, aspectRatio: width / height });
   }, [currImage]);
 
   return useMemo(() => <Cropper />, [style]);
