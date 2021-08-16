@@ -1,8 +1,9 @@
 import { cropTemplateList } from "@/constant";
+import { store, useValue } from "@/core/utils";
 import { theme } from "@/styles/theme";
 import { css, cx } from "@emotion/css";
 import type { FC } from "react";
-import { memo, useState } from "react";
+import { memo } from "react";
 import { ScrollContainer } from "tezign-ui";
 // @ts-ignore
 import { tw } from "twind";
@@ -13,20 +14,32 @@ import { CropTemplateItem } from "./CropTemplateItem";
 export interface CropTemplateType {
   title: string;
   desc?: string;
-  value?: any;
+  ratio: [number, number];
   type?: "origin" | "custom" | "template";
 }
+
+// * --------------------------------------------------------------------------- state
+
+export const activeTemplateKey = store(0);
+
+export const useSelectCustomTemplate = () => () => activeTemplateKey.set(1);
 
 // * --------------------------------------------------------------------------- comp
 
 export const CropTemplate: FC = memo(() => {
-  const [activeKey, setActiveKey] = useState(1);
+  const activeKey = useValue(() => activeTemplateKey.get());
+  const handleChangeTemplate = (index: number) => activeTemplateKey.set(index);
 
   return (
     <div className={list}>
       <ScrollContainer className={cx(tw`rounded mt-0`, scroll)} indicated={true} maxHeight={128} gap={-10}>
         {cropTemplateList.map((item, index) => (
-          <CropTemplateItem key={index} {...item} onClick={() => setActiveKey(index)} active={activeKey === index} />
+          <CropTemplateItem
+            key={index}
+            {...item}
+            onClick={() => handleChangeTemplate(index)}
+            active={activeKey === index}
+          />
         ))}
       </ScrollContainer>
     </div>

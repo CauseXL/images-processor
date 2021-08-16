@@ -1,3 +1,6 @@
+import { cropData } from "@/core/data/cropData";
+import { useValue } from "@/core/utils";
+import { getCropData } from "@/logic/get/cropData";
 import { theme } from "@/styles/theme";
 import { css, cx } from "@emotion/css";
 import type { FC } from "react";
@@ -9,8 +12,8 @@ import { tw } from "twind";
 
 interface CropSizeSelectorProps {
   title: string;
+  ratio: [number, number];
   desc?: string;
-  value?: any;
   type?: "origin" | "custom" | "template";
   onClick: () => void;
   active: boolean;
@@ -19,10 +22,36 @@ interface CropSizeSelectorProps {
 // * --------------------------------------------------------------------------- comp
 
 export const CropTemplateItem: FC<CropSizeSelectorProps> = memo((props) => {
-  const { title, desc, type, value, onClick, active } = props;
+  const { title, desc, type, ratio, onClick, active } = props;
+  const { originWidth, originHeight, width, height, x, y } = useValue(getCropData);
 
   const handleClick = () => {
-    console.log(type, value);
+    // TODO: 用函数抽出去 // XuYuCheng 2021/08/16
+    cropData.set((data) => {
+      if (type === "custom") {
+        data.aspectRatio = null;
+      } else {
+        const originRatio = originWidth / originHeight;
+        const resultRatio = type === "origin" ? originWidth / originHeight : ratio[0] / ratio[1];
+
+        if (originRatio >= resultRatio) {
+          const newWidth = originHeight * resultRatio;
+          data.y = 0;
+          data.x = (originWidth - newWidth) / 2;
+          data.width = newWidth;
+          data.height = originHeight;
+        }
+        if (originRatio < resultRatio) {
+          const newHeight = originWidth / resultRatio;
+          data.y = (originHeight - newHeight) / 2;
+          data.x = 0;
+          data.width = originWidth;
+          data.height = newHeight;
+        }
+        data.aspectRatio = resultRatio;
+      }
+    });
+
     onClick();
   };
 

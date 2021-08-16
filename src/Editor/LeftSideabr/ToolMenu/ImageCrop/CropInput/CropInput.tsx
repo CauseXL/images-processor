@@ -1,6 +1,7 @@
 import { MIN_CROP_LENGTH } from "@/constant";
 import { cropData } from "@/core/data/cropData";
 import { useValue } from "@/core/utils";
+import { useSelectCustomTemplate } from "@/Editor/LeftSideabr/ToolMenu/ImageCrop/CropTemplate/CropTemplate";
 import { getCropData, useCropRatioLocked } from "@/logic/get/cropData";
 import { theme } from "@/styles/theme";
 import { css, cx } from "@emotion/css";
@@ -69,6 +70,12 @@ export const CropInput: FC = memo(() => {
   };
   const { run } = useDebounceFn(handleCropSizeChange, { wait: 500 });
 
+  const selectCustomTemplate = useSelectCustomTemplate();
+  const handleToggleRatioLock = () => {
+    setIsLocked(!isLocked);
+    isLocked && selectCustomTemplate();
+  };
+
   // * ---------------------------
 
   return useMemo(
@@ -83,7 +90,10 @@ export const CropInput: FC = memo(() => {
         />
 
         <Tooltip placement="bottom" title="比例锁定">
-          <div className={cx(tw`flex items-center justify-center cursor-pointer`, lock)} onClick={() => setIsLocked()}>
+          <div
+            className={cx(tw`flex items-center justify-center cursor-pointer`, lock)}
+            onClick={handleToggleRatioLock}
+          >
             {isLocked ? <CropLockIcon /> : <CropUnLockIcon />}
           </div>
         </Tooltip>
@@ -97,7 +107,7 @@ export const CropInput: FC = memo(() => {
         />
       </div>
     ),
-    [width, height, run, maxWidth, maxHeight, minWidth, minHeight, isLocked],
+    [width, height, run, maxWidth, maxHeight, minWidth, minHeight, isLocked, handleToggleRatioLock],
   );
 });
 
