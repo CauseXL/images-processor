@@ -44,7 +44,6 @@ const useSyncCrop = () => {
         .then(() => modal.destroy());
     } else {
       const cropData = await cropImage(currImg, crop);
-      console.log(cropData);
       const newData = { ...currImg, ...cropData, crop: { ...currImg.crop, ...crop } };
       updateCurrentImage(newData);
     }

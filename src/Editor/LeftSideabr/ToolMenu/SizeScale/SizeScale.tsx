@@ -61,7 +61,6 @@ export const SizeScale: FC = () => {
       message.warning("请输入大小！");
       return;
     }
-    console.log(sizeState);
     if (batchStatus) {
       const modal = Modal.alert({
         type: "danger",
