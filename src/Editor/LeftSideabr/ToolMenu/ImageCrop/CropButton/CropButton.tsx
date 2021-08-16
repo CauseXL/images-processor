@@ -60,9 +60,9 @@ const useResetCrop = () => {
   const onCancel = () => {
     const { origin, crop } = currImg;
     const { width, height } = origin;
-    crop.rotate = crop.rotate ?? 0;
     const defaultCrop = {
       ...crop,
+      rotate: crop.rotate ?? 0,
       originWidth: width,
       originHeight: height,
       aspectRatio: width / height,
