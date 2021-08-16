@@ -1,6 +1,6 @@
 import { PageDataType } from "@/core/data";
 import { updateAllImages } from "@/logic/action/imageList";
-import { canvastoDataURL, dataURLtoImage, imagetoCanvas } from "@/utils/imageTransferFuns";
+import { canvastoDataURL, dataURLtoImage, EImageType, imagetoCanvas } from "@/utils/imageTransferFuns";
 import { clone } from "ramda";
 import { message } from "tezign-ui";
 import { proportion } from "../../ImageConvert/logic/compressAccurately";
@@ -14,9 +14,10 @@ export interface SizeScaleType {
 
 export const scaleImage = async (curOriginUrl: string, sizeState: SizeScaleType) => {
   const { width, height } = sizeState;
+  const originalMime = curOriginUrl.split(",")[0].match(/:(.*?);/)![1] as EImageType;
   let image = await dataURLtoImage(curOriginUrl);
   let canvas = await imagetoCanvas(image, sizeState);
-  let url = await canvastoDataURL(canvas, proportion);
+  let url = await canvastoDataURL(canvas, proportion, originalMime);
   let size = url.length * proportion;
   return { url, size, width, height };
 };

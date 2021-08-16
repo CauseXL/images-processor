@@ -13,6 +13,7 @@ import { downloadFile, formatExtension } from "./logic/download";
 
 export const DownloadButton: FC = () => {
   const imgList = useValue(() => pageData.get().imgList);
+  const pageTitle = useValue(() => pageData.get().title);
   const currentImage = useValue(getCurrentImage);
   const [progress, setProgress] = useState<number>(0);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
@@ -30,10 +31,11 @@ export const DownloadButton: FC = () => {
       <Menu.Item
         disabled={!imgList.length}
         onClick={() => {
+          const folderName = pageTitle.replaceAll("/", "_");
           setProgress(0);
           setModalVisible(true);
           const zip = new JSZip();
-          const folder = zip.folder(pageData.get().title);
+          const folder = zip.folder(folderName);
           imgList.forEach((item) => {
             const blobPromise = fetch(item.url).then((response) => {
               if (response.status === 200 || response.status === 0) {
@@ -42,7 +44,8 @@ export const DownloadButton: FC = () => {
                 return Promise.reject(new Error(response.statusText));
               }
             });
-            const downloadName = `${item.name}.${formatExtension(item.type)}`;
+            const name = item.name.replaceAll("/", "");
+            const downloadName = `${name}.${formatExtension(item.type)}`;
             folder!.file(downloadName, blobPromise, { base64: true });
           });
           zip
@@ -50,7 +53,7 @@ export const DownloadButton: FC = () => {
               setProgress(metadata.percent);
             })
             .then((blob) => {
-              saveAs(blob, pageData.get().title);
+              saveAs(blob, folderName);
               setModalVisible(false);
             })
             .catch((e) => {
