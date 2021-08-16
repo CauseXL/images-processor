@@ -1,83 +1,172 @@
-import { MIN_CROP_LENGTH } from "@/constant";
+import { MIN_CROP_LENGTH as min } from "@/constant";
 import { cropData } from "@/core/data/cropData";
 import { rafBatch, useValue } from "@/core/utils";
 import { useMove } from "@/hooks/useMove";
-import { getCropData } from "@/logic/get/cropData";
+import { getCropData, useCropRatioLocked } from "@/logic/get/cropData";
 import { limitSize } from "@/utils/limitSize";
 import { CornerDirectionType } from "./CropperCorner";
 
 // TODO: calculateLogic --> pureFunc // XuYuCheng 2021/08/11
 export const useCornerMove = (direction: CornerDirectionType) => {
-  const { width, height, y: top, x: left, originWidth, originHeight } = useValue(getCropData);
+  const [isLocked] = useCropRatioLocked();
+  const { width: w, height: h, y: t, x: l, originWidth: W, originHeight: H } = useValue(getCropData);
+  const r = W - w - l;
+  const b = H - h - t;
 
   const { moveProps } = useMove({
     onMove: ({ deltaX, deltaY }) => {
       rafBatch(() => {
         cropData.set((data) => {
-          if (direction === "nw") {
-            const [minLeft, minTop, minWidth, minHeight] = [0, 0, MIN_CROP_LENGTH, MIN_CROP_LENGTH];
-            const [maxLeft, maxTop, maxWidth, maxHeight] = [
-              left + width - MIN_CROP_LENGTH,
-              top + height - MIN_CROP_LENGTH,
-              left + width,
-              top + height,
-            ];
-            const [newLeft, newTop, newWidth, newHeight] = [
-              data.x + deltaX,
-              data.y + deltaY,
-              data.width - deltaX,
-              data.height - deltaY,
-            ];
-            const [resLeft, resTop, resWidth, resHeight] = [
-              limitSize(newLeft, minLeft, maxLeft),
-              limitSize(newTop, minTop, maxTop),
-              limitSize(newWidth, minWidth, maxWidth),
-              limitSize(newHeight, minHeight, maxHeight),
-            ];
-            data.y = resTop;
-            data.x = resLeft;
-            data.width = resWidth;
-            data.height = resHeight;
-          }
+          if (!isLocked) {
+            // * --------------------------------------------------------------------------- 自由状态
+            const [minLeft, minTop, minWidth, minHeight] = [0, 0, min, min];
 
-          if (direction === "ne") {
-            const [minTop, minWidth, minHeight] = [0, MIN_CROP_LENGTH, MIN_CROP_LENGTH];
-            const [maxTop, maxWidth, maxHeight] = [top + height - MIN_CROP_LENGTH, originWidth - left, height + top];
-            const [newTop, newWidth, newHeight] = [data.y + deltaY, data.width + deltaX, data.height - deltaY];
-            const [resTop, resWidth, resHeight] = [
-              limitSize(newTop, minTop, maxTop),
-              limitSize(newWidth, minWidth, maxWidth),
-              limitSize(newHeight, minHeight, maxHeight),
-            ];
-            data.y = resTop;
-            data.width = resWidth;
-            data.height = resHeight;
-          }
+            if (direction === "nw") {
+              const [maxLeft, maxTop, maxWidth, maxHeight] = [l + w - min, t + h - min, l + w, t + h];
+              const [newLeft, newTop, newWidth, newHeight] = [
+                data.x + deltaX,
+                data.y + deltaY,
+                data.width - deltaX,
+                data.height - deltaY,
+              ];
+              const [resLeft, resTop, resWidth, resHeight] = [
+                limitSize(newLeft, minLeft, maxLeft),
+                limitSize(newTop, minTop, maxTop),
+                limitSize(newWidth, minWidth, maxWidth),
+                limitSize(newHeight, minHeight, maxHeight),
+              ];
+              data.y = resTop;
+              data.x = resLeft;
+              data.width = resWidth;
+              data.height = resHeight;
+            }
 
-          if (direction === "se") {
-            const [minWidth, minHeight] = [MIN_CROP_LENGTH, MIN_CROP_LENGTH];
-            const [maxWidth, maxHeight] = [originWidth - left, originHeight - top];
-            const [newWidth, newHeight] = [data.width + deltaX, data.height + deltaY];
-            const [resWidth, resHeight] = [
-              limitSize(newWidth, minWidth, maxWidth),
-              limitSize(newHeight, minHeight, maxHeight),
-            ];
-            data.width = resWidth;
-            data.height = resHeight;
-          }
+            if (direction === "ne") {
+              const [maxTop, maxWidth, maxHeight] = [t + h - min, W - l, h + t];
+              const [newTop, newWidth, newHeight] = [data.y + deltaY, data.width + deltaX, data.height - deltaY];
+              const [resTop, resWidth, resHeight] = [
+                limitSize(newTop, minTop, maxTop),
+                limitSize(newWidth, minWidth, maxWidth),
+                limitSize(newHeight, minHeight, maxHeight),
+              ];
+              data.y = resTop;
+              data.width = resWidth;
+              data.height = resHeight;
+            }
 
-          if (direction === "sw") {
-            const [minLeft, minWidth, minHeight] = [0, MIN_CROP_LENGTH, MIN_CROP_LENGTH];
-            const [maxLeft, maxWidth, maxHeight] = [left + width - MIN_CROP_LENGTH, left + width, originHeight - top];
-            const [newLeft, newWidth, newHeight] = [data.x + deltaX, data.width - deltaX, data.height + deltaY];
-            const [resLeft, resWidth, resHeight] = [
-              limitSize(newLeft, minLeft, maxLeft),
-              limitSize(newWidth, minWidth, maxWidth),
-              limitSize(newHeight, minHeight, maxHeight),
-            ];
-            data.x = resLeft;
-            data.width = resWidth;
-            data.height = resHeight;
+            if (direction === "se") {
+              const [maxWidth, maxHeight] = [W - l, H - t];
+              const [newWidth, newHeight] = [data.width + deltaX, data.height + deltaY];
+              const [resWidth, resHeight] = [
+                limitSize(newWidth, minWidth, maxWidth),
+                limitSize(newHeight, minHeight, maxHeight),
+              ];
+              data.width = resWidth;
+              data.height = resHeight;
+            }
+
+            if (direction === "sw") {
+              const [maxLeft, maxWidth, maxHeight] = [l + w - min, l + w, H - t];
+              const [newLeft, newWidth, newHeight] = [data.x + deltaX, data.width - deltaX, data.height + deltaY];
+              const [resLeft, resWidth, resHeight] = [
+                limitSize(newLeft, minLeft, maxLeft),
+                limitSize(newWidth, minWidth, maxWidth),
+                limitSize(newHeight, minHeight, maxHeight),
+              ];
+              data.x = resLeft;
+              data.width = resWidth;
+              data.height = resHeight;
+            }
+          } else {
+            // * --------------------------------------------------------------------------- 锁定比例
+            const ratio = w / h;
+            const [minWidth, minHeight] = ratio > 1 ? [ratio * min, min] : [ratio * min, min];
+
+            if (direction === "nw") {
+              const newRatio = (w + l) / (h + t);
+
+              const [maxWidth, maxHeight] = ratio > newRatio ? [w + l, (w + l) / ratio] : [(h + t) * ratio, h + t];
+              const [minLeft, minTop] = [W - r - maxWidth, H - b - maxHeight];
+              const [maxLeft, maxTop] = [W - r - minWidth, H - b - minHeight];
+
+              const [newLeft, newTop, newWidth, newHeight] = [
+                data.x + deltaX,
+                data.y + deltaX / ratio,
+                data.width - deltaX,
+                data.height - deltaX / ratio,
+              ];
+              const [resLeft, resTop, resWidth, resHeight] = [
+                limitSize(newLeft, minLeft, maxLeft),
+                limitSize(newTop, minTop, maxTop),
+                limitSize(newWidth, minWidth, maxWidth),
+                limitSize(newHeight, minHeight, maxHeight),
+              ];
+              data.y = resTop;
+              data.x = resLeft;
+              data.width = resWidth;
+              data.height = resHeight;
+            }
+
+            // * ---------------------------
+
+            if (direction === "ne") {
+              const newRatio = (w + r) / (h + t);
+
+              const [maxWidth, maxHeight] = ratio > newRatio ? [w + r, (w + r) / ratio] : [(h + t) * ratio, h + t];
+              const [minTop] = [H - b - maxHeight];
+              const [maxTop] = [H - b - minHeight];
+              const [newTop, newWidth, newHeight] = [
+                data.y - deltaX / ratio,
+                data.width + deltaX,
+                data.height + deltaX / ratio,
+              ];
+              const [resTop, resWidth, resHeight] = [
+                limitSize(newTop, minTop, maxTop),
+                limitSize(newWidth, minWidth, maxWidth),
+                limitSize(newHeight, minHeight, maxHeight),
+              ];
+              data.y = resTop;
+              data.width = resWidth;
+              data.height = resHeight;
+            }
+
+            // * ---------------------------
+
+            if (direction === "se") {
+              const newRatio = (w + r) / (h + b);
+
+              const [maxWidth, maxHeight] = ratio > newRatio ? [w + r, (w + r) / ratio] : [(h + b) * ratio, h + b];
+              const [newWidth, newHeight] = [data.width + deltaX, data.height + deltaX / ratio];
+              const [resWidth, resHeight] = [
+                limitSize(newWidth, minWidth, maxWidth),
+                limitSize(newHeight, minHeight, maxHeight),
+              ];
+              data.width = resWidth;
+              data.height = resHeight;
+            }
+
+            // * ---------------------------
+
+            if (direction === "sw") {
+              const newRatio = (w + l) / (h + b);
+
+              const [maxWidth, maxHeight] = ratio > newRatio ? [w + l, (w + l) / ratio] : [(h + b) * ratio, h + b];
+              const [minLeft] = [W - r - maxWidth, H - b - maxHeight];
+              const [maxLeft] = [W - r - minWidth, H - b - minHeight];
+              const [newLeft, newWidth, newHeight] = [
+                data.x + deltaX,
+                data.width - deltaX,
+                data.height - deltaX / ratio,
+              ];
+              const [resLeft, resWidth, resHeight] = [
+                limitSize(newLeft, minLeft, maxLeft),
+                limitSize(newWidth, minWidth, maxWidth),
+                limitSize(newHeight, minHeight, maxHeight),
+              ];
+              data.x = resLeft;
+              data.width = resWidth;
+              data.height = resHeight;
+            }
           }
         });
       }).then();
