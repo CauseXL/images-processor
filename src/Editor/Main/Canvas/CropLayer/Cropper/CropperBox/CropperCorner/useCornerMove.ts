@@ -7,6 +7,7 @@ import { limitSize } from "@/utils/limitSize";
 import { CornerDirectionType } from "./CropperCorner";
 
 // TODO: calculateLogic --> pureFunc // XuYuCheng 2021/08/11
+// TODO: 简化代码 // XuYuCheng 2021/08/16
 export const useCornerMove = (direction: CornerDirectionType) => {
   const [isLocked] = useCropRatioLocked();
   const { width: w, height: h, y: t, x: l, originWidth: W, originHeight: H } = useValue(getCropData);
@@ -19,6 +20,7 @@ export const useCornerMove = (direction: CornerDirectionType) => {
         cropData.set((data) => {
           if (!isLocked) {
             // * --------------------------------------------------------------------------- 自由状态
+
             const [minLeft, minTop, minWidth, minHeight] = [0, 0, min, min];
 
             if (direction === "nw") {
@@ -79,15 +81,17 @@ export const useCornerMove = (direction: CornerDirectionType) => {
             }
           } else {
             // * --------------------------------------------------------------------------- 锁定比例
+
             const ratio = w / h;
             const [minWidth, minHeight] = ratio > 1 ? [ratio * min, min] : [ratio * min, min];
 
             if (direction === "nw") {
-              const newRatio = (w + l) / (h + t);
+              const [areaW, areaH] = [w + l, h + t];
+              const areaRatio = areaW / areaH;
 
-              const [maxWidth, maxHeight] = ratio > newRatio ? [w + l, (w + l) / ratio] : [(h + t) * ratio, h + t];
-              const [minLeft, minTop] = [W - r - maxWidth, H - b - maxHeight];
-              const [maxLeft, maxTop] = [W - r - minWidth, H - b - minHeight];
+              const [maxWidth, maxHeight] = ratio > areaRatio ? [areaW, areaW / ratio] : [areaH * ratio, areaH];
+              const [minLeft, minTop] = [areaW - maxWidth, areaH - maxHeight];
+              const [maxLeft, maxTop] = [areaW - minWidth, areaH - minHeight];
 
               const [newLeft, newTop, newWidth, newHeight] = [
                 data.x + deltaX,
@@ -110,11 +114,12 @@ export const useCornerMove = (direction: CornerDirectionType) => {
             // * ---------------------------
 
             if (direction === "ne") {
-              const newRatio = (w + r) / (h + t);
+              const [areaW, areaH] = [w + r, h + t];
+              const areaRatio = areaW / areaH;
 
-              const [maxWidth, maxHeight] = ratio > newRatio ? [w + r, (w + r) / ratio] : [(h + t) * ratio, h + t];
-              const [minTop] = [H - b - maxHeight];
-              const [maxTop] = [H - b - minHeight];
+              const [maxWidth, maxHeight] = ratio > areaRatio ? [areaW, areaW / ratio] : [areaH * ratio, areaH];
+              const minTop = areaH - maxHeight;
+              const maxTop = areaH - minHeight;
               const [newTop, newWidth, newHeight] = [
                 data.y - deltaX / ratio,
                 data.width + deltaX,
@@ -133,9 +138,10 @@ export const useCornerMove = (direction: CornerDirectionType) => {
             // * ---------------------------
 
             if (direction === "se") {
-              const newRatio = (w + r) / (h + b);
+              const [areaW, areaH] = [w + r, h + b];
+              const areaRatio = areaW / areaH;
 
-              const [maxWidth, maxHeight] = ratio > newRatio ? [w + r, (w + r) / ratio] : [(h + b) * ratio, h + b];
+              const [maxWidth, maxHeight] = ratio > areaRatio ? [areaW, areaW / ratio] : [areaH * ratio, areaH];
               const [newWidth, newHeight] = [data.width + deltaX, data.height + deltaX / ratio];
               const [resWidth, resHeight] = [
                 limitSize(newWidth, minWidth, maxWidth),
@@ -148,11 +154,12 @@ export const useCornerMove = (direction: CornerDirectionType) => {
             // * ---------------------------
 
             if (direction === "sw") {
-              const newRatio = (w + l) / (h + b);
+              const [areaW, areaH] = [w + l, h + b];
+              const areaRatio = areaW / areaH;
 
-              const [maxWidth, maxHeight] = ratio > newRatio ? [w + l, (w + l) / ratio] : [(h + b) * ratio, h + b];
-              const [minLeft] = [W - r - maxWidth, H - b - maxHeight];
-              const [maxLeft] = [W - r - minWidth, H - b - minHeight];
+              const [maxWidth, maxHeight] = ratio > areaRatio ? [areaW, areaW / ratio] : [areaH * ratio, areaH];
+              const minLeft = areaW - maxWidth;
+              const maxLeft = areaW - minWidth;
               const [newLeft, newWidth, newHeight] = [
                 data.x + deltaX,
                 data.width - deltaX,
