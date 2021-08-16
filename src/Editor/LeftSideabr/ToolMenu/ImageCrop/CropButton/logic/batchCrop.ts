@@ -1,6 +1,12 @@
 import { ImgItemType, PageDataType } from "@/core/data";
 import { updateAllImages } from "@/logic/action/imageList";
-import { CropDataType, cropImageToCanvas, orientateUrl, proportion } from "@/utils/cropImageToCanvas";
+import {
+  CropDataType,
+  cropImageToCanvas,
+  flipImageToUrl,
+  proportion,
+  rotateImageToUrl,
+} from "@/utils/cropImageToCanvas";
 import { dataURLtoImage, EImageType } from "@/utils/imageTransferFuns";
 import { clone } from "ramda";
 import { message } from "tezign-ui";
@@ -14,11 +20,14 @@ export const cropImage = async (currentImage: ImgItemType, crop: CropDataType) =
   const oriDataUrl = currentImage.origin.url;
   const originalMime = oriDataUrl.split(",")[0].match(/:(.*?);/)![1] as EImageType;
   const image = await dataURLtoImage(oriDataUrl);
+  /** 做翻转 */
+  const flipUrl = flipImageToUrl(image, originalMime, crop.flip);
+  const flipImage = await dataURLtoImage(flipUrl);
   /** 做旋转 */
-  const dataUrl = orientateUrl(image, originalMime, crop.flip, crop.rotate);
-  const oriImage = await dataURLtoImage(dataUrl);
+  const rotateUrl = rotateImageToUrl(flipImage, originalMime, crop.rotate);
+  const rotateImage = await dataURLtoImage(rotateUrl);
   /** 做裁切 */
-  const canvas = cropImageToCanvas(oriImage, { ...crop });
+  const canvas = cropImageToCanvas(rotateImage, { ...crop });
   const url = canvas.toDataURL(originalMime, proportion);
 
   const size = url.length * proportion;
