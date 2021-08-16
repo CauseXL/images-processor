@@ -1,54 +1,159 @@
-import { MIN_CROP_LENGTH } from "@/constant";
+/* eslint-disable */
+import { MIN_CROP_LENGTH as min, MIN_CROP_LENGTH } from "@/constant";
 import { cropData } from "@/core/data/cropData";
 import { rafBatch, useValue } from "@/core/utils";
 import { useMove } from "@/hooks/useMove";
-import { getCropData } from "@/logic/get/cropData";
-import { getCurrentImage } from "@/logic/get/currentImage";
+import { getCropData, useCropRatioLocked } from "@/logic/get/cropData";
 import { limitSize } from "@/utils/limitSize";
 import { CropperLineType } from "./CropperSides";
 
 // TODO: calculateLogic --> pureFunc // XuYuCheng 2021/08/11
+// TODO: 简化代码 // XuYuCheng 2021/08/16
 export const useLineMove = (direction: CropperLineType) => {
-  const cropInfo = useValue(getCropData);
-  const originInfo = useValue(getCurrentImage).origin;
-
-  const { width, height } = originInfo;
-  const { x: cropLeft, y: cropTop, width: cropWidth, height: cropHeight } = cropInfo;
+  const [isLocked] = useCropRatioLocked();
+  const { width: w, height: h, y: t, x: l, originWidth: W, originHeight: H } = useValue(getCropData);
+  const r = W - w - l;
+  const b = H - h - t;
 
   const { moveProps } = useMove({
     onMove: ({ deltaX, deltaY }) => {
       rafBatch(() => {
         cropData.set((data) => {
-          if (direction === "left") {
-            const [minLeft, minWidth] = [0, MIN_CROP_LENGTH];
-            const [maxLeft, maxWidth] = [cropLeft + cropWidth - MIN_CROP_LENGTH, cropLeft + cropWidth];
-            const [newLeft, newWidth] = [data.x + deltaX, data.width - deltaX];
-            const [resLeft, resWidth] = [limitSize(newLeft, minLeft, maxLeft), limitSize(newWidth, minWidth, maxWidth)];
-            data.x = resLeft;
-            data.width = resWidth;
-          }
+          if (!isLocked) {
+            // * --------------------------------------------------------------------------- 自由状态
 
-          if (direction === "top") {
-            const [minTop, minHeight] = [0, MIN_CROP_LENGTH];
-            const [maxTop, maxHeight] = [cropTop + cropHeight - MIN_CROP_LENGTH, cropTop + cropHeight];
-            const [newTop, newHeight] = [data.y + deltaY, data.height - deltaY];
-            const [resTop, resHeight] = [limitSize(newTop, minTop, maxTop), limitSize(newHeight, minHeight, maxHeight)];
-            data.y = resTop;
-            data.height = resHeight;
-          }
+            if (direction === "left") {
+              const [minLeft, minWidth] = [0, MIN_CROP_LENGTH];
+              const [maxLeft, maxWidth] = [l + w - MIN_CROP_LENGTH, l + w];
+              const [newLeft, newWidth] = [data.x + deltaX, data.width - deltaX];
+              const [resLeft, resWidth] = [
+                limitSize(newLeft, minLeft, maxLeft),
+                limitSize(newWidth, minWidth, maxWidth),
+              ];
+              data.x = resLeft;
+              data.width = resWidth;
+            }
 
-          if (direction === "right") {
-            const minWidth = MIN_CROP_LENGTH;
-            const maxWidth = width - cropLeft;
-            const newWidth = data.width + deltaX;
-            data.width = limitSize(newWidth, minWidth, maxWidth);
-          }
+            if (direction === "top") {
+              const [minTop, minHeight] = [0, MIN_CROP_LENGTH];
+              const [maxTop, maxHeight] = [t + h - MIN_CROP_LENGTH, t + h];
+              const [newTop, newHeight] = [data.y + deltaY, data.height - deltaY];
+              const [resTop, resHeight] = [
+                limitSize(newTop, minTop, maxTop),
+                limitSize(newHeight, minHeight, maxHeight),
+              ];
+              data.y = resTop;
+              data.height = resHeight;
+            }
 
-          if (direction === "bottom") {
-            const minHeight = MIN_CROP_LENGTH;
-            const maxHeight = height - cropTop;
-            const newHeight = data.height + deltaY;
-            data.height = limitSize(newHeight, minHeight, maxHeight);
+            if (direction === "right") {
+              const minWidth = MIN_CROP_LENGTH;
+              const maxWidth = W - l;
+              const newWidth = data.width + deltaX;
+              data.width = limitSize(newWidth, minWidth, maxWidth);
+            }
+
+            if (direction === "bottom") {
+              const minHeight = MIN_CROP_LENGTH;
+              const maxHeight = H - t;
+              const newHeight = data.height + deltaY;
+              data.height = limitSize(newHeight, minHeight, maxHeight);
+            }
+          } else {
+            // * --------------------------------------------------------------------------- 锁定比例
+
+            const ratio = w / h;
+            const [minWidth, minHeight] = ratio > 1 ? [ratio * min, min] : [ratio * min, min];
+
+            if (direction === "left") {
+              const [newLeft, newTop, newWidth, newHeight] = [
+                data.x + deltaX,
+                data.y + deltaX / 2 / ratio,
+                data.width - deltaX,
+                data.height - deltaX / ratio,
+              ];
+
+              if (
+                newLeft >= 0 &&
+                newTop >= 0 &&
+                H - newHeight - newTop >= 0 &&
+                newWidth >= MIN_CROP_LENGTH &&
+                newHeight >= MIN_CROP_LENGTH
+              ) {
+                data.y = newTop;
+                data.x = newLeft;
+                data.width = newWidth;
+                data.height = newHeight;
+              }
+            }
+
+            // * ---------------------------
+
+            if (direction === "top") {
+              const [newLeft, newTop, newWidth, newHeight] = [
+                data.x + (deltaY / 2) * ratio,
+                data.y + deltaY,
+                data.width - deltaY * ratio,
+                data.height - deltaY,
+              ];
+
+              if (
+                newLeft >= 0 &&
+                newTop >= 0 &&
+                W - newWidth - newLeft >= 0 &&
+                newWidth >= MIN_CROP_LENGTH &&
+                newHeight >= MIN_CROP_LENGTH
+              ) {
+                data.y = newTop;
+                data.x = newLeft;
+                data.width = newWidth;
+                data.height = newHeight;
+              }
+            }
+
+            // * ---------------------------
+
+            if (direction === "right") {
+              const [newTop, newWidth, newHeight] = [
+                data.y - deltaX / 2 / ratio,
+                data.width + deltaX,
+                data.height + deltaX / ratio,
+              ];
+
+              if (
+                newTop >= 0 &&
+                H - newHeight - newTop >= 0 &&
+                W - newWidth - l >= 0 &&
+                newWidth >= MIN_CROP_LENGTH &&
+                newHeight >= MIN_CROP_LENGTH
+              ) {
+                data.y = newTop;
+                data.width = newWidth;
+                data.height = newHeight;
+              }
+            }
+
+            // * ---------------------------
+
+            if (direction === "bottom") {
+              const [newLeft, newWidth, newHeight] = [
+                data.x - (deltaY / 2) * ratio,
+                data.width + deltaY * ratio,
+                data.height + deltaY,
+              ];
+
+              if (
+                newLeft >= 0 &&
+                H - newHeight - t >= 0 &&
+                W - newWidth - newLeft >= 0 &&
+                newWidth >= MIN_CROP_LENGTH &&
+                newHeight >= MIN_CROP_LENGTH
+              ) {
+                data.x = newLeft;
+                data.width = newWidth;
+                data.height = newHeight;
+              }
+            }
           }
         });
       }).then();

@@ -25,8 +25,8 @@ export const ImageItem: FC<{ style?: CSSProperties }> = ({ style }) => {
 
   return (
     <div className={tw`flex min-w-full min-h-full relative`} style={style}>
-      <div className={cx(tw`flex-shrink-0 m-auto`, padding)} style={{ paddingTop: "60px", width: "1120px" }}>
-        <div style={{ width: scaleWidth, height: scaleHeight, ...borderStyle, boxSizing: "content-box" }}>
+      <div className={cx(tw`flex-shrink-0 m-auto`, padding)}>
+        <div style={{ width, height, ...borderStyle, boxSizing: "content-box" }}>
           <div className={tw`relative origin-center w-full h-full overflow-hidden`}>
             <div className={tw`absolute`} style={{ width: scaleWidth, height: scaleHeight }}>
               <img alt="" crossOrigin="anonymous" className={image} src={url} width={width} height={height} />
