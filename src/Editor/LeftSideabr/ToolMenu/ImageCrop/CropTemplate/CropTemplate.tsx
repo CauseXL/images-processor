@@ -1,9 +1,10 @@
 import { cropTemplateList } from "@/constant";
 import { store, useValue } from "@/core/utils";
+import { useCropRatioLocked } from "@/logic/get/cropData";
 import { theme } from "@/styles/theme";
 import { css, cx } from "@emotion/css";
 import type { FC } from "react";
-import { memo } from "react";
+import { memo, useEffect } from "react";
 import { ScrollContainer } from "tezign-ui";
 // @ts-ignore
 import { tw } from "twind";
@@ -29,6 +30,11 @@ export const useSelectCustomTemplate = () => () => activeTemplateKey.set(1);
 export const CropTemplate: FC = memo(() => {
   const activeKey = useValue(() => activeTemplateKey.get());
   const handleChangeTemplate = (index: number) => activeTemplateKey.set(index);
+  const [, setIsLocked] = useCropRatioLocked();
+
+  useEffect(() => {
+    activeKey === 1 && setIsLocked(false);
+  }, [activeKey]);
 
   return (
     <div className={list}>

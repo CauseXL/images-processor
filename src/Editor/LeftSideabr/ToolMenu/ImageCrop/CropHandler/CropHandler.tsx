@@ -1,6 +1,7 @@
 import { CropType } from "@/core/data";
 import { cropData } from "@/core/data/cropData";
 import { rafBatch } from "@/core/utils";
+import { useSelectCustomTemplate } from "@/Editor/LeftSideabr/ToolMenu/ImageCrop/CropTemplate/CropTemplate";
 import { theme } from "@/styles/theme";
 import { getTureCropSize } from "@/utils/getTureCropSize";
 import { css } from "@emotion/react";
@@ -19,6 +20,7 @@ type RotateIndexType = 0 | 1 | 2 | 3;
 
 export const CropHandler: FC = memo(() => {
   const [rotateIndex, setRotateIndex] = useState<RotateIndexType>(0);
+  const selectCustomTemplate = useSelectCustomTemplate();
 
   // * ---------------------------
 
@@ -60,37 +62,26 @@ export const CropHandler: FC = memo(() => {
         }
       });
     });
+    // TODO: 目前旋转做的不够好，旋转将开启锁 // XuYuCheng 2021/08/17
+    selectCustomTemplate();
   };
 
   // * ---------------------------
 
-  // TODO: 限制大小 // XuYuCheng 2021/08/11
+  // TODO: 旋转逻辑待优化 // XuYuCheng 2021/08/17
   const handleRotateCrop = () => {
     rafBatch(() => {
       cropData.set((data) => {
-        const { width, height, x, y } = data;
-        data.width = height;
-        data.height = width;
-        data.x = y;
-        data.y = x;
+        const { width, height, x, y, originWidth, originHeight } = data;
+        const maxWidth = originWidth - x;
+        const maxHeight = originHeight - y;
+
+        // TODO: limit 函数 // XuYuCheng 2021/08/17
+        data.width = height > maxWidth ? maxWidth : height;
+        data.height = width > maxHeight ? maxHeight : width;
       });
-    }).then(() => {
-      // TODO: 这里的逻辑抽离成纯函数 // XuYuCheng 2021/08/11
-      // cropData.set((data) => {
-      //   const { x, y, width, height } = data;
-      //   const { width: oWidth, height: oHeight } = getTureCropSize(data);
-      //
-      //   if (width + x > oWidth) {
-      //     data.width = oWidth < width ? oWidth : width;
-      //     data.x = oWidth < width ? 0 : oWidth - width;
-      //   }
-      //
-      //   if (height + y > oHeight) {
-      //     data.height = oHeight < height ? oHeight : height;
-      //     data.y = oHeight < height ? 0 : oHeight - height;
-      //   }
-      // });
-    });
+    }).then();
+    selectCustomTemplate();
   };
 
   // * ---------------------------
