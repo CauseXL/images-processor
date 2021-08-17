@@ -59,8 +59,6 @@ export const ToolMenu: FC = () => {
           onClick={() => handleMenuSelect(index, category)}
         />
       ))}
-      {/* TODO: Remove */}
-      {/* <DemoBtnGroup /> */}
     </div>
   );
 };
