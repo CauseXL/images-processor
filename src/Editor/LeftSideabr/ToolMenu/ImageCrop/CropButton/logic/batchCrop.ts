@@ -36,6 +36,7 @@ export const cropImage = async (currentImage: ImgItemType, crop: CropDataType) =
 };
 
 /** 批量裁剪 */
+// TODO: 精度处理 // XuYuCheng 2021/08/17
 export const batchCrop = async (pageData: PageDataType, crop: any) => {
   const imgList = clone(pageData.imgList);
   const promiseQueue = imgList.map(async (item) => {
@@ -45,7 +46,8 @@ export const batchCrop = async (pageData: PageDataType, crop: any) => {
     .then((res) => {
       if (!res) return;
       const batchedList = imgList.map((item, index: number) => {
-        return { ...item, ...res[index], crop: { ...item.crop, ...crop } };
+        const { x, y, width, height, flip, rotate } = crop;
+        return { ...item, ...res[index], crop: { ...item.crop, x, y, width, height, flip, rotate } };
       });
       // @ts-ignore
       updateAllImages(batchedList);

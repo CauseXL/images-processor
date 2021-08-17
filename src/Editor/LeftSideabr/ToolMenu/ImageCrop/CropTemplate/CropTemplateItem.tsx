@@ -27,6 +27,7 @@ export const CropTemplateItem: FC<CropSizeSelectorProps> = memo((props) => {
 
   const handleClick = () => {
     // TODO: 用函数抽出去 // XuYuCheng 2021/08/16
+    // TODO: 精度处理 // XuYuCheng 2021/08/17
     cropData.set((data) => {
       if (type === "custom") {
         data.aspectRatio = null;
@@ -36,17 +37,17 @@ export const CropTemplateItem: FC<CropSizeSelectorProps> = memo((props) => {
 
         if (originRatio >= resultRatio) {
           const newWidth = originHeight * resultRatio;
-          data.y = 0;
-          data.x = (originWidth - newWidth) / 2;
-          data.width = newWidth;
-          data.height = originHeight;
+          data.y = round(0);
+          data.x = round((originWidth - newWidth) / 2);
+          data.width = round(newWidth);
+          data.height = round(originHeight);
         }
         if (originRatio < resultRatio) {
           const newHeight = originWidth / resultRatio;
-          data.y = (originHeight - newHeight) / 2;
-          data.x = 0;
-          data.width = originWidth;
-          data.height = newHeight;
+          data.y = round((originHeight - newHeight) / 2);
+          data.x = round(0);
+          data.width = round(originWidth);
+          data.height = round(newHeight);
         }
         data.aspectRatio = resultRatio;
       }
@@ -75,3 +76,5 @@ export const CropTemplateItem: FC<CropSizeSelectorProps> = memo((props) => {
 const font = css`
   color: rgba(255, 255, 255, 0.45);
 `;
+
+const round = (val: number) => Number(val.toFixed(2));

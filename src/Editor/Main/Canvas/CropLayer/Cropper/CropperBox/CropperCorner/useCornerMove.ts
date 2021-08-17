@@ -42,10 +42,10 @@ export const useCornerMove = (direction: CornerDirectionType) => {
                 limitSize(newWidth, minWidth, maxWidth),
                 limitSize(newHeight, minHeight, maxHeight),
               ];
-              data.y = resTop;
-              data.x = resLeft;
-              data.width = resWidth;
-              data.height = resHeight;
+              data.y = round(resTop);
+              data.x = round(resLeft);
+              data.width = round(resWidth);
+              data.height = round(resHeight);
             }
 
             if (direction === "ne") {
@@ -56,9 +56,9 @@ export const useCornerMove = (direction: CornerDirectionType) => {
                 limitSize(newWidth, minWidth, maxWidth),
                 limitSize(newHeight, minHeight, maxHeight),
               ];
-              data.y = resTop;
-              data.width = resWidth;
-              data.height = resHeight;
+              data.y = round(resTop);
+              data.width = round(resWidth);
+              data.height = round(resHeight);
             }
 
             if (direction === "se") {
@@ -68,8 +68,8 @@ export const useCornerMove = (direction: CornerDirectionType) => {
                 limitSize(newWidth, minWidth, maxWidth),
                 limitSize(newHeight, minHeight, maxHeight),
               ];
-              data.width = resWidth;
-              data.height = resHeight;
+              data.width = round(resWidth);
+              data.height = round(resHeight);
             }
 
             if (direction === "sw") {
@@ -80,9 +80,9 @@ export const useCornerMove = (direction: CornerDirectionType) => {
                 limitSize(newWidth, minWidth, maxWidth),
                 limitSize(newHeight, minHeight, maxHeight),
               ];
-              data.x = resLeft;
-              data.width = resWidth;
-              data.height = resHeight;
+              data.x = round(resLeft);
+              data.width = round(resWidth);
+              data.height = round(resHeight);
             }
           } else {
             // * --------------------------------------------------------------------------- 锁定比例
@@ -110,10 +110,10 @@ export const useCornerMove = (direction: CornerDirectionType) => {
                 limitSize(newWidth, minWidth, maxWidth),
                 limitSize(newHeight, minHeight, maxHeight),
               ];
-              data.y = resTop;
-              data.x = resLeft;
-              data.width = resWidth;
-              data.height = resHeight;
+              data.y = round(resTop);
+              data.x = round(resLeft);
+              data.width = round(resWidth);
+              data.height = round(resHeight);
             }
 
             // * ---------------------------
@@ -135,9 +135,9 @@ export const useCornerMove = (direction: CornerDirectionType) => {
                 limitSize(newWidth, minWidth, maxWidth),
                 limitSize(newHeight, minHeight, maxHeight),
               ];
-              data.y = resTop;
-              data.width = resWidth;
-              data.height = resHeight;
+              data.y = round(resTop);
+              data.width = round(resWidth);
+              data.height = round(resHeight);
             }
 
             // * ---------------------------
@@ -152,8 +152,8 @@ export const useCornerMove = (direction: CornerDirectionType) => {
                 limitSize(newWidth, minWidth, maxWidth),
                 limitSize(newHeight, minHeight, maxHeight),
               ];
-              data.width = resWidth;
-              data.height = resHeight;
+              data.width = round(resWidth);
+              data.height = round(resHeight);
             }
 
             // * ---------------------------
@@ -175,9 +175,9 @@ export const useCornerMove = (direction: CornerDirectionType) => {
                 limitSize(newWidth, minWidth, maxWidth),
                 limitSize(newHeight, minHeight, maxHeight),
               ];
-              data.x = resLeft;
-              data.width = resWidth;
-              data.height = resHeight;
+              data.x = round(resLeft);
+              data.width = round(resWidth);
+              data.height = round(resHeight);
             }
           }
         });
@@ -187,3 +187,5 @@ export const useCornerMove = (direction: CornerDirectionType) => {
 
   return { moveProps };
 };
+
+const round = (val: number) => Number(val.toFixed(2));

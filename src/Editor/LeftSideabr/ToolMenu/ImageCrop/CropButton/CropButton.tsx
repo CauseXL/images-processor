@@ -7,6 +7,7 @@ import { getBathStatus } from "@/logic/get/batchStatus";
 import { getCropData } from "@/logic/get/cropData";
 import { getCurrentImage } from "@/logic/get/currentImage";
 import { debouncePromise } from "@/utils/debouncePromise";
+import * as R from "ramda";
 import type { FC } from "react";
 import React, { memo, useMemo } from "react";
 import { ModalV2 as Modal } from "tezign-ui";
@@ -44,7 +45,8 @@ const useSyncCrop = () => {
         .then(() => modal.destroy());
     } else {
       const cropData = await cropImage(currImg, crop);
-      const newData = { ...currImg, ...cropData, crop: { ...currImg.crop, ...crop } };
+      const { x, y, width, height, flip, rotate } = crop;
+      const newData = { ...currImg, ...cropData, crop: { ...currImg.crop, x, y, width, height, flip, rotate } };
       updateCurrentImage(newData);
     }
   };
@@ -78,5 +80,12 @@ export const CropButton: FC = memo(() => {
   const { onOk } = useSyncCrop();
   const { onCancel } = useResetCrop();
 
-  return useMemo(() => <ButtonGroup onOk={onOk} onCancel={onCancel} />, [onOk, onCancel]);
+  const { x, y, width, height, flip, rotate } = useValue(getCropData);
+  const { crop } = useValue(getCurrentImage);
+  const hasChanged = !R.equals({ ...crop, rotate: crop.rotate ?? 0 }, { x, y, width, height, flip, rotate });
+
+  return useMemo(
+    () => <ButtonGroup onOk={onOk} onCancel={onCancel} disableOnOk={!hasChanged} />,
+    [onOk, onCancel, hasChanged],
+  );
 });
