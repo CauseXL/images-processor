@@ -47,9 +47,11 @@ export const SizeScale: FC = () => {
       setSizeState({ ...sizeState, width, height });
       return;
     }
-    if (type === "width") result.height = Number((value / (width / height)).toFixed(0));
-    if (type === "height") result.width = Number((value * (width / height)).toFixed(0));
-    if (type === "percent") {
+    if (type === "width") {
+      result.height = Number((value / (width / height)).toFixed(0));
+    } else if (type === "height") {
+      result.width = Number((value * (width / height)).toFixed(0));
+    } else if (type === "percent") {
       result.width = Number(((value / 100) * width).toFixed(0));
       result.height = Number(((value / 100) * height).toFixed(0));
     }
@@ -85,21 +87,24 @@ export const SizeScale: FC = () => {
   const handleCancel = () => {
     if (typeof activeKey === "number") {
       const { width, height } = currentImage;
-      const { value } = sizeScaleItemList[activeKey];
-      setSizeState({ ...sizeState, width, height, scale: value });
+      setSizeState({ ...sizeState, width, height, scale: undefined });
     }
   };
 
   const handleRadioChange = (e: any) => {
     const { type, value } = sizeScaleItemList[e.target.value];
     setActiveKey(e.target.value);
-    setSizeState({ ...sizeState, type, scale: value });
+    if (type === "percent") {
+      setSizeState({ ...sizeState, type, scale: value });
+    } else {
+      setSizeState({ ...sizeState, type });
+    }
   };
 
   const sizeScaleItemList: SizeScaleItemType[] = [
     { text: "按照高度", type: "height", value: sizeState?.height },
     { text: "按照宽度", type: "width", value: sizeState?.width },
-    { text: "按照百分比", type: "percent", value: 100 },
+    { text: "按照百分比", type: "percent", value: sizeState?.scale },
   ];
 
   return (
