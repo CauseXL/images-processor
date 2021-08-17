@@ -30,8 +30,8 @@ export const useLineMove = (direction: CropperLineType) => {
                 limitSize(newLeft, minLeft, maxLeft),
                 limitSize(newWidth, minWidth, maxWidth),
               ];
-              data.x = resLeft;
-              data.width = resWidth;
+              data.x = round(resLeft);
+              data.width = round(resWidth);
             }
 
             if (direction === "top") {
@@ -42,22 +42,22 @@ export const useLineMove = (direction: CropperLineType) => {
                 limitSize(newTop, minTop, maxTop),
                 limitSize(newHeight, minHeight, maxHeight),
               ];
-              data.y = resTop;
-              data.height = resHeight;
+              data.y = round(resTop);
+              data.height = round(resHeight);
             }
 
             if (direction === "right") {
               const minWidth = MIN_CROP_LENGTH;
               const maxWidth = W - l;
               const newWidth = data.width + deltaX;
-              data.width = limitSize(newWidth, minWidth, maxWidth);
+              data.width = round(limitSize(newWidth, minWidth, maxWidth));
             }
 
             if (direction === "bottom") {
               const minHeight = MIN_CROP_LENGTH;
               const maxHeight = H - t;
               const newHeight = data.height + deltaY;
-              data.height = limitSize(newHeight, minHeight, maxHeight);
+              data.height = round(limitSize(newHeight, minHeight, maxHeight));
             }
           } else {
             // * --------------------------------------------------------------------------- 锁定比例
@@ -80,10 +80,10 @@ export const useLineMove = (direction: CropperLineType) => {
                 newWidth >= MIN_CROP_LENGTH &&
                 newHeight >= MIN_CROP_LENGTH
               ) {
-                data.y = newTop;
-                data.x = newLeft;
-                data.width = newWidth;
-                data.height = newHeight;
+                data.y = round(newTop);
+                data.x = round(newLeft);
+                data.width = round(newWidth);
+                data.height = round(newHeight);
               }
             }
 
@@ -104,10 +104,10 @@ export const useLineMove = (direction: CropperLineType) => {
                 newWidth >= MIN_CROP_LENGTH &&
                 newHeight >= MIN_CROP_LENGTH
               ) {
-                data.y = newTop;
-                data.x = newLeft;
-                data.width = newWidth;
-                data.height = newHeight;
+                data.y = round(newTop);
+                data.x = round(newLeft);
+                data.width = round(newWidth);
+                data.height = round(newHeight);
               }
             }
 
@@ -127,9 +127,9 @@ export const useLineMove = (direction: CropperLineType) => {
                 newWidth >= MIN_CROP_LENGTH &&
                 newHeight >= MIN_CROP_LENGTH
               ) {
-                data.y = newTop;
-                data.width = newWidth;
-                data.height = newHeight;
+                data.y = round(newTop);
+                data.width = round(newWidth);
+                data.height = round(newHeight);
               }
             }
 
@@ -149,9 +149,9 @@ export const useLineMove = (direction: CropperLineType) => {
                 newWidth >= MIN_CROP_LENGTH &&
                 newHeight >= MIN_CROP_LENGTH
               ) {
-                data.x = newLeft;
-                data.width = newWidth;
-                data.height = newHeight;
+                data.x = round(newLeft);
+                data.width = round(newWidth);
+                data.height = round(newHeight);
               }
             }
           }
@@ -162,3 +162,5 @@ export const useLineMove = (direction: CropperLineType) => {
 
   return { moveProps };
 };
+
+const round = (val: number) => Number(val.toFixed(2));

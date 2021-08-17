@@ -12,6 +12,7 @@ import { tw } from "twind";
 
 // * --------------------------------------------------------------------------- serv
 
+// TODO: 精度处理 // XuYuCheng 2021/08/17
 export const useCropperDrag = () => {
   const cropInfo = useValue(getCropData);
   const { width, height } = getTureCropSize(cropInfo);
@@ -29,8 +30,8 @@ export const useCropperDrag = () => {
         cropData.set((data) => {
           const [newTop, newLeft] = [data.y + offsetY, data.x + offsetX];
           const [resTop, resLeft] = [limitPos(newTop, maxTop), limitPos(newLeft, maxLeft)];
-          data.y = resTop;
-          data.x = resLeft;
+          data.y = round(resTop);
+          data.x = round(resLeft);
         });
       }).then();
     },
@@ -53,6 +54,8 @@ export const CropperDrag: FC = memo(() => {
 });
 
 // * --------------------------------------------------------------------------- util
+
+const round = (val: number) => Number(val.toFixed(2));
 
 const limitPos = (newVal: number, maxVal: number) => {
   if (newVal < 0) return 0;
