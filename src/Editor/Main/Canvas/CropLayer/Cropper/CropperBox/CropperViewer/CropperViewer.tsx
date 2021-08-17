@@ -16,13 +16,13 @@ const useCropperViewer = () => {
   const { url } = useValue(getCurrentImage).origin;
   const cropInfo = useValue(getCropData);
   const { width, height } = getTureCropSize(cropInfo);
-  const { x, y, flip, rotate } = cropInfo;
+  const { x, y, flip, rotate, originWidth, originHeight } = cropInfo;
   const [scaleX, scaleY] = flip;
   const scale = useScale();
 
   const imgStyle = {
-    width: width * scale,
-    height: height * scale,
+    width: originWidth * scale,
+    height: originHeight * scale,
     transformOrigin: `0 0`,
     transform: getTransformStyle({
       width,

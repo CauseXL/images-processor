@@ -11,13 +11,15 @@ export const useCropperImage = () => {
   const { url } = useValue(getCurrentImage).origin;
   const cropInfo = useValue(getCropData);
   const { width, height } = getTureCropSize(cropInfo);
-  const { rotate, flip } = cropInfo;
+  const { rotate, flip, originWidth, originHeight } = cropInfo;
   const [scaleX, scaleY] = flip;
   const scale = useScale();
 
   const onLoad = () => {};
 
   const imgStyle = {
+    width: originWidth * scale,
+    height: originHeight * scale,
     transformOrigin: "0 0",
     transform: getTransformStyle({
       width: width * scale,
