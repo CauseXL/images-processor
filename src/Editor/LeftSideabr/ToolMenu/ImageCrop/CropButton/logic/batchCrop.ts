@@ -49,7 +49,7 @@ export const batchCrop = async (pageData: PageDataType, crop: any) => {
       });
       // @ts-ignore
       updateAllImages(batchedList);
-      message.success("批量尺寸缩放操作成功！");
+      message.success("批量图片裁剪操作成功！");
     })
     .catch((e) => {
       message.error(`操作失败！${e}`);
