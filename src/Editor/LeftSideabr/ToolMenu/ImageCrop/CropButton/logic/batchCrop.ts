@@ -46,7 +46,9 @@ export const batchCrop = async (pageData: PageDataType, crop: any) => {
     .then((res) => {
       if (!res) return;
       const batchedList = imgList.map((item, index: number) => {
-        const { width, height, flip, rotate } = crop;
+        const { width, height } = crop;
+        const flip = [1, 1] as [1 | -1, 1 | -1];
+        const rotate = 0 as 0 | 90 | -90 | 180;
         return { ...item, ...res[index], crop: { ...item.crop, x: 0, y: 0, width, height, flip, rotate } };
       });
       // @ts-ignore
