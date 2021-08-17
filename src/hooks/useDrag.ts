@@ -32,6 +32,7 @@ export const useDrag = <T extends ISize>({ list, minWidth, maxWidth, screenWidth
     width: waterfallSize.width,
     gap: waterfallSize.gap,
     subNodeHeight: waterfallSize.nameHeightWithMargin,
+    minHeight: waterfallSize.imageMinHeight,
   });
 
   useEffect(() => {

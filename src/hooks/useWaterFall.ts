@@ -20,6 +20,7 @@ interface IWaterfallProps<T> {
   width: number;
   gap: number;
   subNodeHeight: number;
+  minHeight: number;
 }
 
 export const useWaterFall = <T extends ISize>({
@@ -28,6 +29,7 @@ export const useWaterFall = <T extends ISize>({
   width,
   gap,
   subNodeHeight,
+  minHeight,
 }: IWaterfallProps<T>) => {
   const [positionList, setList] = useRafState<TPositionList<T>>([]);
   const calc = useCallback(() => {
@@ -42,7 +44,7 @@ export const useWaterFall = <T extends ISize>({
     const pList = list.map((item) => {
       const factor = width / item.width;
       const sw = width;
-      const sh = item.height * factor;
+      const sh = item.height * factor < minHeight ? minHeight : item.height * factor;
 
       const sizes: [number, number] = [sw, sh];
 

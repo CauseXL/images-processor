@@ -4,6 +4,7 @@ export const waterfallSize = {
   width: 184,
   gap: 16,
   nameHeightWithMargin: 28,
+  imageMinHeight: 72,
 };
 
 export const getPositionStyle = (item: any) => {
