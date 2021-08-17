@@ -13,7 +13,7 @@ import { tw } from "twind";
 // * --------------------------------------------------------------------------- serv
 
 const useCropperViewer = () => {
-  const { url } = useValue(getCurrentImage).origin;
+  const { url } = useValue(getCurrentImage);
   const cropInfo = useValue(getCropData);
   const { width, height } = getTureCropSize(cropInfo);
   const { x, y, flip, rotate, originWidth, originHeight } = cropInfo;

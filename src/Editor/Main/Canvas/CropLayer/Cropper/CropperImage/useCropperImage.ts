@@ -8,7 +8,7 @@ import { getTureCropSize } from "@/utils/getTureCropSize";
 // * --------------------------------------------------------------------------- serv
 
 export const useCropperImage = () => {
-  const { url } = useValue(getCurrentImage).origin;
+  const { url } = useValue(getCurrentImage);
   const cropInfo = useValue(getCropData);
   const { width, height } = getTureCropSize(cropInfo);
   const { rotate, flip, originWidth, originHeight } = cropInfo;

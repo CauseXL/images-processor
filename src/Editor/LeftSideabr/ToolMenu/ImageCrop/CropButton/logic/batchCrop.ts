@@ -17,7 +17,7 @@ export interface ICompressConfig {
 }
 
 export const cropImage = async (currentImage: ImgItemType, crop: CropDataType) => {
-  const oriDataUrl = currentImage.origin.url;
+  const oriDataUrl = currentImage.url;
   const originalMime = oriDataUrl.split(",")[0].match(/:(.*?);/)![1] as EImageType;
   const image = await dataURLtoImage(oriDataUrl);
   /** 做翻转 */
@@ -46,8 +46,8 @@ export const batchCrop = async (pageData: PageDataType, crop: any) => {
     .then((res) => {
       if (!res) return;
       const batchedList = imgList.map((item, index: number) => {
-        const { x, y, width, height, flip, rotate } = crop;
-        return { ...item, ...res[index], crop: { ...item.crop, x, y, width, height, flip, rotate } };
+        const { width, height, flip, rotate } = crop;
+        return { ...item, ...res[index], crop: { ...item.crop, x: 0, y: 0, width, height, flip, rotate } };
       });
       // @ts-ignore
       updateAllImages(batchedList);
