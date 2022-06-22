@@ -1,16 +1,13 @@
 {
-  "name": "tezign-intelligence-images-processor",
-  "version": "1.0.0-dev.30",
+  "name": "images-processor",
+  "version": "1.0.0",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
-  "module": "dist/tezign-intelligence-images-processor.esm.js",
+  "module": "dist/images-processor.esm.js",
   "files": [
     "dist",
     "src"
   ],
-  "publishConfig": {
-    "registry": "https://tech-npm.tezign.com/"
-  },
   "engines": {
     "node": ">=10"
   },
@@ -39,11 +36,11 @@
   },
   "size-limit": [
     {
-      "path": "dist/tezign-intelligence-images-processor.cjs.production.min.js",
+      "path": "dist/images-processor.cjs.production.min.js",
       "limit": "10 KB"
     },
     {
-      "path": "dist/tezign-intelligence-images-processor.esm.js",
+      "path": "dist/images-processor.esm.js",
       "limit": "10 KB"
     }
   ],

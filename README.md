@@ -79,7 +79,7 @@ CSS 的开发模式目前主要使用（CSS in JS "@emotion/css"）
 可以用下面的代码更新 remote（建议用 ssh 的模式）
 
 ```sh
-git remote set-url origin git@git.tezign.com:engineering/tezign-intelligence-images-processor.git
+git remote set-url origin images-processor.git
 git fetch --all --prune
 ```
 
