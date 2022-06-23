@@ -5,9 +5,9 @@ import { getCurrentImage } from "@/logic/get/currentImage";
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
 import { useKeyPress } from "ahooks";
+import { Icon, message } from "antd";
 import type { FC } from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Icon, Input, message } from "tezign-ui";
 import tw from "twin.macro";
 import { CompareModal } from "./CompareModal/CompareModal";
 import { DownloadButton } from "./DownloadButton/DownloadButton";
@@ -63,7 +63,8 @@ export const Header: FC<IHeader> = (props) => {
             <Icon type="left" css={tw`pr-1 flex items-center`} /> 返回
           </div>
           <div css={[tw`mx-4`, titleInputStyle]}>
-            <Input.Text style={{ width: 120 }} value={title} onInputBlur={onTitleChange} />
+            {/* <Input style={{ width: 120 }} value={title} onChange={onTitleChange} /> */}
+            <div style={{ width: 120 }}>{title}</div>
           </div>
           <div css={tw`mx-4 cursor-pointer`}>
             <CompareModal />

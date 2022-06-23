@@ -2,15 +2,6 @@
   "plugins": [
     "@emotion",
     [
-      "import",
-      {
-        "libraryName": "tezign-ui",
-        "libraryDirectory": "es",
-        "style": "css"
-      },
-      "tezign-ui"
-    ],
-    [
       "module-resolver",
       {
         "root": ["./"],

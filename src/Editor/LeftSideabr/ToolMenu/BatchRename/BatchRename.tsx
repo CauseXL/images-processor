@@ -4,8 +4,8 @@ import { renameImage } from "@/logic/action/imageList";
 import { getBathStatus } from "@/logic/get/batchStatus";
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
+import { Checkbox, Divider, Input, InputNumber, message } from "antd";
 import { FC, useCallback, useMemo, useState } from "react";
-import { Checkbox, Divider, Input, InputNumber, message } from "tezign-ui";
 import tw from "twin.macro";
 
 const log = console.log.bind(console);
@@ -76,10 +76,9 @@ export const BatchRename: FC = () => {
           <InputNumber
             size="small"
             css={inputNumberStyle}
-            indicated={false}
             placeholder="请输入整数"
             value={order}
-            onChange={(v) => {
+            onChange={(v: any) => {
               if (typeof v === "number") {
                 let value: number = v;
                 if (v === 0) {

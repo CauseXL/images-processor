@@ -4,8 +4,8 @@ import { changeCurrentImage } from "@/logic/action/currentImage";
 import { updateAllImages } from "@/logic/action/imageList";
 import { updatePageTitle } from "@/logic/action/updatePageTitle";
 import { getCurrentImage } from "@/logic/get/currentImage";
+import { Button } from "antd";
 import type { FC } from "react";
-import { Button } from "tezign-ui";
 
 export const DemoBtnGroup: FC = () => {
   const data = useValue(() => pageData.get());

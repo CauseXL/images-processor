@@ -5,7 +5,6 @@ import { theme } from "@/styles/theme";
 import { css, cx } from "@emotion/css";
 import type { FC } from "react";
 import { memo, useEffect } from "react";
-import { ScrollContainer } from "tezign-ui";
 // @ts-ignore
 import { tw } from "twind";
 import { CropTemplateItem } from "./CropTemplateItem";
@@ -38,7 +37,7 @@ export const CropTemplate: FC = memo(() => {
 
   return (
     <div className={list}>
-      <ScrollContainer className={cx(tw`rounded mt-0`, scroll)} indicated={true} maxHeight={128} gap={-10}>
+      <div className={cx(tw`rounded mt-0`, scroll)}>
         {cropTemplateList.map((item, index) => (
           <CropTemplateItem
             key={index}
@@ -47,7 +46,7 @@ export const CropTemplate: FC = memo(() => {
             active={activeKey === index}
           />
         ))}
-      </ScrollContainer>
+      </div>
     </div>
   );
 });

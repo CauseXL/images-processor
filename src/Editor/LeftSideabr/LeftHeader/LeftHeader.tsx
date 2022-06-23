@@ -4,8 +4,8 @@ import { toggleBatchStatus } from "@/logic/action/toggleBathStatus";
 import { getBathStatus } from "@/logic/get/batchStatus";
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
+import { Switch } from "antd";
 import type { FC } from "react";
-import { Switch } from "tezign-ui";
 import tw from "twin.macro";
 
 // * --------------------------------------------------------------------------- comp

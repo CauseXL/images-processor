@@ -2,9 +2,9 @@ import { pageData } from "@/core/data";
 import { useValue } from "@/core/utils";
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
+import { Icon, Modal } from "antd";
 import type { FC } from "react";
-import React, { useEffect, useMemo, useState } from "react";
-import { Icon, ModalV2 as Modal } from "tezign-ui";
+import { useEffect, useMemo, useState } from "react";
 import tw from "twin.macro";
 
 // * --------------------------------------------------------------------------- comp
@@ -50,7 +50,6 @@ export const CompareModal: FC = () => {
         <Modal
           visible={modalVisible}
           css={modalStyle}
-          full={true}
           footer={true}
           mask={false}
           closable={true}
@@ -58,7 +57,7 @@ export const CompareModal: FC = () => {
           onCancel={() => setModalVisible(false)}
         >
           <div css={tw`h-full flex flex-col items-center justify-center px-48`}>
-            <Icon type="round-right" css={[tw`transform -rotate-90 cursor-pointer`, iconStyle]} onClick={getPreview} />
+            <Icon type="up" css={[tw`transform -rotate-90 cursor-pointer`, iconStyle]} onClick={getPreview} />
             <div css={tw`w-full flex items-center justify-center my-6`}>
               <div css={[tw`mr-8 w-1/2 overflow-hidden pb-1`, containerStyle]}>
                 <div css={tw`text-base mb-3`}>原图</div>
@@ -92,7 +91,7 @@ export const CompareModal: FC = () => {
                 </div>
               </div>
             </div>
-            <Icon type="round-right" css={[tw`transform rotate-90 cursor-pointer`, iconStyle]} onClick={getNext} />
+            <Icon type="down" css={[tw`transform rotate-90 cursor-pointer`, iconStyle]} onClick={getNext} />
           </div>
         </Modal>
       )
@@ -124,11 +123,29 @@ export const CompareModal: FC = () => {
 // * --------------------------------------------------------------------------- style
 const modalStyle = css`
   color: ${theme.colors.white};
+  top: 0;
+  padding-bottom: 0;
+  width: 100% !important;
+  height: 100%;
   .ant-modal-content {
     background: transparent;
-    .ant-modal-close .ant-modal-close-x {
-      border: none;
-      color: ${theme.colors.white};
+    border-radius: 0;
+    height: 100%;
+    .ant-modal-footer {
+      display: none;
+    }
+    .ant-modal-close {
+      top: 24px;
+      right: 32px;
+      opacity: 1;
+      .ant-modal-close-x {
+        position: static;
+        font-size: 26px;
+        border: none;
+        background-color: transparent;
+        border-radius: 50%;
+        color: ${theme.colors.white};
+      }
     }
   }
 `;

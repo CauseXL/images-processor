@@ -1,8 +1,8 @@
 import { SizeScaleItemType } from "@/Editor/LeftSideabr/ToolMenu/SizeScale/SizeScale";
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
+import { InputNumber } from "antd";
 import { FC, ReactNode } from "react";
-import { InputNumber } from "tezign-ui";
 import tw from "twin.macro";
 
 // * --------------------------------------------------------------------------- inter
@@ -37,12 +37,10 @@ export const SizeScaleItem: FC<SizeScaleItemProps> = ({
         <InputNumber
           size="small"
           value={value}
-          indicated={false}
           precision={0}
-          placeholder="请输入整数"
+          placeholder={type === "percent" ? "请输入整数%" : "请输入整数"}
           min={type === "percent" ? MIN_PERCENT : MIN_SHAPE}
-          suffix={type === "percent" && "%"}
-          onChange={(value) => onChange(value as unknown as number)}
+          onChange={(value: any) => onChange(value as unknown as number)}
         />
       )}
     </div>

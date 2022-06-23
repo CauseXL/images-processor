@@ -1,7 +1,7 @@
 import { css, cx } from "@emotion/css";
+import { Dropdown, Icon } from "antd";
 import type { FC } from "react";
 import { memo } from "react";
-import { Dropdown, Icon } from "tezign-ui";
 // @ts-ignore
 import { tw } from "twind";
 import { getFormatScale, scaleDown, scaleUp, useScale } from "../logic/scale";
@@ -16,7 +16,7 @@ export const ZoomBar: FC = memo(() => {
     <div className={cx(tw`absolute bottom-10 left-1/2 z-50 flex justify-between`, container)}>
       <div className={cx(tw`h-9 px-3 flex items-center justify-between`, zoomBar)}>
         <div className={cx(tw`p-1 flex items-center mr-2 cursor-pointer`, icon)} onClick={scaleDown}>
-          <Icon type="stop" className="fz-16" />
+          <Icon type="minus-circle" className="fz-16" />
         </div>
 
         <Dropdown
@@ -29,7 +29,7 @@ export const ZoomBar: FC = memo(() => {
         </Dropdown>
 
         <div className={tw`p-1 flex items-center ml-2 cursor-pointer`} onClick={scaleUp}>
-          <Icon type="add-plus" className="fz-16" />
+          <Icon type="plus-circle" className="fz-16" />
         </div>
       </div>
     </div>

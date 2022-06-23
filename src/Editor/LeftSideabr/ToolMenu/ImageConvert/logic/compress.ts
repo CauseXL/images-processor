@@ -1,8 +1,8 @@
 import { ImgItemType, PageDataType } from "@/core/data";
 import { updateCurrentImage } from "@/logic/action/currentImage";
 import { updateAllImages } from "@/logic/action/imageList";
+import { message } from "antd";
 import { clone } from "ramda";
-import { message } from "tezign-ui";
 import { compressAccurately, proportion } from "./compressAccurately";
 
 export interface ICompressConfig {

@@ -1,11 +1,11 @@
 import { pageData } from "@/core/data";
 import { useValue } from "@/core/utils";
 import { getCurrentImage } from "@/logic/get/currentImage";
+import { Button, Dropdown, Icon, Menu, Modal, Progress } from "antd";
 import { saveAs } from "file-saver";
 import JSZip from "jszip";
 import type { FC } from "react";
-import React, { useMemo, useState } from "react";
-import { Button, Dropdown, Icon, Menu, ModalV2 as Modal, Progress } from "tezign-ui";
+import { useMemo, useState } from "react";
 import tw from "twin.macro";
 import { downloadFile, formatExtension } from "./logic/download";
 
@@ -81,7 +81,7 @@ export const DownloadButton: FC = () => {
   return (
     <>
       <Dropdown overlay={menu} placement="bottomLeft">
-        <Button>
+        <Button type="primary">
           <Icon className="btn-left-icon" type="download" />
           下载
         </Button>

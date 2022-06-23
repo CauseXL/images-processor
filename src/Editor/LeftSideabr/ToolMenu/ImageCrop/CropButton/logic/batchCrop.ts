@@ -8,8 +8,8 @@ import {
   rotateImageToUrl,
 } from "@/utils/cropImageToCanvas";
 import { dataURLtoImage, EImageType } from "@/utils/imageTransferFuns";
+import { message } from "antd";
 import { clone } from "ramda";
-import { message } from "tezign-ui";
 
 export interface ICompressConfig {
   type: "origin" | "custom" | undefined;

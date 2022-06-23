@@ -5,11 +5,10 @@ import { useSelectCustomTemplate } from "@/Editor/LeftSideabr/ToolMenu/ImageCrop
 import { theme } from "@/styles/theme";
 import { getTureCropSize } from "@/utils/getTureCropSize";
 import { css } from "@emotion/react";
-import type { FC, ReactElement } from "react";
+import { Button, Tooltip } from "antd";
+import type { FC } from "react";
 import { memo, useState } from "react";
-import { Button, Tooltip } from "tezign-ui";
 import tw from "twin.macro";
-import { FlipHorizontalIcon, FlipVerticalIcon, RotateCropIcon, RotateLeftIcon, RotateRightIcon } from "../Icon";
 
 // notice arr sort
 const rotateArr: CropType["rotate"][] = [0, 90, 180, -90];
@@ -85,38 +84,39 @@ export const CropHandler: FC = memo(() => {
   };
 
   // * ---------------------------
-
   return (
     <div css={tw`flex justify-between items-center mt-4`}>
-      <CropBtn icon={<FlipHorizontalIcon />} alt="垂直翻转" onClick={() => handleScale("y")} />
-      <CropBtn icon={<FlipVerticalIcon />} alt="水平翻转" onClick={() => handleScale("x")} />
-      <CropBtn icon={<RotateLeftIcon />} alt="旋转 -90 度" onClick={() => handleRotate("left")} />
-      <CropBtn icon={<RotateRightIcon />} alt="旋转 90 度" onClick={() => handleRotate("right")} />
-      <CropBtn icon={<RotateCropIcon />} alt="裁剪框旋转" onClick={handleRotateCrop} />
+      <CropBtn icon="border-verticle" alt="垂直翻转" onClick={() => handleScale("y")} />
+      <CropBtn icon="border-horizontal" alt="水平翻转" onClick={() => handleScale("x")} />
+      <CropBtn icon="border-left" alt="旋转 -90 度" onClick={() => handleRotate("left")} />
+      <CropBtn icon="border-right" alt="旋转 90 度" onClick={() => handleRotate("right")} />
+      <CropBtn icon="border-inner" alt="裁剪框旋转" onClick={handleRotateCrop} />
     </div>
   );
 });
 
 // * ---------------------------
 
-const CropBtn: FC<{ icon: string | ReactElement; alt: string; onClick?: () => void }> = memo(
-  ({ icon, alt, onClick }) => (
-    <Tooltip placement="bottom" title={alt}>
-      <Button
-        onClick={onClick}
-        icon={icon}
-        type="neutral"
-        css={[tw`flex justify-center items-center w-9 h-9 border-0 rounded`, cropButtonStyle]}
-      />
-    </Tooltip>
-  ),
-);
+const CropBtn: FC<{ icon: string; alt: string; onClick?: () => void }> = memo(({ icon, alt, onClick }) => (
+  <Tooltip placement="bottom" title={alt}>
+    <Button
+      onClick={onClick}
+      icon={icon}
+      ghost
+      css={[tw`flex justify-center items-center w-9 h-9 border-0 rounded`, cropButtonStyle]}
+    />
+  </Tooltip>
+));
 
 // * --------------------------------------------------------------------------- style
 
 const cropButtonStyle = css`
-  &.tz-btn.type-neutral {
+  &.tz-btn {
     color: ${theme.colors.default};
     background-color: ${theme.bgColors.light};
+  }
+  &:hover,
+  &:active {
+    color: white;
   }
 `;

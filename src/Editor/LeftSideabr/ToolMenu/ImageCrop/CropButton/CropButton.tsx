@@ -7,10 +7,10 @@ import { getBathStatus } from "@/logic/get/batchStatus";
 import { getCropData } from "@/logic/get/cropData";
 import { getCurrentImage } from "@/logic/get/currentImage";
 import { debouncePromise } from "@/utils/debouncePromise";
+import { Modal } from "antd";
 import * as R from "ramda";
 import type { FC } from "react";
-import React, { memo, useMemo } from "react";
-import { ModalV2 as Modal } from "tezign-ui";
+import { memo, useMemo } from "react";
 import { batchCrop, cropImage } from "./logic/batchCrop";
 
 // * --------------------------------------------------------------------------- serv
@@ -23,13 +23,14 @@ const useSyncCrop = () => {
 
   const onOk = async () => {
     if (batchStatus) {
-      const modal = Modal.alert({
+      const modal = Modal.info({
         type: "danger",
         width: 300,
-        footer: null,
-        closable: false,
+        centered: true,
         maskClosable: false,
         content: "正在处理批量裁剪，请稍后...",
+        okButtonProps: { disabled: true },
+        cancelButtonProps: { disabled: true },
       });
       // TODO: 批量裁剪其他图片时要通过出计算裁切比例来做裁切，现在逻辑不太对，先放着
       // const { x, y, width, height } = crop;

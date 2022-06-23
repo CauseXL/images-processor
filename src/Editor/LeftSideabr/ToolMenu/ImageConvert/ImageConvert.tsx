@@ -8,9 +8,9 @@ import { getCurrentImage } from "@/logic/get/currentImage";
 import { theme } from "@/styles/theme";
 import { debouncePromise } from "@/utils/debouncePromise";
 import { css } from "@emotion/react";
+import { InputNumber, message, Modal, Radio } from "antd";
 import type { FC } from "react";
 import { useState } from "react";
-import { InputNumber, message, ModalV2 as Modal, Radio } from "tezign-ui";
 import tw from "twin.macro";
 import { batchCompress, compress, ICompressConfig } from "./logic/compress";
 
@@ -39,13 +39,12 @@ export const ImageConvert: FC = () => {
   };
 
   const batchCompressAction = () => {
-    const modal = Modal.alert({
+    const modal = Modal.info({
       type: "danger",
       width: 300,
-      footer: null,
-      closable: false,
       maskClosable: false,
       content: "正在批量压缩，请稍后...",
+      okButtonProps: { disabled: true },
     });
     debouncePromise(200)
       .then(() => batchCompress(pageData.get(), compressConfig))
@@ -101,11 +100,9 @@ export const ImageConvert: FC = () => {
         <div css={tw`flex justify-between`}>
           <p>目标大小</p>
           <InputNumber
-            placeholder="请输入整数"
+            placeholder="请输入整数(KB)"
             css={inputStyle}
             size="small"
-            indicated={false}
-            suffix="KB"
             min={1}
             precision={0}
             onChange={handleInputChange}

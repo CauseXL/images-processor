@@ -1,7 +1,7 @@
 import { ImgItemType, pageData, Snap } from "@/core/data";
 import { rafBatch } from "@/core/utils";
+import { message } from "antd";
 import { clone } from "ramda";
-import { message } from "tezign-ui";
 
 /** 全量更新图片列表 */
 export const updateAllImages = (imgList: ImgItemType[]) => {

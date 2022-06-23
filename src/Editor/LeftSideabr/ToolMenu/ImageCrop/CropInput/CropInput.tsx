@@ -6,10 +6,10 @@ import { getCropData, useCropRatioLocked } from "@/logic/get/cropData";
 import { theme } from "@/styles/theme";
 import { css, cx } from "@emotion/css";
 import { useDebounceFn } from "ahooks";
+import { InputNumber, Tooltip } from "antd";
+import { InputNumberProps } from "antd/lib/input-number";
 import type { FC } from "react";
 import { memo, useMemo } from "react";
-import { InputNumber, Tooltip } from "tezign-ui";
-import { InputNumberProps } from "tezign-ui/lib/input-number";
 // @ts-ignore
 import { tw } from "twind";
 import { CropLockIcon, CropUnLockIcon } from "../Icon";
@@ -117,17 +117,16 @@ interface InputItemProps extends InputNumberProps {
   value: number;
 }
 
-const InputItem: FC<InputItemProps> = memo(({ placeholder, value, onChange, min, max }) => (
+const InputItem: FC<any> = memo(({ placeholder, value, onChange, min, max }) => (
   <InputNumber
     className={input}
     placeholder={placeholder}
     size="small"
     precision={0}
-    indicated={false}
     min={min}
     max={max}
-    value={round(value)}
     // @ts-ignore
+    value={round(value)}
     onChange={onChange}
   />
 ));

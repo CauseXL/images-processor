@@ -8,9 +8,9 @@ import { getCurrentImage } from "@/logic/get/currentImage";
 import { theme } from "@/styles/theme";
 import { debouncePromise } from "@/utils/debouncePromise";
 import { css } from "@emotion/react";
+import { message, Modal, Radio } from "antd";
 import type { FC } from "react";
 import { useEffect, useState } from "react";
-import { message, ModalV2 as Modal, Radio } from "tezign-ui";
 import tw from "twin.macro";
 import { batchScaleImage, scaleImage, SizeScaleType } from "./logic/scale";
 
@@ -64,13 +64,12 @@ export const SizeScale: FC = () => {
       return;
     }
     if (batchStatus) {
-      const modal = Modal.alert({
+      const modal = Modal.info({
         type: "danger",
         width: 300,
-        footer: null,
-        closable: false,
         maskClosable: false,
         content: "正在处理批量尺寸缩放，请稍后...",
+        okButtonProps: { disabled: true },
       });
       debouncePromise(200)
         .then(() => batchScaleImage(data, sizeState))

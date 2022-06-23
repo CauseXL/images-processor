@@ -1,8 +1,8 @@
 import { theme } from "@/styles/theme";
 import { css, cx } from "@emotion/css";
+import { Popover } from "antd";
 import type { FC } from "react";
-import React, { memo, useMemo, useState } from "react";
-import { Popover } from "tezign-ui";
+import { memo, useMemo, useState } from "react";
 // @ts-ignore
 import { tw } from "twind";
 import { DirectionIcon } from "../Icon";
@@ -19,7 +19,7 @@ export const CropDirection: FC = memo(() => {
         placement="topRight"
         trigger="click"
         style={{ padding: "0" }}
-        className={popover}
+        overlayClassName={popover}
         content={<DirectionTable visible={visible} />}
         onVisibleChange={(visible) => setVisible(visible)}
       >

@@ -1,8 +1,8 @@
 import { PageDataType } from "@/core/data";
 import { updateAllImages } from "@/logic/action/imageList";
 import { canvastoDataURL, dataURLtoImage, EImageType, imagetoCanvas } from "@/utils/imageTransferFuns";
+import { message } from "antd";
 import { clone } from "ramda";
-import { message } from "tezign-ui";
 import { proportion } from "../../ImageConvert/logic/compressAccurately";
 
 export interface SizeScaleType {

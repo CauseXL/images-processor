@@ -1,7 +1,7 @@
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
+import { Icon } from "antd";
 import { FC, ReactNode } from "react";
-import { Icon } from "tezign-ui";
 import tw from "twin.macro";
 
 // * --------------------------------------------------------------------------- inter
@@ -26,10 +26,9 @@ export const ToolMenuItem: FC<SubMenuProps> = ({ title, content, active = false,
 );
 
 // * ---------------------------
-
 const ToolMenuTitle: FC<{ active: boolean; onClick?: () => void }> = ({ children, active, onClick }) => (
   <div css={tw`select-none cursor-pointer flex justify-start p-4`} onClick={onClick}>
-    <Icon type={active ? "expand" : "right"} css={tw`pr-4 flex items-center text-center`} />
+    <Icon type={active ? "caret-down" : "caret-right"} css={tw`pr-4 flex items-center text-center`} />
     {children}
   </div>
 );

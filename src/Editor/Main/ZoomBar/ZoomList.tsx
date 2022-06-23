@@ -1,6 +1,6 @@
+import { Menu } from "antd";
 import type { FC } from "react";
 import { memo } from "react";
-import { Menu } from "tezign-ui";
 import { getFormatScale, scaleTo, scaleToContain, scaleToFill, SCALE_LIST } from "../logic/scale";
 
 // * --------------------------------------------------------------------------- comp

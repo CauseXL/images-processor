@@ -1,8 +1,8 @@
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
+import { Icon } from "antd";
 import type { FC } from "react";
 import { CSSProperties, useCallback, useState } from "react";
-import { Icon } from "tezign-ui";
 import tw from "twin.macro";
 
 export enum EViewMode {
@@ -28,13 +28,13 @@ export const ViewMode: FC<IToggleProps> = ({ onChange, viewMode, style }) => {
         css={[tw`flex justify-center items-center rounded`, optionStyle, getActivatedStyle(EViewMode.CARD)]}
         onClick={() => action(EViewMode.CARD)}
       >
-        <Icon type="tile" />
+        <Icon type="pic-center" />
       </div>
       <div
         css={[tw`flex justify-center items-center rounded`, optionStyle, getActivatedStyle(EViewMode.LIST)]}
         onClick={() => action(EViewMode.LIST)}
       >
-        <Icon type="unordered-list" />
+        <Icon type="pic-left" />
       </div>
     </div>
   );

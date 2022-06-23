@@ -1,8 +1,8 @@
 import { resetPageData } from "@/logic/action/resetPageData";
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
+import { Button } from "antd";
 import type { FC } from "react";
-import { Button } from "tezign-ui";
 import tw from "twin.macro";
 
 export const ResetButton: FC = () => {
@@ -10,7 +10,7 @@ export const ResetButton: FC = () => {
     <div css={[resetBtnStyle, tw`flex justify-center`]}>
       <Button
         type="danger"
-        ghost="text"
+        ghost
         onClick={() => {
           /* 不用 Snap.rest 因为···一键还原···也需要支持撤销 */
           resetPageData();

@@ -1,7 +1,7 @@
 import { theme } from "@/styles/theme";
 import { css } from "@emotion/react";
+import { Button } from "antd";
 import type { FC } from "react";
-import { Button } from "tezign-ui";
 
 // * --------------------------------------------------------------------------- type
 
@@ -23,7 +23,7 @@ export const ButtonGroup: FC<ButtonGroupProps> = (props) => {
       <Button size="small" onClick={onOk} css={okBtnStyle} disabled={disableOnOk}>
         {okText}
       </Button>
-      <Button size="small" onClick={onCancel} css={cancelBtnStyle} type="neutral">
+      <Button size="small" onClick={onCancel} css={cancelBtnStyle}>
         {cancelText}
       </Button>
     </div>
